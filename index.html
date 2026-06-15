@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dr. VSR Hospital</title>
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_02_FEVICON_ICON.png" type="image/png">
-<link rel="apple-touch-icon" href="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_02_FEVICON_ICON.png">
-<meta name="theme-color" content="#1e3a8a">	
+    <title>DR. S. VENKATA SUBBA REDDY MULTISPECIALITY HOSPITAL - Official Portal</title>
     <link rel="icon" type="image/png" href="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_02_FEVICON_ICON.png">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -227,6 +223,54 @@
     .geo-btn:hover { background: #1569a8; transform: scale(1.02); box-shadow: 0 4px 10px rgba(30,129,206,0.2); }
     .geo-btn svg { width: 13px; height: 13px; }
     .footer-copyright-strip { margin-top:0; padding:10px 0 2px 0; text-align:center; font-size:8.5px; color:#888; letter-spacing:0.4px; opacity:0.8; }
+
+
+
+
+.portal-menu-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.portal-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 180px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    z-index: 9999;
+    padding: 6px;
+}
+
+.portal-dropdown.show {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.portal-btn {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    padding: 8px 10px;
+    background: #1e81ce;
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.portal-btn:hover {
+    background: #1569a8;
+}
+
+
 </style>
 </head>
 <body>
@@ -255,9 +299,42 @@
             <a id="btn-specialties" href="javascript:void(0)" onclick="navigateSection('specialties-section','btn-specialties')" class="menu-btn">Specialties</a>
             <a id="btn-timings" href="javascript:void(0)" onclick="navigateSection('timings-section','btn-timings')" class="menu-btn">Timings</a>
             <a id="btn-token" href="javascript:void(0)" onclick="navigateSection('SVSR_REGISTRATION_MODULE','btn-token')" class="menu-btn">OP Register</a>
-            <a id="btn-facilities" href="javascript:void(0)" onclick="navigateSection('facilities-section','btn-facilities')" class="menu-btn">Facilities</a>
             <a id="btn-gallery" href="javascript:void(0)" onclick="navigateSection('gallery-section','btn-gallery')" class="menu-btn">Gallery</a>
             <a id="btn-contact" href="javascript:void(0)" onclick="navigateSection('contact-section','btn-contact')" class="menu-btn">Contact</a>
+<div class="portal-menu-wrapper">
+    <a id="btn-facilities" href="javascript:void(0)" onclick="toggleHospitalPortal()" class="menu-btn">
+        Hospital Portal
+    </a>
+<div id="hospitalPortalDropdown" class="portal-dropdown">
+
+    <a href="#" class="portal-btn">
+        OP Management
+    </a>
+
+    <a href="#" class="portal-btn">
+        Doctor Dashboard
+    </a>
+
+    <a href="#" class="portal-btn">
+        Pharmacy Inventory
+    </a>
+
+    <a href="#" class="portal-btn">
+        Pharmacy Billing
+    </a>
+
+    <a href="#" class="portal-btn">
+        Hospital Forms
+    </a>
+
+    <a href="#" class="portal-btn">
+        Staff Attendance
+    </a>
+
+</div>
+</div>
+
+			
         </div>
     </section>
 
@@ -911,6 +988,19 @@
     window.addEventListener('load', () => { console.log("SVSRH Multispeciality Hospital System Initialized."); finalizeHospitalBranding(); initializeMarqueeTrack(); initializeAboutSection(); SET_DEFAULT_TIMESTAMP(); initSlider('track-left', 3000); initSlider('track-right', 3500); document.querySelectorAll('img').forEach(img => { img.onerror = () => handleImageError(img); }); });
     window.onclick = () => document.querySelectorAll('.dropdown-options').forEach(d => d.classList.remove('show'));
     document.getElementById('tokenForm').addEventListener('submit', function(e) { e.preventDefault(); const msg = document.getElementById('statusMessage'); if(!document.getElementById('doctor').value) { msg.innerText = "⚠ CHOOSE CLINICAL DEPARTMENT FIRST"; return; } if(!document.getElementById('gender').value) { msg.innerText = "⚠ SELECT PATIENT GENDER"; return; } document.getElementById('loadingOverlay').style.display = 'flex'; const payload = { doctorName: document.getElementById('doctor').value, fullName: document.getElementById('patientName').value.trim(), age: document.getElementById('age').value, gender: document.getElementById('gender').value, phone: document.getElementById('phoneNumber').value.trim(), village: document.getElementById('village').value.trim() }; fetch(GLOBAL_DEPLOYED_URL, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(payload) }).then(res => res.json()).then(data => { if(data.result === "success") { document.getElementById('resToken').innerText = data.token; document.getElementById('resName').innerText = payload.fullName; document.getElementById('formContainer').style.display = 'none'; document.getElementById('successView').style.display = 'flex'; document.getElementById('sideButtons').classList.add('show-flex'); } else { msg.innerText = "⚠ ENTRY ERROR: " + data.message; } }).catch(() => { msg.innerText = "⚠ CONNECTION TIMEOUT: TRY AGAIN"; }).finally(() => { document.getElementById('loadingOverlay').style.display = 'none'; }); });
+
+function toggleHospitalPortal() {
+    document.getElementById("hospitalPortalDropdown").classList.toggle("show");
+}
+
+document.addEventListener("click", function(e) {
+    const wrapper = document.querySelector(".portal-menu-wrapper");
+
+    if (!wrapper.contains(e.target)) {
+        document.getElementById("hospitalPortalDropdown").classList.remove("show");
+    }
+});
+
 </script>
 </body>
 </html>

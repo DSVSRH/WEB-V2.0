@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP BILL - Dr VSR Hospital</title>
+<link rel="icon" type="image/png" href="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_02_FEVICON_ICON.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+body { font-family: 'Roboto Slab', serif; background-color: #f1f5f9; padding: 2px; margin: 0; }
+.a4-page { width: 210mm; min-height: 297mm; padding: 4mm 8mm 8mm 8mm; margin: 10px auto; background: #ffffff; border: 3.5px solid #1e3a8a; box-sizing: border-box; display: flex; flex-direction: column; position: relative; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); overflow: hidden; }
+.header-container { display: flex; flex-direction: column; border-bottom: 2.5px solid #1e3a8a; padding-bottom: 5px; margin-top: -14px; }
+.header-top { display: flex; align-items: center; justify-content: flex-start; gap: 10px; }
+.logo-img { height: 82px; width: 82px; object-fit: contain; margin-top: -4px; }
+.header-text { display: flex; flex-direction: column; align-items: flex-start; flex-grow: 1; text-align: left; }
+.hospital-name { font-size: 1.18rem; font-weight: 800; color:#228BE6; text-transform: uppercase; line-height: 1.1; white-space: nowrap; letter-spacing: -0.01em; margin-top: -2px; }
+.sub-header-row { display: flex; align-items: center; justify-content: flex-start; gap: 12px; margin-top: 2px; }
+.since-box { font-size: 0.8rem; font-weight: 800; color:#000000;background-color:#7FD3FF; padding: 2px 10px; border-radius: 4px; border: 1px solid #1e3a8a; }
+.phone-box { font-size: 0.9rem; font-weight: 800; color: #1e3a8a; }
+.tagline { font-size: 0.8rem; font-weight: 700; color:#228BE6; text-transform: uppercase; }
+.doctors-row { display: flex; justify-content: space-around; align-items: flex-start; border-top: 1.5px solid #1e3a8a; margin-top: 6px; padding-top: 5px; color: #1e3a8a; text-align: center; gap: 12px; }
+.doctor-col { display: flex; flex-direction: column; align-items: center; width: 48%; }
+.doctor-name { font-size: 0.90rem; font-weight: 800; letter-spacing: 0.015em; margin-bottom: 1px; text-transform: uppercase; line-height: 1.1; }
+.doctor-degree { font-size: 0.72rem; font-weight: 700; margin-bottom: 1px; line-height: 1.1; }
+.doctor-extra { font-size: 0.60rem; font-weight: 500; opacity: 0.90; text-align: center; margin-bottom: 2px; line-height: 1.2; font-family: sans-serif; }
+.doctor-reg { font-size: 0.65rem; font-weight: 700; opacity: 0.95; line-height: 1.1; }
+.field-row { display: flex; align-items: center; margin-bottom: 6px; font-size: 0.95rem; justify-content: flex-start; }
+.field-label { width: 230px; font-weight: 700; color: #1e3a8a; cursor: default; }
+.input-field { border: none; border-bottom: 1px dotted #1e3a8a; width: 100%; outline: none; padding: 1px 2px; font-weight: bold; color: #0f172a; background: transparent; line-height: 1.1; }
+.input-field:focus { border-bottom: 1.5px solid #2563eb; }
+.date-field { border: none; border-bottom: 1px dotted #1e3a8a; width: 145px; outline: none; padding: 1px; background: transparent; color: #1e3a8a; font-weight: bold; }
+.footer-wrapper { position: absolute; bottom: 12px; left: 16px; right: 16px; }
+.footer { text-align: center; color: #1e3a8a; border-top: 1px solid #1e3a8a; padding-top: 6px; }
+.address-text { font-size: 1rem; font-weight: 800; margin-bottom: 2px; line-height: 1.2; }
+.controls-top { display: flex; justify-content: center; align-items: center; gap: 12px; margin: 12px 0 14px 0; }
+.btn { padding: 8px 22px; background-color: #1e3a8a; color: white; border-radius: 6px; font-weight: 700; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; transition: all 0.2s ease-in-out; }
+.btn-save { background-color: #059669; }
+.btn-print { background-color: #3b82f6; }
+.print-pulse { animation: pulseGlow 2s infinite; }
+@keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(59,130,246,0.7); } 70% { box-shadow: 0 0 0 10px rgba(59,130,246,0); } 100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); } }
+#toast { position: fixed; bottom: 25px; right: 25px; padding: 14px 28px; border-radius: 8px; font-weight: 800; color: white; display: none; z-index: 2000; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2); }
+.toast-success { background: #10b981; }
+.toast-error { background: #ef4444; }
+@media print {
+    @page { size: A4; margin: 2mm; }
+    body { background: #ffffff; padding: 0; margin: 0; }
+    .controls-top, .no-print { display: none !important; }
+    .a4-page { margin: 2mm auto; border: 3.5px solid #1e3a8a !important; width: 198mm; min-height: 287mm; padding: 5mm 8mm 8mm 8mm; box-shadow: none !important; }
+    input[type="checkbox"] { display: none !important; }
+    .print-hide { display: none !important; }
+}
+</style>
+</head>
+<body onload="loadStoredElementsAndCheckState_8831()" oninput="runDataAutoSave_8312()">
+
+<div class="no-print w-full bg-white text-slate-800 p-4 shadow-md border-b border-slate-200">
+    <div class="max-w-[1200px] mx-auto flex flex-col gap-4">
+        
+        <!-- Three Buttons Section (Centered, No Heading) -->
+        <div class="flex flex-wrap justify-center items-center gap-3">
+            <button class="btn bg-rose-600 hover:bg-rose-700 shadow-sm" onclick="triggerConfirmReset_8213()"><i class="fa-solid fa-trash-can"></i> RESET</button>
+            <button class="btn btn-save shadow-sm" id="commitBtn_9381" onclick="submitToSpreadsheet_7182()"><i class="fa-solid fa-cloud-arrow-up"></i> SAVE</button>
+            <button class="btn btn-print shadow-sm" id="printBtn_2831" onclick="triggerNativePrint_9281()"><i class="fa-solid fa-print"></i> PRINT</button>
+        </div>
+
+        <!-- IP Bill Tracker Section (Directly after buttons) -->
+        <div class="bg-sky-50/70 p-3 rounded-lg border border-sky-100 flex flex-col md:flex-row items-center justify-between gap-3">
+            <div class="text-sm font-extrabold text-blue-900 flex items-center gap-2 shrink-0"><i class="fa-solid fa-hospital-user text-blue-600"></i> IP BILL TRACKER</div>
+            <div class="flex items-center gap-2 w-full md:w-auto max-w-md">
+<input
+    type="text"
+    id="searchIpNumber_9182"
+    placeholder="Search IP Bill/Receipt Number..."
+    class="w-full px-3 py-1.5 bg-white border border-slate-300 rounded-md text-slate-800 font-bold text-sm focus:outline-none focus:border-blue-500 shadow-sm"
+    oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '')">
+                <button class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-md text-sm flex items-center gap-1 transition shadow-sm" onclick="verifySearch_9283()"><i class="fa-solid fa-circle-check"></i> VERIFY</button>
+            </div>
+        </div>
+
+        <!-- Doctor Selector Grid Section (HD Light Grey/White) -->
+        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <div class="text-xs font-black text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5"><i class="fa-solid fa-user-doctor text-blue-600"></i> Select Doctors on Bill (Maximum 2) :</div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs">
+                <label class="flex items-start gap-2 bg-white p-2 rounded cursor-pointer hover:bg-slate-100/80 border border-slate-200 shadow-sm"><input type="checkbox" id="sel_dr_haneesha" value="dr_haneesha" onchange="handleDoctorSelection_9182(this)" class="mt-0.5"><div class="flex flex-col"><strong class="text-slate-800">Dr. P. Haneesha Reddy</strong><span class="text-[10px] text-slate-500">GYNECOLOGY</span></div></label>
+                <label class="flex items-start gap-2 bg-white p-2 rounded cursor-pointer hover:bg-slate-100/80 border border-slate-200 shadow-sm"><input type="checkbox" id="sel_dr_chandrika" value="dr_chandrika" onchange="handleDoctorSelection_9182(this)" class="mt-0.5"><div class="flex flex-col"><strong class="text-slate-800">Dr. S. Chandrika</strong><span class="text-[10px] text-slate-500">OPHTHALMOLOGY</span></div></label>
+                <label class="flex items-start gap-2 bg-white p-2 rounded cursor-pointer hover:bg-slate-100/80 border border-slate-200 shadow-sm"><input type="checkbox" id="sel_dr_yashwanth" value="dr_yashwanth" onchange="handleDoctorSelection_9182(this)" class="mt-0.5"><div class="flex flex-col"><strong class="text-slate-800">Dr. S. Yashwanth Reddy</strong><span class="text-[10px] text-slate-500">ANESTHESIA</span></div></label>
+                <label class="flex items-start gap-2 bg-white p-2 rounded cursor-pointer hover:bg-slate-100/80 border border-slate-200 shadow-sm"><input type="checkbox" id="sel_dr_lakshmi" value="dr_lakshmi" onchange="handleDoctorSelection_9182(this)" class="mt-0.5"><div class="flex flex-col"><strong class="text-slate-800">Dr. T.N. Lakshmi Reddy</strong><span class="text-[10px] text-slate-500">GENERAL MEDICINE</span></div></label>
+                <label class="flex items-start gap-2 bg-white p-2 rounded cursor-pointer hover:bg-slate-100/80 border border-slate-200 shadow-sm"><input type="checkbox" id="sel_dr_narasimha" value="dr_narasimha" onchange="handleDoctorSelection_9182(this)" class="mt-0.5"><div class="flex flex-col"><strong class="text-slate-800">Dr. S. Narasimha Reddy</strong><span class="text-[10px] text-slate-500">HOMEOPATHY</span></div></label>
+                <label class="flex items-start gap-2 bg-white p-2 rounded cursor-pointer hover:bg-slate-100/80 border border-slate-200 shadow-sm"><input type="checkbox" id="sel_dr_siva" value="dr_siva" onchange="handleDoctorSelection_9182(this)" class="mt-0.5"><div class="flex flex-col"><strong class="text-slate-800">Dr. S. Siva Nageswaramma</strong><span class="text-[10px] text-slate-500">HOMEOPATHY</span></div></label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<div id="confirmModal_9988" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-[3000] hidden">
+    <div class="bg-white p-6 rounded-xl border-2 border-blue-900 shadow-2xl max-w-sm w-full text-center m-4">
+        <h3 class="text-lg font-extrabold text-blue-900 mb-2">Confirm Action</h3>
+        <p class="text-sm text-slate-700 mb-6 font-semibold">Are you sure you want to reset?</p>
+        <div class="flex justify-center gap-4">
+            <button class="px-4 py-2 bg-slate-300 hover:bg-slate-400 text-slate-800 font-bold rounded" onclick="closeConfirmModal_8822()">Cancel</button>
+            <button class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded" onclick="confirmAndClearAllStoredData_9281()">Yes, Reset</button>
+        </div>
+    </div>
+</div>
+
+<div class="a4-page">
+    <div class="header-container">
+        <div class="header-top">
+            <img src="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_01_HEDER_LOGO_MAIN.png" alt="Hospital Logo" class="logo-img">
+            <div class="header-text">
+                <h1 class="hospital-name">Dr. S. Venkata Subba Reddy Multispecialty Hospital</h1>
+                <div class="sub-header-row">
+                    <span class="since-box">SINCE 1989</span>
+                    <p class="tagline">"Best Of Care, Close to Home"</p>
+                    <div class="phone-box"><i class="fas fa-phone-alt"></i> 9063307444</div>
+                </div>
+            </div>
+        </div>
+        <div class="doctors-row" id="billDoctorsRow_9381">
+            <!-- Rendered Dynamically from JavaScript -->
+        </div>
+    </div>
+
+    <div class="px-5 py-3">
+        <div class="flex justify-between mb-4 font-bold text-blue-900 border-b border-blue-900 pb-2 text-sm">
+            <div>Receipt No: <span id="receiptNumDisplay_9182" class="text-rose-600 font-extrabold">[Click Save]</span></div>
+            <div>IP Number: <span id="ipNumDisplay_2931" class="text-rose-600 font-extrabold">[Click Save]</span></div>
+            <div>Date: <input type="date" class="date-field" id="receiptDate_8471"></div>
+        </div>
+
+        <div class="space-y-1.5">
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_patientName" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_patientName" onblur="saveLabel_9281(this)">Patient Name</span></label> : <input type="text" class="input-field uppercase" id="patientName_9103"></div>
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_consultFee" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_consultFee" onblur="saveLabel_9281(this)">Consultation Fee</span></label> : <input type="number" class="input-field" id="consultFee_2841"></div>
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_admissionFee" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_admissionFee" onblur="saveLabel_9281(this)">Admission Fee</span></label> : <input type="number" class="input-field" id="admissionFee_4732"></div>
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_opCharge" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_opCharge" onblur="saveLabel_9281(this)">Operation Charges</span></label> : <input type="number" class="input-field" id="opCharge_9184"></div>
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_anesCharge" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_anesCharge" onblur="saveLabel_9281(this)">Anesthesia Charges</span></label> : <input type="number" class="input-field" id="anesCharge_3849"></div>
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_otCharge" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_otCharge" onblur="saveLabel_9281(this)">OT Charges</span></label> : <input type="number" class="input-field" id="otCharge_7412"></div>
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_oxyCharge" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_oxyCharge" onblur="saveLabel_9281(this)">Oxygen Charges</span></label> : <input type="number" class="input-field" id="oxyCharge_6391"></div>
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_fluidsMed" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_fluidsMed" onblur="saveLabel_9281(this)">Fluids & Medicine</span></label> : <input type="number" class="input-field" id="fluidsMed_8423"></div>
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_docCharge" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_docCharge" onblur="saveLabel_9281(this)">Doctor Charges</span></label> : <input type="number" class="input-field" id="docCharge_1942"></div>
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_rentDays" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_rentDays" onblur="saveLabel_9281(this)">Charges Days</span></label> : <input type="number" class="input-field" style="width: 50px;" id="rentDays_5821"> <span class="ml-2 font-bold">From</span> <input type="date" class="date-field" id="rentFrom_4812"> <span class="ml-2 font-bold">To</span> <input type="date" class="date-field" id="rentTo_2931"></div>
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_roomRent" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_roomRent" onblur="saveLabel_9281(this)">Room Rent</span></label> : <input type="number" class="input-field" id="roomRent_6294"></div>
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_nurseCharge" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_nurseCharge" onblur="saveLabel_9281(this)">Nursing Charges</span></label> : <input type="number" class="input-field" id="nurseCharge_7183"></div>
+            <div class="field-row"><label class="field-label flex items-center gap-2"><input type="checkbox" id="chk_misc" checked onchange="toggleField_9281(this)"><span contenteditable="true" id="lbl_misc" onblur="saveLabel_9281(this)">Miscellaneous</span></label> : <input type="number" class="input-field" id="misc_3948"></div>
+        </div>
+
+        <div class="mt-5 border-t-2 border-blue-900 pt-3">
+            <div class="field-row text-xl font-bold"><label class="field-label">Total Amount</label> : <input type="text" class="input-field text-blue-900 text-lg" id="totalAmount_8192" readonly></div>
+            <div class="field-row font-bold text-orange-700"><label class="field-label">Received Amt</label> : <input type="number" class="input-field" id="receivedAmount_9482" oninput="transcribeNumberToWords_1832()"></div>
+            <div class="field-row"><label class="field-label">Rupees in words</label> : <input type="text" class="input-field text-slate-800 text-sm italic font-extrabold" id="rupeesWords_1029" readonly></div>
+        </div>
+    </div>
+
+    <div class="footer-wrapper">
+        <div class="text-right mr-10 font-bold mb-8 text-blue-900">Authorized Signatory</div>
+        <div class="footer">
+            <p class="address-text">Address : Church Masjid Street, ALLAGADDA - 518543, Nandyal District, Andhra Pradesh.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+const NUMERIC_CALCULATION_IDS_8293 = ['consultFee_2841', 'admissionFee_4732', 'opCharge_9184', 'anesCharge_3849', 'otCharge_7412', 'oxyCharge_6391', 'fluidsMed_8423', 'docCharge_1942', 'roomRent_6294', 'nurseCharge_7183', 'misc_3948'];
+const ALL_FORM_INPUTS_LIST_8392 = ['receiptDate_8471', 'patientName_9103', ...NUMERIC_CALCULATION_IDS_8293, 'rentDays_5821', 'rentFrom_4812', 'rentTo_2931', 'receivedAmount_9482', 'rupeesWords_1029'];
+const OFFICIAL_WEBAPP_URL_9283 = "https://script.google.com/macros/s/AKfycbyH-Hq6Ok0WIQBjR4v3JCM5zAzdW0HZiUSVttnEj8v72wy3vse8XGdBpEtqQljTzTiF/exec";
+
+const DOCTORS_DATABASE_2931 = {
+    dr_haneesha: {
+        name: "Dr. P. Haneesha Reddy",
+        role: "Gynecology",
+        education: "MBBS, MS (OBGY)",
+        regNo: "APMC/FMR/97996"
+    },
+
+    dr_chandrika: {
+        name: "Dr. S. Chandrika",
+        role: "Ophthalmology",
+        education: "MBBS, MS (Ophthalmology)",
+        regNo: "APMC/FMR/98519"
+    },
+
+    dr_yashwanth: {
+        name: "Dr. S. Yashwanth Reddy",
+        role: "Anesthesia",
+        education: "MBBS, MD (Anesthesiology)",
+        regNo: "APMC/FMR/118411"
+    },
+
+    dr_lakshmi: {
+        name: "Dr. T.N. Lakshmi Reddy",
+        role: "General Medicine",
+        education: "MBBS, MD (General Medicine)",
+        regNo: "APMC/FMR/96871"
+    },
+
+    dr_narasimha: {
+        name: "Dr. S. Narasimha Reddy",
+        role: "Homeopathy",
+        education: "MBS (Hom)",
+        regNo: "4678"
+    },
+
+    dr_siva: {
+        name: "Dr. S. Siva Nageswaramma",
+        role: "Homeopathy",
+        education: "MBS (Hom)",
+        regNo: "4686"
+    }
+};
+
+const saveLabel_9281 = (span) => localStorage.setItem("vsr_lbl_" + span.id, span.innerText);
+const triggerConfirmReset_8213 = () => document.getElementById('confirmModal_9988').classList.remove('hidden');
+const closeConfirmModal_8822 = () => document.getElementById('confirmModal_9988').classList.add('hidden');
+const triggerNativePrint_9281 = () => window.print();
+
+function loadStoredElementsAndCheckState_8831() { restoreFormValuesFromStore_8291(); restoreUIStates_9921(); runCalculations_9182(); handleInitialPrintBtnState_2819(); loadActiveDoctors_9381(); const savedNo = localStorage.getItem('vsr_saved_receipt_no'); const savedIp = localStorage.getItem('vsr_saved_ip_no'); if (savedNo && savedNo !== '[Click Save]') { document.getElementById('receiptNumDisplay_9182').innerText = savedNo; } if (savedIp && savedIp !== '[Click Save]') { document.getElementById('ipNumDisplay_2931').innerText = savedIp; } }
+function restoreUIStates_9921() { document.querySelectorAll('input[type="checkbox"]').forEach(chk => { if(chk.id.startsWith('sel_')) return; const saved = localStorage.getItem("vsr_checked_" + chk.id); chk.checked = saved === null ? true : saved === 'true'; toggleField_9281(chk, true); }); document.querySelectorAll('[contenteditable="true"]').forEach(lbl => { const saved = localStorage.getItem("vsr_lbl_" + lbl.id); if(saved) lbl.innerText = saved; }); }
+
+
+
+function toggleField_9281(checkbox, isInit = false) {
+    const row = checkbox.closest('.field-row');
+    if (!row) return;
+
+    const inputs = row.querySelectorAll('input[type="number"], input[type="text"]');
+
+    inputs.forEach(inp => {
+        inp.disabled = false;
+    });
+
+    if (checkbox.checked) {
+        row.classList.remove('print-hide');
+    } else {
+        row.classList.add('print-hide');
+    }
+
+    if(!isInit) {
+        localStorage.setItem("vsr_checked_" + checkbox.id, checkbox.checked);
+        runCalculations_9182();
+        runDataAutoSave_8312();
+    }
+}
+
+
+function runCalculations_9182() { let aggregatedTotal_2931 = 0; NUMERIC_CALCULATION_IDS_8293.forEach(targetId_1928 => { const el = document.getElementById(targetId_1928); if(el && !el.disabled) aggregatedTotal_2931 += parseFloat(el.value) || 0; }); document.getElementById('totalAmount_8192').value = aggregatedTotal_2931 > 0 ? aggregatedTotal_2931 : ""; }
+function restoreFormValuesFromStore_8291() { ALL_FORM_INPUTS_LIST_8392.forEach(fieldId_3821 => { const savedVal_8192 = localStorage.getItem("vsr_field_" + fieldId_3821); if (savedVal_8192 !== null) { const el = document.getElementById(fieldId_3821); if(el) el.value = savedVal_8192; } }); }
+function runDataAutoSave_8312() { runCalculations_9182(); ALL_FORM_INPUTS_LIST_8392.forEach(fieldId_3821 => { const el = document.getElementById(fieldId_3821); if(el) localStorage.setItem("vsr_field_" + fieldId_3821, el.value); }); const printBtn_8291 = document.getElementById('printBtn_2831'); printBtn_8291.disabled = true; printBtn_8291.classList.remove('print-pulse'); }
+function handleInitialPrintBtnState_2819() { const savedReceipt_3821 = localStorage.getItem('vsr_saved_receipt_9182'); if (savedReceipt_3821) { document.getElementById('printBtn_2831').disabled = false; document.getElementById('printBtn_2831').classList.add('print-pulse'); } }
+function confirmAndClearAllStoredData_9281() { closeConfirmModal_8822(); localStorage.clear(); location.reload(); }
+function numberToIndianWords_7381(num) { if (num === 0) return 'Zero Rupees Only'; const single = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen']; const double = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']; const formatHundreds = (n) => n < 20 ? single[n] : double[Math.floor(n / 10)] + (n % 10 ? ' ' + single[n % 10] : ''); let words = ''; if (Math.floor(num / 10000000) > 0) { words += formatHundreds(Math.floor(num / 10000000)) + ' Crore '; num %= 10000000; } if (Math.floor(num / 100000) > 0) { words += formatHundreds(Math.floor(num / 100000)) + ' Lakh '; num %= 100000; } if (Math.floor(num / 1000) > 0) { words += formatHundreds(Math.floor(num / 1000)) + ' Thousand '; num %= 1000; } if (Math.floor(num / 100) > 0) { words += formatHundreds(Math.floor(num / 100)) + ' Hundred '; num %= 100; } if (num > 0) { words += (words !== '' ? 'and ' : '') + formatHundreds(num); } return words.trim() + ' Rupees Only'; }
+function transcribeNumberToWords_1832() { const amt = parseInt(document.getElementById('receivedAmount_9482').value) || 0; document.getElementById('rupeesWords_1029').value = amt > 0 ? numberToIndianWords_7381(amt) : ''; runDataAutoSave_8312(); }
+function showToast_8392(msg, isSuccess) { const t = document.getElementById('toast'); t.className = "fixed bottom-5 right-5 font-extrabold text-white z-[5000] shadow-2xl p-4 rounded-lg " + (isSuccess ? "bg-emerald-600" : "bg-rose-600"); t.innerText = msg; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 4000); }
+function loadActiveDoctors_9381() { let active = JSON.parse(localStorage.getItem('vsr_active_doctors_list')); if(!active || active.length === 0) { active = ['dr_haneesha', 'dr_yashwanth']; } active.forEach(id => { const chk = document.getElementById("sel_" + id); if(chk) chk.checked = true; }); renderDoctorsOnBill_3829(active); }
+function handleDoctorSelection_9182(checkbox) { let checkedCheckboxes = Array.from(document.querySelectorAll('input[id^="sel_"]:checked')); if(checkedCheckboxes.length > 2) { checkbox.checked = false; showToast_8392('Maximum of 2 doctors can be selected for bill fitting!', false); return; } const selectedIds = checkedCheckboxes.map(chk => chk.value); localStorage.setItem('vsr_active_doctors_list', JSON.stringify(selectedIds)); renderDoctorsOnBill_3829(selectedIds); }
+function renderDoctorsOnBill_3829(idsList) {
+    const target = document.getElementById('billDoctorsRow_9381');
+    target.innerHTML = '';
+
+    idsList.forEach(id => {
+        const doc = DOCTORS_DATABASE_2931[id];
+        if(!doc) return;
+
+        const col = document.createElement('div');
+        col.className = 'doctor-col';
+
+        col.innerHTML = `
+            <div class="doctor-name">${doc.name}</div>
+            <div class="doctor-degree">${doc.role}</div>
+            <div class="doctor-extra">${doc.education}</div>
+            <div class="doctor-reg">Regd. No. : ${doc.regNo}</div>
+        `;
+
+        target.appendChild(col);
+    });
+}
+
+
+function convertDateForInput(dateValue) {
+    if (!dateValue) return '';
+
+    const d = new Date(dateValue);
+
+    if (isNaN(d.getTime())) {
+        return '';
+    }
+
+    return d.toISOString().split('T')[0];
+}
+async function verifySearch_9283() { const query = document.getElementById('searchIpNumber_9182').value.trim(); if(!query) return showToast_8392('Please enter a Bill or IP Number to verify.', false); const btn = document.querySelector('button[onclick="verifySearch_9283()"]'); const orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i>'; try { const response = await fetch(OFFICIAL_WEBAPP_URL_9283, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'search', query: query }) }); const text = await response.text(); let result; try { result = JSON.parse(text); } catch(err) { console.error("Non-JSON Search Response received:", text); if (text.includes("HtmlOutput") || text.includes("<!DOCTYPE") || text.includes("html") || text.includes("Authorization")) { return showToast_8392('Google Script deployment issue! Redeploy with Access: Anyone.', false); } return showToast_8392('Invalid response format received from sheet.', false); } 
+
+
+
+if (result.status === 'success' && result.found) {
+
+    showToast_8392('Record successfully retrieved from Cloud!', true);
+
+    console.log("Search Result:", result);
+    console.log("Receipt Date:", result.receiptDate_8471);
+    console.log("Rent From:", result.rentFrom_4812);
+    console.log("Rent To:", result.rentTo_2931);
+
+    document.getElementById('receiptNumDisplay_9182').innerText = result.receiptNo || '';
+    document.getElementById('ipNumDisplay_2931').innerText = result.ipNumber || '';
+
+    localStorage.setItem('vsr_saved_receipt_no', result.receiptNo || '');
+    localStorage.setItem('vsr_saved_ip_no', result.ipNumber || '');
+
+    document.getElementById('receiptDate_8471').value = result.receiptDate_8471 || '';
+    document.getElementById('rentFrom_4812').value = result.rentFrom_4812 || '';
+    document.getElementById('rentTo_2931').value = result.rentTo_2931 || '';
+
+
+const fields = {
+    'receiptDate_8471': convertDateForInput(result.receiptDate_8471),
+    'patientName_9103': result.patientName_9103,
+    'consultFee_2841': result.consultFee_2841,
+    'admissionFee_4732': result.admissionFee_4732,
+    'opCharge_9184': result.opCharge_9184,
+    'anesCharge_3849': result.anesCharge_3849,
+    'otCharge_7412': result.otCharge_7412,
+    'oxyCharge_6391': result.oxyCharge_6391,
+    'fluidsMed_8423': result.fluidsMed_8423,
+    'docCharge_1942': result.docCharge_1942,
+    'rentDays_5821': result.rentDays_5821,
+    'rentFrom_4812': convertDateForInput(result.rentFrom_4812),
+    'rentTo_2931': convertDateForInput(result.rentTo_2931),
+    'roomRent_6294': result.roomRent_6294,
+    'nurseCharge_7183': result.nurseCharge_7183,
+    'misc_3948': result.misc_3948,
+    'receivedAmount_9482': result.receivedAmount_9482,
+    'rupeesWords_1029': result.rupeesWords_1029
+};
+
+
+
+Object.keys(fields).forEach(id => { const el = document.getElementById(id); if(el) { el.value = fields[id] || ''; localStorage.setItem("vsr_field_" + id, el.value); } }); NUMERIC_CALCULATION_IDS_8293.forEach(id => { const el = document.getElementById(id); const chk = document.getElementById("chk_" + id.split('_')[0]); if(el && chk) { chk.checked = parseFloat(el.value) > 0; toggleField_9281(chk, true); } }); const pBtn = document.getElementById('printBtn_2831'); pBtn.disabled = false; pBtn.classList.add('print-pulse'); runCalculations_9182(); } else { showToast_8392('No matching record found.', false); } } catch(e) { console.error("Verify Network Error Details:", e); showToast_8392('CORS / Fetch Error! Please make sure you are in an Incognito window or re-deploy the Google Apps Script.', false); } finally { btn.disabled = false; btn.innerHTML = orig; } }
+async function submitToSpreadsheet_7182() { const btn = document.getElementById('commitBtn_9381'); const origText = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> SAVING...'; const payload = { action: 'save' }; ALL_FORM_INPUTS_LIST_8392.forEach(id => { const el = document.getElementById(id); payload[id] = el ? el.value : ''; }); payload['totalAmount_8192'] = document.getElementById('totalAmount_8192').value; const currentReceiptNo = document.getElementById('receiptNumDisplay_9182').innerText; if (currentReceiptNo && currentReceiptNo !== '[Click Save]') { payload['receiptNo'] = currentReceiptNo; } const customLabels = ['lbl_patientName', 'lbl_consultFee', 'lbl_admissionFee', 'lbl_opCharge', 'lbl_anesCharge', 'lbl_otCharge', 'lbl_oxyCharge', 'lbl_fluidsMed', 'lbl_docCharge', 'lbl_rentDays', 'lbl_roomRent', 'lbl_nurseCharge', 'lbl_misc']; customLabels.forEach(id => { const el = document.getElementById(id); payload[id] = el ? el.innerText : ''; }); try { const response = await fetch(OFFICIAL_WEBAPP_URL_9283, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) }); const text = await response.text(); let result; try { result = JSON.parse(text); } catch(err) { console.error("Non-JSON Save Response received:", text); return showToast_8392('Save failed: Sheet deployment must have "Anyone" access enabled.', false); } if (result.status === 'success') { document.getElementById('receiptNumDisplay_9182').innerText = result.receiptNo; document.getElementById('ipNumDisplay_2931').innerText = result.ipNumber; localStorage.setItem('vsr_saved_receipt_9182', JSON.stringify(result)); localStorage.setItem('vsr_saved_receipt_no', result.receiptNo); localStorage.setItem('vsr_saved_ip_no', result.ipNumber); showToast_8392(result.updated ? 'Data Successfully Updated on Sheet!' : 'New Data Saved Successfully to Cloud!', true); const pBtn = document.getElementById('printBtn_2831'); pBtn.disabled = false; pBtn.classList.add('print-pulse'); } else { showToast_8392('Server Error: ' + result.message, false); } } catch (err) { console.error("Save Network Error:", err); showToast_8392('Network Block! Ensure spreadsheet script has "Anyone" access deployment.', false); } finally { btn.disabled = false; btn.innerHTML = origText; } }
+</script>
+</body>
+</html>

@@ -934,7 +934,7 @@
             <!-- 07-RETURN PANEL STYLES -->
             <div class="return-panel">
                 <div class="return-title">
-                    <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65(0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
                     <span>SVR Medicine Return and Adjustment Console</span>
                 </div>
                 <div class="return-grid">
@@ -977,7 +977,7 @@
 
     <script>
         /* 01-GLOBAL STYLES */
-        const CLOUD_URL = "https://script.google.com/macros/s/AKfycbwq6MIa-LSQtf-gWT4UijuZeCRN6Cq87u5KXjlN-WZNd2io4MvnXGQ5MWg5LLvKRNKxGg/exec"; 
+        const CLOUD_URL = "https://script.google.com/macros/s/AKfycbx3VsgFwT2zpDTHl3M-CGEnGu0gIIHRTFtGiOcDgLUF7ZEkELAAOS3btUJa7eopru2lJw/exec"; 
         let activeInventoryArray = []; 
         let dbMedicines = []; 
         let currentConfirmAction = null; 
@@ -988,57 +988,593 @@
         let verifiedDiscountPercentage = 0;
 
         /* 02-HEADER STYLES */
-        const runLiveTimeClockSequence_99 = () => { liveTimeInterval_99 = setInterval(() => { const now = new Date(); document.getElementById('live-time-display').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }); document.getElementById('live-date-display').innerText = now.toLocaleDateString('en-GB'); }, 1000); };
+        const runLiveTimeClockSequence_99 = () => {
+            liveTimeInterval_99 = setInterval(() => {
+                const now = new Date();
+                document.getElementById('live-time-display').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                document.getElementById('live-date-display').innerText = now.toLocaleDateString('en-GB');
+            }, 1000);
+        };
 
         /* 03-WORKSPACE STYLES */
-        const initiateSecureAuthenticationSequence = () => { const id = document.getElementById('log-id').value.trim(); const pass = document.getElementById('log-pass').value.trim(); if (!id || !pass) { updateAuthStatus("#e74c3c", "Please enter Login ID and Password."); return; } sessionID = id; sessionPass = pass; updateAuthStatus("#3498db", "Connecting to SVR Hospital Access Registry..."); toggleLoginLoading(true); fetch(CLOUD_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ action: "auth", uid: id, pwd: pass }) }).then(res => res.json()).then(data => { toggleLoginLoading(false); if (data.success) { updateAuthStatus("#2ecc71", "Access Approved! Loading Dashboard..."); setTimeout(() => transitionToDashboard(data.name || "Authorized User"), 800); } else { updateAuthStatus("#e74c3c", "Error: " + (data.msg || data.message || "Failed credentials verification.")); } }).catch(err => { toggleLoginLoading(false); updateAuthStatus("#e67e22", "Cloud Connection Error!"); console.error(err); }); };
-        const toggleLoginLoading = (isLoading) => { document.getElementById('login-spinner').style.display = isLoading ? 'inline-block' : 'none'; document.getElementById('login-btn-text').style.display = isLoading ? 'none' : 'inline'; document.getElementById('login-btn').disabled = isLoading; };
-        const transitionToDashboard = (name) => { document.getElementById('login-section').style.display = 'none'; document.getElementById('app-dashboard').style.display = 'flex'; document.getElementById('content-wrapper').classList.add('dashboard-active'); document.getElementById('dr-display-name').innerText = "Active: " + name; document.getElementById('logged-user-display').style.display = 'block'; document.getElementById('header-controls').style.display = 'flex'; runLiveTimeClockSequence_99(); loadMedicineDatabase(); invalidateSaveState(); };
-        const logoutSession = () => { showCustomDialog("Logout Session", "Are you sure you want to log out of SVR Medical Receipt System?", () => { clearInterval(liveTimeInterval_99); document.getElementById('log-id').value = ''; document.getElementById('log-pass').value = ''; document.getElementById('logged-user-display').style.display = 'none'; document.getElementById('header-controls').style.display = 'none'; document.getElementById('app-dashboard').style.display = 'none'; document.getElementById('content-wrapper').classList.remove('dashboard-active'); document.getElementById('login-section').style.display = 'block'; updateAuthStatus("#333333", "Session closed successfully."); }); };
+        const initiateSecureAuthenticationSequence = () => {
+            const id = document.getElementById('log-id').value.trim();
+            const pass = document.getElementById('log-pass').value.trim();
+            if (!id || !pass) {
+                updateAuthStatus("#e74c3c", "Please enter Login ID and Password.");
+                return;
+            }
+            sessionID = id;
+            sessionPass = pass;
+            updateAuthStatus("#3498db", "Connecting to SVR Hospital Access Registry...");
+            toggleLoginLoading(true);
+            fetch(CLOUD_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({ action: "auth", uid: id, pwd: pass })
+            })
+            .then(res => res.json())
+            .then(data => {
+                toggleLoginLoading(false);
+                if (data.success) {
+                    updateAuthStatus("#2ecc71", "Access Approved! Loading Dashboard...");
+                    setTimeout(() => {
+                        transitionToDashboard(data.name || "Authorized User");
+                    }, 800);
+                } else {
+                    updateAuthStatus("#e74c3c", "Error: " + (data.msg || data.message || "Failed credentials verification."));
+                }
+            })
+            .catch(err => {
+                toggleLoginLoading(false);
+                updateAuthStatus("#e67e22", "Cloud Connection Error!");
+                console.error(err);
+            });
+        };
+
+        const toggleLoginLoading = (isLoading) => {
+            document.getElementById('login-spinner').style.display = isLoading ? 'inline-block' : 'none';
+            document.getElementById('login-btn-text').style.display = isLoading ? 'none' : 'inline';
+            document.getElementById('login-btn').disabled = isLoading;
+        };
+
+        const transitionToDashboard = (name) => {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('app-dashboard').style.display = 'flex';
+            document.getElementById('content-wrapper').classList.add('dashboard-active');
+            document.getElementById('dr-display-name').innerText = "Active: " + name;
+            document.getElementById('logged-user-display').style.display = 'block';
+            document.getElementById('header-controls').style.display = 'flex';
+            runLiveTimeClockSequence_99();
+            loadMedicineDatabase();
+            invalidateSaveState();
+        };
+
+        const logoutSession = () => {
+            showCustomDialog("Logout Session", "Are you sure you want to log out of SVR Medical Receipt System?", () => {
+                clearInterval(liveTimeInterval_99);
+                document.getElementById('log-id').value = '';
+                document.getElementById('log-pass').value = '';
+                document.getElementById('logged-user-display').style.display = 'none';
+                document.getElementById('header-controls').style.display = 'none';
+                document.getElementById('app-dashboard').style.display = 'none';
+                document.getElementById('content-wrapper').classList.remove('dashboard-active');
+                document.getElementById('login-section').style.display = 'block';
+                updateAuthStatus("#333333", "Session closed successfully.");
+            });
+        };
 
         /* 04-INPUT PANEL STYLES */
-        const loadMedicineDatabase = () => { fetch(CLOUD_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ action: "getMedicines" }) }).then(res => res.json()).then(resData => { if (resData.success) { dbMedicines = resData.medicines || resData.data || resData.records || []; populateMedicineDatalists(); } }).catch(err => console.error("Error loading database catalogue:", err)); };
-        const getMedicineFields = (med) => { if (Array.isArray(med)) { return { mcd: med[1] || '', short: med[2] || '', name: med[3] || '', price: parseFloat(med[8] || 2.00) }; } else if (med && typeof med === 'object') { return { mcd: med.mcd || med[1] || '', short: med.short || med[2] || '', name: med.name || med[3] || '', price: parseFloat(med.price || med[8] || 2.00) }; } return { mcd: '', short: '', name: '', price: 2.00 }; };
-        const populateMedicineDatalists = () => { const shortDatalist = document.getElementById('short-list-options'); const fullDatalist = document.getElementById('full-list-options'); shortDatalist.innerHTML = ''; fullDatalist.innerHTML = ''; dbMedicines.forEach(med => { const fields = getMedicineFields(med); if (fields.short) { const shortOpt = document.createElement('option'); shortOpt.value = fields.short; shortOpt.textContent = `${fields.name} (₹${fields.price.toFixed(2)})`; shortDatalist.appendChild(shortOpt); } if (fields.name) { const fullOpt = document.createElement('option'); fullOpt.value = fields.name; fullOpt.textContent = `Code: ${fields.short} (₹${fields.price.toFixed(2)})`; fullDatalist.appendChild(fullOpt); } }); };
-        const handleMedicineLiveSearch = () => { const query = document.getElementById('med-search').value.trim().toLowerCase(); if (!query) { loadMedicineDatabase(); return; } dbMedicines = dbMedicines.filter(med => { const fields = getMedicineFields(med); return fields.name.toLowerCase().includes(query) || fields.short.toLowerCase().includes(query) || fields.mcd.toLowerCase().includes(query); }); populateMedicineDatalists(); };
-        const handleShortInput = function() { const val = this.value.trim().toUpperCase(); if (!val) return; const matched = dbMedicines.find(m => { const f = getMedicineFields(m); return f.short.toUpperCase() === val || f.mcd.toUpperCase() === val; }); if (matched) { const f = getMedicineFields(matched); document.getElementById('in-mfull').value = f.name; document.getElementById('in-mprice').value = f.price.toFixed(2); } else { document.getElementById('in-mprice').value = "2.00"; } };
+        const loadMedicineDatabase = () => {
+            fetch(CLOUD_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({ action: "getMedicines" })
+            })
+            .then(res => res.json())
+            .then(resData => {
+                if (resData.success) {
+                    dbMedicines = resData.medicines || resData.data || resData.records || [];
+                    populateMedicineDatalists();
+                }
+            })
+            .catch(err => {
+                console.error("Error loading database catalogue:", err);
+            });
+        };
+
+        const getMedicineFields = (med) => {
+            if (Array.isArray(med)) {
+                return {
+                    mcd: med[1] || '',
+                    short: med[2] || '',
+                    name: med[3] || '',
+                    price: parseFloat(med[8] || 2.00)
+                };
+            } else if (med && typeof med === 'object') {
+                return {
+                    mcd: med.mcd || med[1] || '',
+                    short: med.short || med[2] || '',
+                    name: med.name || med[3] || '',
+                    price: parseFloat(med.price || med[8] || 2.00)
+                };
+            }
+            return { mcd: '', short: '', name: '', price: 2.00 };
+        };
+
+        const populateMedicineDatalists = () => {
+            const shortDatalist = document.getElementById('short-list-options');
+            const fullDatalist = document.getElementById('full-list-options');
+            shortDatalist.innerHTML = '';
+            fullDatalist.innerHTML = '';
+            dbMedicines.forEach(med => {
+                const fields = getMedicineFields(med);
+                if (fields.short) {
+                    const shortOpt = document.createElement('option');
+                    shortOpt.value = fields.short;
+                    shortOpt.textContent = `${fields.name} (₹${fields.price.toFixed(2)})`;
+                    shortDatalist.appendChild(shortOpt);
+                }
+                if (fields.name) {
+                    const fullOpt = document.createElement('option');
+                    fullOpt.value = fields.name;
+                    fullOpt.textContent = `Code: ${fields.short} (₹${fields.price.toFixed(2)})`;
+                    fullDatalist.appendChild(fullOpt);
+                }
+            });
+        };
+
+        const handleMedicineLiveSearch = () => {
+            const query = document.getElementById('med-search').value.trim().toLowerCase();
+            if (!query) {
+                loadMedicineDatabase();
+                return;
+            }
+            dbMedicines = dbMedicines.filter(med => {
+                const fields = getMedicineFields(med);
+                return fields.name.toLowerCase().includes(query) ||
+                       fields.short.toLowerCase().includes(query) ||
+                       fields.mcd.toLowerCase().includes(query);
+            });
+            populateMedicineDatalists();
+        };
+
+        const handleShortInput = function() {
+            const val = this.value.trim().toUpperCase();
+            if (!val) return;
+            const matched = dbMedicines.find(m => {
+                const f = getMedicineFields(m);
+                return f.short.toUpperCase() === val || f.mcd.toUpperCase() === val;
+            });
+            if (matched) {
+                const f = getMedicineFields(matched);
+                document.getElementById('in-mfull').value = f.name;
+                document.getElementById('in-mprice').value = f.price.toFixed(2);
+            } else {
+                document.getElementById('in-mprice').value = "2.00";
+            }
+        };
+
         document.getElementById('in-mshort').addEventListener('input', handleShortInput);
         document.getElementById('in-mshort').addEventListener('change', handleShortInput);
-        const handleFullInput = function() { const val = this.value.trim().toUpperCase(); if (!val) return; const matched = dbMedicines.find(m => { const f = getMedicineFields(m); return f.name.toUpperCase() === val; }); if (matched) { const f = getMedicineFields(matched); document.getElementById('in-mshort').value = f.short; document.getElementById('in-mprice').value = f.price.toFixed(2); } };
+
+        const handleFullInput = function() {
+            const val = this.value.trim().toUpperCase();
+            if (!val) return;
+            const matched = dbMedicines.find(m => {
+                const f = getMedicineFields(m);
+                return f.name.toUpperCase() === val;
+            });
+            if (matched) {
+                const f = getMedicineFields(matched);
+                document.getElementById('in-mshort').value = f.short;
+                document.getElementById('in-mprice').value = f.price.toFixed(2);
+            }
+        };
+
         document.getElementById('in-mfull').addEventListener('input', handleFullInput);
         document.getElementById('in-mfull').addEventListener('change', handleFullInput);
 
         /* 05-RECEIPT PAPER STYLES */
-        const applyVerifiedDiscountPercent = () => { const discInput = document.getElementById('in-mdisc'); let val = parseFloat(discInput.value) || 0; if (val < 0) val = 0; if (val > 100) val = 100; discInput.value = val; verifiedDiscountPercentage = val; const badge = document.getElementById('discount-status'); if(val > 0) { badge.innerText = `Verified: ${val}% Discount`; badge.style.display = 'block'; } else { badge.style.display = 'none'; } calculateBillSummary(); };
-        const addNewMedicineEntry = () => { const shortVal = document.getElementById('in-mshort').value.trim(); const fullVal = document.getElementById('in-mfull').value.trim(); const qtyVal = parseFloat(document.getElementById('in-mqty').value) || 0; if (!fullVal) { showCustomDialog("Input Error", "Please provide a valid Medicine Name or Code before appending to receipt.", () => {}, false); return; } if (qtyVal <= 0) { showCustomDialog("Input Error", "Medicine Quantity must be 1 or higher.", () => {}, false); return; } let matched = dbMedicines.find(m => { const f = getMedicineFields(m); return f.name.toUpperCase() === fullVal.toUpperCase(); }); if (!matched) matched = dbMedicines.find(m => { const f = getMedicineFields(m); return f.short.toUpperCase() === shortVal.toUpperCase(); }); const fields = getMedicineFields(matched); const mcdVal = matched ? fields.mcd : "-"; const shortCode = matched ? fields.short : (shortVal || "-"); const finalPrice = matched ? fields.price : 2.00; const item = { mcd: mcdVal, short: shortCode, full: fullVal || (matched ? fields.name : ""), qty: qtyVal, price: finalPrice }; activeInventoryArray.push(item); calculateBillSummary(); clearMedicineInputs(); document.getElementById('in-mshort').focus(); invalidateSaveState(); };
-        const updateReceiptQtyValue = (index, value) => { const parsedVal = parseFloat(value) || 0; if (parsedVal <= 0) { activeInventoryArray.splice(index, 1); } else { activeInventoryArray[index].qty = parsedVal; } calculateBillSummary(); invalidateSaveState(); };
-        const removeReceiptItem = (index) => { activeInventoryArray.splice(index, 1); calculateBillSummary(); invalidateSaveState(); };
-        const calculateBillSummary = () => { const tbody = document.getElementById('medicine-list'); tbody.innerHTML = ''; if (activeInventoryArray.length === 0) { tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #777; padding: 20px;">Receipt is currently empty. Enter patient information and medicine items above.</td></tr>'; document.getElementById('gross-total').innerText = "0.00"; document.getElementById('discount-display-note').innerHTML = "No discount applied"; document.getElementById('net-payable-total').innerText = "0.00"; return; } let gross = 0; activeInventoryArray.forEach((med, i) => { const line = med.qty * med.price; gross += line; tbody.innerHTML += `<tr><td>${i + 1}</td><td style="font-size: 9px; font-weight: 900;">${med.mcd}</td><td style="word-break: break-word; font-size: 9px;">${med.full}</td><td style="text-align:center;"><input type="number" class="receipt-qty-editor" value="${med.qty}" onchange="updateReceiptQtyValue(${i}, this.value)"></td><td style="text-align:right;">₹${med.price.toFixed(2)}</td><td style="text-align:right;">₹${line.toFixed(2)}</td><td class="no-print" style="text-align:right;"><button class="btn-receipt-del" onclick="removeReceiptItem(${i})">X</button></td></tr>`; }); const sav = gross * (verifiedDiscountPercentage / 100); const net = gross - sav; document.getElementById('gross-total').innerText = gross.toFixed(2); document.getElementById('discount-display-note').innerHTML = verifiedDiscountPercentage > 0 ? `Discount Applied: <span style="color:#8b0000;font-weight:900;">${verifiedDiscountPercentage}%</span> (Saved ₹${sav.toFixed(2)})` : 'No discount applied'; document.getElementById('net-payable-total').innerText = net.toFixed(2); updatePatientReceiptDisplay(); };
-        const updatePatientReceiptDisplay = () => { document.getElementById('out-pname').innerText = document.getElementById('in-pname').value || "-"; document.getElementById('out-page').innerText = document.getElementById('in-page').value || "-"; document.getElementById('out-pgender').innerText = document.getElementById('in-pgender').value || "-"; };
-        const clearMedicineInputs = () => { document.getElementById('in-mshort').value = ''; document.getElementById('in-mfull').value = ''; document.getElementById('in-mqty').value = '1'; document.getElementById('in-mprice').value = '2.00'; };
+        const applyVerifiedDiscountPercent = () => {
+            const discInput = document.getElementById('in-mdisc');
+            let val = parseFloat(discInput.value) || 0;
+            if (val < 0) val = 0;
+            if (val > 100) val = 100;
+            discInput.value = val;
+            verifiedDiscountPercentage = val;
+            const badge = document.getElementById('discount-status');
+            if (val > 0) {
+                badge.innerText = `Verified: ${val}% Discount`;
+                badge.style.display = 'block';
+            } else {
+                badge.style.display = 'none';
+            }
+            calculateBillSummary();
+        };
+
+        const addNewMedicineEntry = () => {
+            const shortVal = document.getElementById('in-mshort').value.trim();
+            const fullVal = document.getElementById('in-mfull').value.trim();
+            const qtyVal = parseFloat(document.getElementById('in-mqty').value) || 0;
+            if (!fullVal) {
+                showCustomDialog("Input Error", "Please provide a valid Medicine Name or Code before appending to receipt.", () => {}, false);
+                return;
+            }
+            if (qtyVal <= 0) {
+                showCustomDialog("Input Error", "Medicine Quantity must be 1 or higher.", () => {}, false);
+                return;
+            }
+            let matched = dbMedicines.find(m => {
+                const f = getMedicineFields(m);
+                return f.name.toUpperCase() === fullVal.toUpperCase();
+            });
+            if (!matched) {
+                matched = dbMedicines.find(m => {
+                    const f = getMedicineFields(m);
+                    return f.short.toUpperCase() === shortVal.toUpperCase();
+                });
+            }
+            const fields = getMedicineFields(matched);
+            const mcdVal = matched ? fields.mcd : "-";
+            const shortCode = matched ? fields.short : (shortVal || "-");
+            const finalPrice = matched ? fields.price : 2.00;
+            const finalFullName = fullVal || (matched ? fields.name : "");
+            const existingIndex = activeInventoryArray.findIndex(item => item.full.toUpperCase() === finalFullName.toUpperCase());
+            if (existingIndex > -1) {
+                activeInventoryArray[existingIndex].qty += qtyVal;
+            } else {
+                const item = {
+                    mcd: mcdVal,
+                    short: shortCode,
+                    full: finalFullName,
+                    qty: qtyVal,
+                    price: finalPrice
+                };
+                activeInventoryArray.push(item);
+            }
+            calculateBillSummary();
+            clearMedicineInputs();
+            document.getElementById('in-mshort').focus();
+            invalidateSaveState();
+        };
+
+        const updateReceiptQtyValue = (index, value) => {
+            const parsedVal = parseFloat(value) || 0;
+            if (parsedVal <= 0) {
+                activeInventoryArray.splice(index, 1);
+            } else {
+                activeInventoryArray[index].qty = parsedVal;
+            }
+            calculateBillSummary();
+            invalidateSaveState();
+        };
+
+        const removeReceiptItem = (index) => {
+            activeInventoryArray.splice(index, 1);
+            calculateBillSummary();
+            invalidateSaveState();
+        };
+
+        const calculateBillSummary = () => {
+            const tbody = document.getElementById('medicine-list');
+            tbody.innerHTML = '';
+            if (activeInventoryArray.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #777; padding: 20px;">Receipt is currently empty. Enter patient information and medicine items above.</td></tr>';
+                document.getElementById('gross-total').innerText = "0.00";
+                document.getElementById('discount-display-note').innerHTML = "No discount applied";
+                document.getElementById('net-payable-total').innerText = "0.00";
+                return;
+            }
+            let gross = 0;
+            activeInventoryArray.forEach((med, i) => {
+                const line = med.qty * med.price;
+                gross += line;
+                const isDisabledStr = transactionSaved ? 'disabled' : '';
+                tbody.innerHTML += `<tr><td>${i + 1}</td><td style="font-size: 9px; font-weight: 900;">${med.mcd}</td><td style="word-break: break-word; font-size: 9px;">${med.full}</td><td style="text-align:center;"><input type="number" class="receipt-qty-editor" value="${med.qty}" onchange="updateReceiptQtyValue(${i}, this.value)" ${isDisabledStr}></td><td style="text-align:right;">₹${med.price.toFixed(2)}</td><td style="text-align:right;">₹${line.toFixed(2)}</td><td class="no-print" style="text-align:right;"><button class="btn-receipt-del" onclick="removeReceiptItem(${i})" ${isDisabledStr}>X</button></td></tr>`;
+            });
+            const sav = gross * (verifiedDiscountPercentage / 100);
+            const net = gross - sav;
+            document.getElementById('gross-total').innerText = gross.toFixed(2);
+            document.getElementById('discount-display-note').innerHTML = verifiedDiscountPercentage > 0 ? `Discount Applied: <span style="color:#8b0000;font-weight:900;">${verifiedDiscountPercentage}%</span> (Saved ₹${sav.toFixed(2)})` : 'No discount applied';
+            document.getElementById('net-payable-total').innerText = net.toFixed(2);
+            updatePatientReceiptDisplay();
+        };
+
+        const updatePatientReceiptDisplay = () => {
+            document.getElementById('out-pname').innerText = document.getElementById('in-pname').value || "-";
+            document.getElementById('out-page').innerText = document.getElementById('in-page').value || "-";
+            document.getElementById('out-pgender').innerText = document.getElementById('in-pgender').value || "-";
+        };
+
+        const clearMedicineInputs = () => {
+            document.getElementById('in-mshort').value = '';
+            document.getElementById('in-mfull').value = '';
+            document.getElementById('in-mqty').value = '1';
+            document.getElementById('in-mprice').value = '2.00';
+        };
 
         /* 06-CONTROL ACTIONS STYLES */
-        const invalidateSaveState = () => { transactionSaved = false; const saveBtn = document.getElementById('btn-save'); saveBtn.style.display = 'inline-flex'; const printBtn = document.getElementById('print-receipt-btn'); printBtn.classList.remove('active'); printBtn.title = "Please save the transaction before printing."; };
-        const validateSaveState = () => { transactionSaved = true; const saveBtn = document.getElementById('btn-save'); saveBtn.style.display = 'none'; const printBtn = document.getElementById('print-receipt-btn'); printBtn.classList.add('active'); printBtn.title = "Click to execute and print receipt."; };
-        const toggleSaveButtonLoading = (isLoading) => { const btn = document.getElementById('btn-save'); if (isLoading) { btn.disabled = true; btn.innerHTML = `<span class="spinner" style="display:inline-block; margin-right:5px; border-color:#fff; border-top-color:transparent;"></span> Saving`; toggleAllFormInputs(true); } else { btn.disabled = false; btn.innerHTML = `Save`; toggleAllFormInputs(false); } };
-        const toggleAllFormInputs = (disabled) => { const inputs = document.querySelectorAll('#input-form input, #input-form select, #input-form button, .return-panel input, .return-panel button, .receipt-qty-editor, .btn-receipt-del, #btn-clear, #print-receipt-btn'); inputs.forEach(el => { if (el.id !== 'in-mprice') { el.disabled = disabled; } }); };
-        const triggerSystemResetRequest = () => { showCustomDialog("Confirm Reset", "Are you sure you want to clear all patient fields, current medicine items, and reset the form?", () => { activeInventoryArray = []; verifiedDiscountPercentage = 0; document.getElementById('in-mdisc').value = 0; document.getElementById('discount-status').style.display = 'none'; calculateBillSummary(); invalidateSaveState(); document.querySelectorAll('#input-form input').forEach(el => { if (el.id === 'in-mqty') el.value = "1"; else if (el.id === 'in-mdisc') el.value = "0"; else if (el.id === 'in-mprice') el.value = "2.00"; else el.value = ""; }); document.getElementById('in-pgender').value = ""; updatePatientReceiptDisplay(); document.getElementById('in-pname').focus(); }, true); };
-        const triggerSaveTransaction = () => { if (activeInventoryArray.length === 0) { showCustomDialog("Unable to Save", "Your receipt is currently empty. Please add items to save.", () => {}, false); return; } const pname = document.getElementById('in-pname').value.trim() || "Unknown Patient"; const page = document.getElementById('in-page').value || "-"; const pgender = document.getElementById('in-pgender').value || "-"; const gross = parseFloat(document.getElementById('gross-total').innerText) || 0; const discount = verifiedDiscountPercentage; const net = parseFloat(document.getElementById('net-payable-total').innerText) || 0; const items = activeInventoryArray.map(m => ({ mcd: m.mcd, short: m.short, full: m.full, qty: m.qty, price: m.price })); const billData = { pname: pname, page: page, pgender: pgender, gross: gross, discount: discount, net: net, items: items }; toggleSaveButtonLoading(true); fetch(CLOUD_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ action: "saveBill", uid: sessionID, pwd: sessionPass, bill: billData }) }).then(res => res.json()).then(res => { toggleSaveButtonLoading(false); if (res.success) { validateSaveState(); showCustomDialog("Save Confirmed", "Transaction saved successfully. Receipt printing is now unlocked.", () => {}, false); if(res.medicines) { dbMedicines = res.medicines; populateMedicineDatalists(); } } else { showCustomDialog("Cloud Storage Error", "Failed to upload transaction: " + (res.error || res.msg), () => {}, true); } }).catch(err => { toggleSaveButtonLoading(false); console.error("Database connection failed:", err); showCustomDialog("Database Error", "Unable to connect to Google Sheets DB. Please verify network.", () => {}, true); }); };
-        const triggerReceiptPrintProcess = () => { if(!transactionSaved) { showCustomDialog("Printing Restricted", "Please save this transaction first to record it securely.", () => {}, false); return; } window.print(); };
-        const updateAuthStatus = (color, text) => { const el = document.getElementById('log-msg'); el.style.color = color; el.innerHTML = text; };
+        const invalidateSaveState = () => {
+            transactionSaved = false;
+            const saveBtn = document.getElementById('btn-save');
+            saveBtn.style.display = 'inline-flex';
+            const printBtn = document.getElementById('print-receipt-btn');
+            printBtn.classList.remove('active');
+            printBtn.title = "Please save the transaction before printing.";
+            lockFormPostSave(false);
+        };
+
+        const validateSaveState = () => {
+            transactionSaved = true;
+            const saveBtn = document.getElementById('btn-save');
+            saveBtn.style.display = 'none';
+            const printBtn = document.getElementById('print-receipt-btn');
+            printBtn.classList.add('active');
+            printBtn.title = "Click to execute and print receipt.";
+            lockFormPostSave(true);
+        };
+
+        const toggleSaveButtonLoading = (isLoading) => {
+            const btn = document.getElementById('btn-save');
+            if (isLoading) {
+                btn.disabled = true;
+                btn.innerHTML = `<span class="spinner" style="display:inline-block; margin-right:5px; border-color:#fff; border-top-color:transparent;"></span> Saving`;
+                toggleAllFormInputs(true);
+            } else {
+                btn.disabled = false;
+                btn.innerHTML = `Save`;
+                toggleAllFormInputs(false);
+            }
+        };
+
+        const toggleAllFormInputs = (disabled) => {
+            const inputs = document.querySelectorAll('#input-form input, #input-form select, #input-form button, .return-panel input, .return-panel button, .receipt-qty-editor, .btn-receipt-del, #btn-clear, #print-receipt-btn');
+            inputs.forEach(el => {
+                if (el.id !== 'in-mprice') {
+                    el.disabled = disabled;
+                }
+            });
+        };
+
+        const lockFormPostSave = (lock) => {
+            const inputFormEls = document.querySelectorAll('#input-form input, #input-form select, #input-form button');
+            inputFormEls.forEach(el => {
+                if (el.id !== 'in-mprice') {
+                    el.disabled = lock;
+                }
+            });
+            const returnEls = document.querySelectorAll('.return-panel input, .return-panel button');
+            returnEls.forEach(el => {
+                el.disabled = false;
+            });
+            const receiptQtyInputs = document.querySelectorAll('.receipt-qty-editor');
+            receiptQtyInputs.forEach(el => {
+                el.disabled = lock;
+            });
+            const receiptDelButtons = document.querySelectorAll('.btn-receipt-del');
+            receiptDelButtons.forEach(el => {
+                el.disabled = lock;
+            });
+        };
+
+        const triggerSystemResetRequest = () => {
+            showCustomDialog("Confirm Reset", "Are you sure you want to clear all patient fields, current medicine items, and reset the form?", () => {
+                activeInventoryArray = [];
+                verifiedDiscountPercentage = 0;
+                document.getElementById('in-mdisc').value = 0;
+                document.getElementById('discount-status').style.display = 'none';
+                invalidateSaveState();
+                calculateBillSummary();
+                document.querySelectorAll('#input-form input').forEach(el => {
+                    if (el.id === 'in-mqty') el.value = "1";
+                    else if (el.id === 'in-mdisc') el.value = "0";
+                    else if (el.id === 'in-mprice') el.value = "2.00";
+                    else el.value = "";
+                });
+                document.getElementById('in-pgender').value = "";
+                updatePatientReceiptDisplay();
+                document.getElementById('in-pname').focus();
+            }, true);
+        };
+
+        const triggerSaveTransaction = () => {
+            if (activeInventoryArray.length === 0) {
+                showCustomDialog("Unable to Save", "Your receipt is currently empty. Please add items to save.", () => {}, false);
+                return;
+            }
+            const pname = document.getElementById('in-pname').value.trim() || "Unknown Patient";
+            const page = document.getElementById('in-page').value || "-";
+            const pgender = document.getElementById('in-pgender').value || "-";
+            const gross = parseFloat(document.getElementById('gross-total').innerText) || 0;
+            const discount = verifiedDiscountPercentage;
+            const net = parseFloat(document.getElementById('net-payable-total').innerText) || 0;
+            const items = activeInventoryArray.map(m => ({ mcd: m.mcd, short: m.short, full: m.full, qty: m.qty, price: m.price }));
+            const billData = { pname: pname, page: page, pgender: pgender, gross: gross, discount: discount, net: net, items: items };
+            toggleSaveButtonLoading(true);
+            fetch(CLOUD_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({ action: "saveBill", uid: sessionID, pwd: sessionPass, bill: billData })
+            })
+            .then(res => res.json())
+            .then(res => {
+                toggleSaveButtonLoading(false);
+                if (res.success) {
+                    validateSaveState();
+                    showCustomDialog("Save Confirmed", "Transaction saved successfully. Receipt printing is now unlocked.", () => {}, false);
+                    if (res.medicines) {
+                        dbMedicines = res.medicines;
+                        populateMedicineDatalists();
+                    }
+                } else {
+                    showCustomDialog("Cloud Storage Error", "Failed to upload transaction: " + (res.error || res.msg), () => {}, true);
+                }
+            })
+            .catch(err => {
+                toggleSaveButtonLoading(false);
+                console.error("Database connection failed:", err);
+                showCustomDialog("Database Error", "Unable to connect to Google Sheets DB. Please verify network.", () => {}, true);
+            });
+        };
+
+        const triggerReceiptPrintProcess = () => {
+            if (!transactionSaved) {
+                showCustomDialog("Printing Restricted", "Please save this transaction first to record it securely.", () => {}, false);
+                return;
+            }
+            window.print();
+        };
+
+        const updateAuthStatus = (color, text) => {
+            const el = document.getElementById('log-msg');
+            el.style.color = color;
+            el.innerHTML = text;
+        };
 
         /* 07-RETURN PANEL STYLES */
-        const triggerMedicineReturnProcess = () => { const medId = document.getElementById('ret-mcd').value.trim().toUpperCase(); const qty = parseFloat(document.getElementById('ret-qty').value) || 0; const amt = parseFloat(document.getElementById('ret-amt').value) || 0; if (!medId) { showCustomDialog("Input Error", "Please provide a valid Medicine ID (MCD) to process return.", () => {}); return; } if (qty <= 0 || amt < 0) { showCustomDialog("Input Error", "Return Quantity must be greater than 0, and Refund Amount cannot be negative.", () => {}); return; } let matched = dbMedicines.find(m => { const f = getMedicineFields(m); return f.mcd.toUpperCase() === medId || f.short.toUpperCase() === medId; }); const targetMcd = matched ? getMedicineFields(matched).mcd : medId; showCustomDialog("Confirm Return", `Are you sure you want to return quantity (${qty}) of Medicine Code "${targetMcd}" and refund ₹${amt.toFixed(2)}?`, () => { fetch(CLOUD_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ action: "returnMedicine", uid: sessionID, pwd: sessionPass, medId: targetMcd, qty: qty, amount: amt }) }).then(res => res.json()).then(res => { if (res.success) { showCustomDialog("Return Success", "Medicine returned successfully. Stock inventory refreshed.", () => { document.getElementById('ret-mcd').value = ''; document.getElementById('ret-qty').value = '1'; document.getElementById('ret-amt').value = ''; if (res.medicines) { dbMedicines = res.medicines; populateMedicineDatalists(); } else { loadMedicineDatabase(); } }); } else { showCustomDialog("Return Action Failed", "Error processing transaction: " + (res.msg || res.message), () => {}, true); } }).catch(err => { console.error(err); showCustomDialog("Error Connection", "Could not submit return to SVR server.", () => {}, true); }); }); };
+        const triggerMedicineReturnProcess = () => {
+            const medId = document.getElementById('ret-mcd').value.trim().toUpperCase();
+            const qty = parseFloat(document.getElementById('ret-qty').value) || 0;
+            const amt = parseFloat(document.getElementById('ret-amt').value) || 0;
+            if (!medId) {
+                showCustomDialog("Input Error", "Please provide a valid Medicine ID (MCD) to process return.", () => {});
+                return;
+            }
+            if (qty <= 0 || amt < 0) {
+                showCustomDialog("Input Error", "Return Quantity must be greater than 0, and Refund Amount cannot be negative.", () => {});
+                return;
+            }
+            let matched = dbMedicines.find(m => {
+                const f = getMedicineFields(m);
+                return f.mcd.toUpperCase() === medId || f.short.toUpperCase() === medId;
+            });
+            const targetMcd = matched ? getMedicineFields(matched).mcd : medId;
+            showCustomDialog("Confirm Return", `Are you sure you want to return quantity (${qty}) of Medicine Code "${targetMcd}" and refund ₹${amt.toFixed(2)}?`, () => {
+                fetch(CLOUD_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({ action: "returnMedicine", uid: sessionID, pwd: sessionPass, medId: targetMcd, qty: qty, amount: amt })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        showCustomDialog("Return Success", "Medicine returned successfully. Stock inventory refreshed.", () => {
+                            document.getElementById('ret-mcd').value = '';
+                            document.getElementById('ret-qty').value = '1';
+                            document.getElementById('ret-amt').value = '';
+                            if (res.medicines) {
+                                dbMedicines = res.medicines;
+                                populateMedicineDatalists();
+                            } else {
+                                loadMedicineDatabase();
+                            }
+                        });
+                    } else {
+                        showCustomDialog("Return Action Failed", "Error processing transaction: " + (res.msg || res.message), () => {}, true);
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    showCustomDialog("Error Connection", "Could not submit return to SVR server.", () => {}, true);
+                });
+            });
+        };
 
         /* 08-MODAL STYLES */
-        const showCustomDialog = (title, message, callback, isDanger = false) => { document.getElementById('modal-title').innerText = title; document.getElementById('modal-message').innerText = message; const mBox = document.getElementById('modal-box-inner'); if(isDanger) { mBox.classList.add('danger-modal'); } else { mBox.classList.remove('danger-modal'); } document.getElementById('modal-container').style.display = 'flex'; currentConfirmAction = callback; };
-        const closeCustomDialog = () => { document.getElementById('modal-container').style.display = 'none'; currentConfirmAction = null; };
-        document.getElementById('modal-confirm-action').addEventListener('click', () => { if (currentConfirmAction) currentConfirmAction(); closeCustomDialog(); });
+        const showCustomDialog = (title, message, callback, isDanger = false) => {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            const mBox = document.getElementById('modal-box-inner');
+            if (isDanger) {
+                mBox.classList.add('danger-modal');
+            } else {
+                mBox.classList.remove('danger-modal');
+            }
+            document.getElementById('modal-container').style.display = 'flex';
+            currentConfirmAction = callback;
+        };
+
+        const closeCustomDialog = () => {
+            document.getElementById('modal-container').style.display = 'none';
+            currentConfirmAction = null;
+        };
+
+        document.getElementById('modal-confirm-action').addEventListener('click', () => {
+            if (currentConfirmAction) currentConfirmAction();
+            closeCustomDialog();
+        });
 
         /* 09-FOOTER STYLES */
-        const setupFocusNavigation = () => { const inputs = Array.from(document.querySelectorAll('.nav-input')); inputs.forEach((input, index) => { input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); if (input.id === 'in-mdisc') { applyVerifiedDiscountPercent(); } let nextIndex = index + 1; while (nextIndex < inputs.length && inputs[nextIndex].disabled) { nextIndex++; } const nextInput = inputs[nextIndex]; if (nextInput) { nextInput.focus(); if(nextInput.tagName === 'INPUT') nextInput.select(); } else { addNewMedicineEntry(); } } }); }); const loginInputs = Array.from(document.querySelectorAll('.login-nav-input')); loginInputs.forEach((input, index) => { input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); const nextLogin = loginInputs[index + 1]; if (nextLogin) { nextLogin.focus(); } else { initiateSecureAuthenticationSequence(); } } }); }); const returnInputs = Array.from(document.querySelectorAll('.ret-nav-input')); returnInputs.forEach((input, index) => { input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); const nextReturn = returnInputs[index + 1]; if (nextReturn) { nextReturn.focus(); if(nextReturn.tagName === 'INPUT') nextReturn.select(); } else { triggerMedicineReturnProcess(); } } }); }); };
+        const setupFocusNavigation = () => {
+            const inputs = Array.from(document.querySelectorAll('.nav-input'));
+            inputs.forEach((input, index) => {
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (input.id === 'in-mdisc') {
+                            applyVerifiedDiscountPercent();
+                        }
+                        let nextIndex = index + 1;
+                        while (nextIndex < inputs.length && inputs[nextIndex].disabled) {
+                            nextIndex++;
+                        }
+                        const nextInput = inputs[nextIndex];
+                        if (nextInput) {
+                            nextInput.focus();
+                            if (nextInput.tagName === 'INPUT') nextInput.select();
+                        } else {
+                            addNewMedicineEntry();
+                        }
+                    }
+                });
+            });
+            const loginInputs = Array.from(document.querySelectorAll('.login-nav-input'));
+            loginInputs.forEach((input, index) => {
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const nextLogin = loginInputs[index + 1];
+                        if (nextLogin) {
+                            nextLogin.focus();
+                        } else {
+                            initiateSecureAuthenticationSequence();
+                        }
+                    }
+                });
+            });
+            const returnInputs = Array.from(document.querySelectorAll('.ret-nav-input'));
+            returnInputs.forEach((input, index) => {
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const nextReturn = returnInputs[index + 1];
+                        if (nextReturn) {
+                            nextReturn.focus();
+                            if (nextReturn.tagName === 'INPUT') nextReturn.select();
+                        } else {
+                            triggerMedicineReturnProcess();
+                        }
+                    }
+                });
+            });
+        };
+
         setupFocusNavigation();
-        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').then(() => console.log('PWA Service Worker registered.')).catch(err => { if (location.hostname.includes('usercontent.goog') || location.hostname.includes('scf.usercontent')) { console.log('Service worker registration bypassed in preview sandbox.'); } else { console.warn('Service Worker registration failed:', err); } }); }); }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then(() => {
+                    console.log('PWA Service Worker registered.');
+                }).catch(err => {
+                    if (location.hostname.includes('usercontent.goog') || location.hostname.includes('scf.usercontent')) {
+                        console.log('Service worker registration bypassed in preview sandbox.');
+                    } else {
+                        console.warn('Service Worker registration failed:', err);
+                    }
+                });
+            });
+        }
     </script>
 </body>
 </html>

@@ -1,238 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dr. S. Venkata Subba Reddy MULTISPECIALTY Hospital — Admin Portal</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <style>
-        body, button, input, textarea, select, span, p, h1, h2, h3, h4, h5, h6, td, th, label { font-family: 'Roboto Slab', serif !important; }
-        .fa, .fa-solid, .fa-regular, .fa-brands, [class^="fa-"], [class*=" fa-"] { font-family: 'Font Awesome 6 Free', 'Font Awesome 6 Pro' !important; font-weight: 900 !important; font-style: normal !important; }
-        :root { --primary: #ef4444; --accent: #dc2626; --bg: #f3f7f9; --black: #000000; }
-        body { background-color: #eef2f5; color: #111827; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
-        .top-hospital-header { background: white; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary); width: 100%; z-index: 50; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .left-branding { display: flex; align-items: center; }
-        .header-logo { height: 48px; margin-right: 12px; filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.1)); }
-        .hospital-name { font-size: 14px; font-weight: 900; color: var(--black); text-transform: uppercase; line-height: 1.2; letter-spacing: 0.2px; }
-        @media (max-width: 640px) { .hospital-name { font-size: 10px; } .header-logo { height: 36px; } }
-        .dept-tagline { font-size: 8px; font-weight: 700; color: var(--accent); margin-top: 1px; letter-spacing: 0.5px; text-transform: uppercase; }
-        .tracing-pill { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 3px 10px; border-radius: 20px; display: flex; align-items: center; gap: 6px; }
-        .blink-dot { width: 6px; height: 6px; background-color: #22c55e; border-radius: 50%; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
-        .tracing-text { font-size: 8px; font-weight: 900; color: #166534; text-transform: uppercase; letter-spacing: 0.5px; }
-        .main-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .login-card { background: white; padding: 40px 30px; border-radius: 25px; box-shadow: 0 15px 50px rgba(0,0,0,0.1); width: 95%; max-width: 380px; position: relative; margin-top: 8vh; margin-bottom: 5vh; transition: all 0.3s ease; }
-        .login-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 6px 20px; border-radius: 8px; font-size: 10px; font-weight: 900; white-space: nowrap; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); z-index: 10; }
-        .input-group { position: relative; margin-bottom: 18px; }
-        .input-group i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #3b82f6; font-size: 14px; }
-        .login-input { width: 100%; padding: 12px 20px 12px 50px; border: 1.5px solid #e2e8f0; border-radius: 50px; outline: none; font-size: 12px; font-weight: 700; transition: 0.3s; color: #334155; }
-        .login-input:focus { border-color: #3b82f6; background: #f8fafc; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
-        .login-go-btn { background: var(--primary); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; transition: 0.3s; margin: 15px auto 0; box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3); border: none; }
-        .login-go-btn:hover { background: var(--accent); transform: scale(1.05); }
-        .login-go-btn:disabled { opacity: 0.7; cursor: not-allowed; }
-        .toolbar { background: white; padding: 10px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #e2e8f0; width: 100%; }
-        .btn-hd { padding: 8px 16px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 3px 6px rgba(0,0,0,0.08); border: none; cursor: pointer; }
-        .btn-hd:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.12); }
-        .btn-hd:active { transform: translateY(0); }
-        .table-container { overflow-x: auto; background: white; width: 100%; scrollbar-width: none; -ms-overflow-style: none; }
-        .table-container::-webkit-scrollbar { display: none; }
-        table { border-collapse: collapse; width: 100%; }
-        th { background-color: #f1f5f9; color: #1e293b; font-weight: 900; text-transform: uppercase; font-size: 9px; padding: 12px 10px; border: 1px solid #cbd5e1; white-space: nowrap; letter-spacing: 0.5px; }
-        td { padding: 10px; border: 1px solid #e2e8f0; font-size: 11px; text-align: center; font-weight: 600; white-space: nowrap; }
-        tr:hover td { background-color: #f8fafc; }
-        .col-qty { background-color: #ffffff; }
-        .col-amt { background-color: #f0f7ff; color: #1d4ed8; }
-        .col-highlight { background-color: #fdf2f2; color: #b91c1c; }
-        .col-green { background-color: #f0fdf4; color: #15803d; }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(4px); padding: 16px; }
-        .modal-content { background: white; padding: 28px; border-radius: 20px; width: 100%; max-width: 440px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); transform: scale(0.95); transition: all 0.2s ease-out; }
-        .modal.flex .modal-content { transform: scale(1); }
-        .spinner { animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Dashboard | Dr. VSR Hospital</title>
+<!-- ఫెవికాన్ కాన్ఫిగరేషన్ -->
+<link class="favicon-icon" rel="icon" type="image/png" href="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_02_FEVICON_ICON.png">
+<!-- రెస్పాన్సివ్ లేఅవుట్ కోసం టెయిల్విండ్ CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+html, body, * {
+    font-family: 'Roboto Slab', serif !important;
+}
+</style>
+<!-- గూగుల్ రోబోట్ స్లాబ్ ఫాంట్ ఇంపోర్ట్ -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* 01-HEADER CSS SECTION */
+* { font-family: 'Roboto Slab', serif !important; margin: 0; padding: 0; box-sizing: border-box; }
+body { background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column; }
+.premium-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); }
+.live-glow { width: 8px; height: 8px; background-color: #10b981; border-radius: 50%; display: inline-block; box-shadow: 0 0 8px #10b981; }
+/* 02-ABOUT CSS SECTION */
+.glass-effect { background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(226, 232, 240, 0.8); }
+.doctor-avatar { width: 36px; height: 36px; border-radius: 50%; background-color: #dbeafe; color: #1e40af; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+/* 03-SPECIALTY CSS SECTION */
+.stats-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.stats-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+/* 04-TIMINGS CSS SECTION */
+.table-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+.table-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+.table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+/* 05-REGISTRATION CSS SECTION */
+.reg-input { width: 100%; padding: 8px 12px 8px 36px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; outline: none; transition: all 0.2s; font-size: 12px; font-weight: bold; }
+.reg-input:focus { border-color: #1e3a8a; background-color: #ffffff; }
+html, body {
+    font-family: 'Roboto Slab', serif !important;
+}
+</style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col text-slate-800">
 
-    <!-- SECTION NAME: Header -->
-    <header class="top-hospital-header">
-        <div class="left-branding">
-            <img src="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_02_FEVICON_ICON.png" alt="Logo" class="header-logo">
-            <div class="header-text-stack">
-                <div class="hospital-name">Dr. S. Venkata Subba Reddy MULTISPECIALTY Hospital</div>
-                <div class="dept-tagline">MEDICAL DEPARTMENT • SECURE ACCESS</div>
-            </div>
-        </div>
-        <div class="header-right-tools flex flex-col items-end gap-1.5">
-            <!-- SECTION NAME: Live Tracing -->
-            <div class="tracing-pill">
-                <span id="syncStatus" class="tracing-text">24*7 Live Synced</span>
-                <div class="blink-dot"></div>
-            </div>
-            <!-- SECTION NAME: Live Clock -->
-            <div id="liveClock" class="text-[9px] font-black text-gray-700 uppercase tracking-wider"></div>
-        </div>
-    </header>
+<!-- 01-HEADER SECTION -->
+<header class="bg-white border-b-2 border-[#1e3a8a] shadow-md px-4 py-3 md:px-8 relative z-10">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<img src="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_02_FEVICON_ICON.png" alt="Hospital Logo" class="h-16 w-16 object-contain">
+<div class="text-left">
+<h1 class="text-lg md:text-xl font-extrabold tracking-tight text-[#1e3a8a] uppercase leading-tight">Dr. S. Venkata Subba Reddy Multispecialty Hospital</h1>
+<p class="text-[10px] md:text-xs text-slate-500 font-bold uppercase mt-0.5">Since 1989 - "Best Of Care, Close to Home"</p>
+<div class="mt-1.5"><span class="bg-[#1e3a8a] text-white px-3 py-1 rounded text-[10px] font-bold tracking-wider uppercase inline-block shadow-sm">Doctor Portal</span></div>
+</div>
+</div>
+<div class="flex flex-col items-start md:items-end gap-1.5 w-full md:w-auto border-t border-slate-100 md:border-t-0 pt-2.5 md:pt-0">
+<div class="flex items-center gap-2"><span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span></span><span class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">24 * 7 Live Tracing</span></div>
+<div id="liveClock" class="text-[#1e3a8a] text-xs md:text-sm font-extrabold tracking-wide uppercase">Loading live Date...</div>
+</div>
+</div>
+</header>
 
-    <main class="main-wrapper">
-        <!-- SECTION NAME: Login Area -->
-        <div id="loginArea" class="login-card">
-            <div class="login-badge uppercase">Medicine Register Admin Login</div>
-            
-            <div class="input-group">
-                <i class="fa-solid fa-user"></i>
-                <input type="text" id="uidInput" class="login-input uppercase" placeholder="LOGIN ID">
-            </div>
-            
-            <div class="input-group">
-                <i class="fa-solid fa-lock"></i>
-                <input type="password" id="pwdInput" class="login-input" placeholder="PASSWORD">
-                <i id="togglePwd" class="fa-solid fa-eye text-gray-400 cursor-pointer" style="left: auto; right: 20px;" onclick="togglePassword()"></i>
-            </div>
-            
-            <button id="loginBtn" class="login-go-btn" onclick="verifyAndLoad()">
-                <i id="loginIcon" class="fa-solid fa-arrow-right"></i>
-            </button>
-            <p id="loginError" class="text-red-600 text-[10px] text-center font-bold hidden mt-5 uppercase">Invalid Credentials! Try Again.</p>
-        </div>
+<!-- 02-ABOUT SECTION -->
+<div id="doctorBar" class="hidden bg-slate-100 border-b border-slate-200 px-4 py-3 md:px-8">
+<div class="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="doctor-avatar"><svg class="w-5 h-5 text-blue-800" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></div>
+<div>
+<div class="text-sm font-extrabold text-blue-900"><span id="docName">Dr. Loading...</span></div>
+<div class="text-[0.7rem] font-bold text-slate-500 uppercase tracking-wider"><span id="docRole">ORTHOPEDIC</span> | ID: <span id="docId">000</span></div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button onclick="fetchLatest()" title="Refresh Live Data" class="w-10 h-10 rounded-full bg-gradient-to-b from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 active:scale-95 text-white flex items-center justify-center transition-all duration-200 shadow-[0_4px_10px_rgba(30,58,138,0.4)] border border-blue-600/50 relative overflow-hidden group"><span class="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent pointer-events-none"></span><svg id="refreshIcon" class="w-5 h-5 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path></svg></button>
+<button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-3 py-2 rounded-lg flex items-center gap-1.5 transition-all shadow-sm text-xs"><svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg> LOG OUT</button>
+</div>
+</div>
+</div>
 
-        <!-- SECTION NAME: Main Content -->
-        <div id="mainContent" class="hidden w-full">
-            <!-- SECTION NAME: Toolbar -->
-            <div class="toolbar shadow-sm flex-wrap md:flex-nowrap gap-4">
-                <button onclick="openModal('add')" class="bg-green-600 text-white btn-hd hover:bg-green-700 uppercase whitespace-nowrap">
-                    <i class="fa-solid fa-circle-plus"></i> NEW REGISTER
-                </button>
-                
-                <div class="flex items-center gap-2 flex-1 justify-end w-full md:w-auto">
-                    <div class="relative w-full max-w-[200px] md:max-w-[300px]">
-                        <input type="text" id="searchInput" onkeydown="if(event.key==='Enter')handleSearch()" oninput="handleAutoClear(this)" placeholder="Search MCD or Name..." class="w-full border-2 border-gray-100 p-2 rounded-xl text-[11px] outline-none focus:border-blue-500 uppercase font-black transition">
-                    </div>
-                    <button onclick="handleSearch()" class="bg-blue-600 text-white btn-hd px-4 hover:bg-blue-700" title="Search">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                    <button onclick="clearSearch()" class="bg-gray-500 text-white btn-hd px-4 hover:bg-gray-600" title="Clear Search">
-                        <i class="fa-solid fa-eraser"></i>
-                    </button>
-                    
-                    <button id="reloadBtn" onclick="fetchData()" class="bg-orange-500 text-white btn-hd px-4 hover:bg-orange-600" title="Reload Database">
-                        <i id="reloadIcon" class="fa-solid fa-rotate"></i>
-                    </button>
-                    
-                    <button onclick="location.reload()" class="bg-red-600 text-white btn-hd px-4 hover:bg-red-700" title="Power Off/Log Out">
-                        <i class="fa-solid fa-power-off"></i>
-                    </button>
-                </div>
-            </div>
+<!-- 03-SPECIALTY SECTION -->
+<div id="toast" class="fixed top-5 right-5 z-50 transform flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl text-white font-semibold max-w-md hidden"><span id="toastIcon"></span><span id="toastMsg"></span></div>
 
-            <!-- SECTION NAME: Medicine Data Table -->
-            <div class="table-container shadow-inner">
-                <table class="w-full border-collapse">
-                    <thead>
-                        <tr id="tableHeader"></tr>
-                    </thead>
-                    <tbody id="tableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </main>
+<!-- 04-TIMINGS SECTION -->
+<main class="flex-grow flex flex-col justify-center py-6">
+<div id="loginScreen" class="w-full max-w-sm mx-auto px-4">
+<div class="glass-effect rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+<div class="p-6">
+<h3 class="text-base font-extrabold text-slate-700 mb-5 text-center flex items-center justify-center gap-2"><svg class="w-4 h-4 text-blue-900" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> DOCTOR PORTAL LOGIN</h3>
+<form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+<div><label class="block text-[10px] font-bold text-slate-500 mb-1 tracking-wider uppercase">Username (Doctor ID)</label><div class="relative"><span class="absolute inset-y-0 left-0 flex items-center pl-3"><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></span><input type="text" id="username" required oninput="this.value = this.value.toUpperCase()" class="reg-input" placeholder="Username"></div></div>
+<div><label class="block text-[10px] font-bold text-slate-500 mb-1 tracking-wider uppercase">Password</label><div class="relative"><span class="absolute inset-y-0 left-0 flex items-center pl-3"><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg></span><input type="password" id="password" required class="reg-input" placeholder="••••••••"><button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 flex items-center pr-3"><svg class="w-4 h-4 text-slate-400 hover:text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button></div></div>
+<button type="submit" id="loginBtn" class="w-full premium-gradient hover:opacity-95 text-white font-bold py-2.5 px-4 rounded-lg shadow-md flex items-center justify-center gap-2 transition-all mt-6 text-xs tracking-wider"><svg class="w-4 h-4 text-white inline" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg> SIGN IN</button>
+</form>
+</div>
+</div>
+</div>
 
-    <!-- SECTION NAME: Medicine Entry Modal -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center border-b-2 border-gray-100 pb-3 mb-4">
-                <h2 id="modalTitle" class="text-xs font-black text-blue-900 uppercase">Medicine Entry</h2>
-                <i onclick="closeModal()" class="fa-solid fa-xmark text-gray-400 cursor-pointer hover:text-red-500 text-lg transition"></i>
-            </div>
-            
-            <div class="grid grid-cols-1 gap-4">
-                <input type="hidden" id="editMcd">
-                <div>
-                    <label id="shortLabel" class="text-[10px] font-black uppercase text-gray-500 ml-1">Short Name</label>
-                    <input id="shortName" type="text" class="w-full border-2 border-gray-100 p-2.5 rounded-xl text-xs uppercase font-bold outline-none focus:border-blue-400 transition">
-                </div>
-                <div>
-                    <label id="fullLabel" class="text-[10px] font-black uppercase text-gray-500 ml-1">Full Name</label>
-                    <input id="fullName" type="text" class="w-full border-2 border-gray-100 p-2.5 rounded-xl text-xs uppercase font-bold outline-none focus:border-blue-400 transition">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label id="stockLabel" class="text-[10px] font-black uppercase text-gray-500 ml-1">Stock Added</label>
-                        <input id="lstStk" type="number" class="w-full border-2 border-gray-100 p-2.5 rounded-xl text-xs font-bold outline-none focus:border-blue-400 transition" value="0">
-                    </div>
-                    <div>
-                        <label id="priceLabel" class="text-[10px] font-black uppercase text-gray-500 ml-1">Price Added</label>
-                        <input id="lstPrc" type="number" class="w-full border-2 border-gray-100 p-2.5 rounded-xl text-xs font-bold outline-none focus:border-blue-400 transition" value="0">
-                    </div>
-                </div>
-                <div>
-                    <label class="text-[10px] font-black uppercase text-gray-500 ml-1">Tab Price</label>
-                    <input id="tabPrc" type="number" class="w-full border-2 border-gray-100 p-2.5 rounded-xl text-xs font-bold outline-none focus:border-blue-400 transition" value="0">
-                </div>
-            </div>
-            
-            <div class="flex justify-end gap-3 mt-6">
-                <button onclick="closeModal()" class="bg-gray-100 text-gray-600 btn-hd px-5 hover:bg-gray-200">CANCEL</button>
-                <button id="submitBtn" onclick="submitData()" class="bg-blue-900 text-white btn-hd shadow-lg px-6 hover:bg-blue-800">
-                    <i id="submitIcon" class="fa-solid fa-floppy-disk mr-1"></i> <span id="submitText">SUBMIT RECORD</span>
-                </button>
-            </div>
-        </div>
-    </div>
+<div id="dashboardContent" class="hidden w-full max-w-7xl mx-auto px-4 md:px-8 flex flex-col gap-6">
+<section class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
+<div class="flex items-center gap-2.5"><span class="live-glow"></span><span class="text-[10px] font-extrabold uppercase tracking-widest text-slate-500">TODAY'S LIVE RECORDS</span><span class="text-[11px] bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full font-extrabold" id="liveDate">DD-MM-YYYY</span></div>
+<div class="grid grid-cols-2 lg:grid-cols-5 gap-3 w-full">
+<div class="stats-card"><div class="stats-icon bg-blue-100/50"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div><div><div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Total Registered</div><div class="text-xs font-extrabold text-slate-700" id="statReg">0</div></div></div>
+<div class="stats-card"><div class="stats-icon bg-emerald-100/50"><svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><div><div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Checked (No OPD)</div><div class="text-xs font-extrabold text-slate-700" id="statChk">0</div></div></div>
+<div class="stats-card"><div class="stats-icon bg-purple-100/50"><svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div><div><div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">OPD Payments</div><div class="text-xs font-extrabold text-slate-700" id="statOPD">0</div></div></div>
+<div class="stats-card"><div class="stats-icon bg-blue-100/50"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><div><div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">OPD Collection</div><div class="text-xs font-extrabold text-slate-700" id="statCol">₹0.00</div></div></div>
+<div class="stats-card"><div class="stats-icon bg-rose-100/50"><svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><div><div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Today Expenses</div><div class="text-xs font-extrabold text-slate-700" id="statExpenses">₹0.00</div></div></div>
+</div>
+</section>
 
-    <!-- SECTION NAME: Delete Confirmation Modal -->
-    <div id="confirmModal" class="modal">
-        <div class="modal-content text-center">
-            <i class="fa-solid fa-triangle-exclamation text-red-500 text-4xl mb-3"></i>
-            <h2 class="text-xs font-black uppercase mb-5 tracking-tighter text-slate-800">Are you sure you want to delete this record?</h2>
-            <div class="flex justify-center gap-4">
-                <button onclick="closeConfirm()" class="bg-gray-200 text-gray-700 btn-hd px-8 hover:bg-gray-300">NO</button>
-                <button id="confirmBtn" onclick="confirmDelete()" class="bg-red-600 text-white btn-hd px-8 hover:bg-red-700">
-                    <i id="confirmIcon" class="fa-solid fa-spinner spinner hidden mr-1"></i> YES
-                </button>
-            </div>
-        </div>
-    </div>
+<!-- 05-REGISTRATION SECTION -->
+<div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden flex flex-col w-full">
+<div class="premium-gradient px-4 py-2.5 flex items-center justify-between text-white">
+<h2 class="font-bold text-xs tracking-wider uppercase flex items-center gap-2"><svg class="w-4 h-4 text-white inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> 1. OPD PAID PATIENTS QUEUE (Today)</h2>
+<span class="bg-white/20 px-2.5 py-0.5 rounded-full text-[10px] font-bold" id="opdPaidBadge">0 Patients</span>
+</div>
+<div class="overflow-x-auto table-scroll w-full">
+<table class="w-full text-left border-collapse min-w-[900px]">
+<thead>
+<tr class="bg-slate-50 border-b border-slate-200 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+<th class="py-2.5 px-4">Token ID</th>
+<th class="py-2.5 px-4">PID</th>
+<th class="py-2.5 px-4">Full Name</th>
+<th class="py-2.5 px-4 text-center">Age / Gender</th>
+<th class="py-2.5 px-4">Phone Number</th>
+<th class="py-2.5 px-4">Village</th>
+<th class="py-2.5 px-4">Section</th>
+<th class="py-2.5 px-4 text-center">Time</th>
+<th class="py-2.5 px-4 text-right">OPD Amount / Remarks</th>
+</tr>
+</thead>
+<tbody id="opdBody" class="divide-y divide-slate-100 text-[11px] font-semibold text-slate-600">
+<tr><td colspan="9" class="py-8 text-center text-slate-400 font-bold">Loading OPD paid patients...</td></tr>
+</tbody>
+</table>
+</div>
+</div>
 
-    <!-- UI Alert Toast System -->
-    <div id="toast" class="fixed bottom-5 right-5 opacity-0 pointer-events-none transition-all duration-300 z-[200]"></div>
+<div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden flex flex-col w-full">
+<div class="premium-gradient px-4 py-2.5 flex items-center justify-between text-white">
+<h2 class="font-bold text-xs tracking-wider uppercase flex items-center gap-2"><svg class="w-4 h-4 text-white inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 2. PATIENTS CHECKED QUEUE (Today - No OPD)</h2>
+<span class="bg-white/20 px-2.5 py-0.5 rounded-full text-[10px] font-bold" id="checkedBadge">0 Patients</span>
+</div>
+<div class="overflow-x-auto table-scroll w-full">
+<table class="w-full text-left border-collapse min-w-[900px]">
+<thead>
+<tr class="bg-slate-50 border-b border-slate-200 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+<th class="py-2.5 px-4">Token ID</th>
+<th class="py-2.5 px-4">PID</th>
+<th class="py-2.5 px-4">Full Name</th>
+<th class="py-2.5 px-4 text-center">Age / Gender</th>
+<th class="py-2.5 px-4">Phone Number</th>
+<th class="py-2.5 px-4">Village</th>
+<th class="py-2.5 px-4">Section</th>
+<th class="py-2.5 px-4 text-center">Time</th>
+<th class="py-2.5 px-4 text-right">OPD Amount / Remarks</th>
+</tr>
+</thead>
+<tbody id="checkedBody" class="divide-y divide-slate-100 text-[11px] font-semibold text-slate-600">
+<tr><td colspan="9" class="py-8 text-center text-slate-400 font-bold">Loading checked patients...</td></tr>
+</tbody>
+</table>
+</div>
+</div>
 
-    <!-- SECTION NAME: Footer -->
-    <footer class="bg-white p-4 text-center border-t border-gray-200 w-full mt-auto">
-        <p class="text-[8.5px] text-gray-500 font-bold uppercase tracking-wider">© 2026 All Rights Reserved | Dr. S. Venkata Subba Reddy MULTISPECIALTY Hospital | Architected by Sri Veda Org.</p>
-    </footer>
+<!-- NEW EXPENSES SECTION -->
+<div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden flex flex-col w-full mb-6">
+<div class="premium-gradient px-4 py-2.5 flex items-center justify-between text-white" style="background: linear-gradient(135deg, #7c2d12 0%, #9a3412 100%);">
+<h2 class="font-bold text-xs tracking-wider uppercase flex items-center gap-2"><svg class="w-4 h-4 text-white inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 3. TODAY'S HOSPITAL EXPENSES (ఖర్చులు)</h2>
+<span class="bg-white/20 px-2.5 py-0.5 rounded-full text-[10px] font-bold" id="expensesBadge">0 Records</span>
+</div>
+<div class="overflow-x-auto table-scroll w-full">
+<table class="w-full text-left border-collapse min-w-[700px]">
+<thead>
+<tr class="bg-slate-50 border-b border-slate-200 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+<th class="py-2.5 px-4 w-24">S.No</th>
+<th class="py-2.5 px-4 text-center w-36">Time (సమయం)</th>
+<th class="py-2.5 px-4 text-right w-40">Amount (మొత్తం)</th>
+<th class="py-2.5 px-4">Reason / Particulars (వివరణ)</th>
+</tr>
+</thead>
+<tbody id="expensesBody" class="divide-y divide-slate-100 text-[11px] font-semibold text-slate-600">
+<tr><td colspan="4" class="py-8 text-center text-slate-400 font-bold">Loading today's expenses...</td></tr>
+</tbody>
+</table>
+</div>
+</div>
 
-    <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbw7arjfEek62Gp7wXxKiPN-lDebVLRJPYEhWQLu2dAcC_x7DJ8OCuuhIURjrpPBUVLAzg/exec";
-        let allMedicines = [];
-        let sessionID = "";
-        let sessionPass = "";
-        let deleteTarget = null;
+</div>
+</main>
 
-        const showToast = (msg, isErr = false) => { const t = document.getElementById('toast'); t.innerText = msg; t.className = `fixed bottom-5 right-5 px-4 py-2 rounded-lg text-white font-bold text-xs uppercase z-[200] shadow-lg transition-all transform duration-300 ${isErr ? 'bg-red-600' : 'bg-green-600'}`; t.style.opacity = '1'; setTimeout(() => t.style.opacity = '0', 3000); };
-        const setLoading = (btnId, iconId, isLoad) => { const btn = document.getElementById(btnId); const icon = document.getElementById(iconId); if(isLoad) { btn.disabled = true; if(icon) { icon.className = "fa-solid fa-spinner spinner"; icon.classList.remove('hidden'); } } else { btn.disabled = false; if(icon) { if(iconId === "loginIcon") icon.className = "fa-solid fa-arrow-right"; else if(iconId === "reloadIcon") icon.className = "fa-solid fa-rotate"; else if(iconId === "submitIcon") icon.className = "fa-solid fa-floppy-disk"; else if(iconId === "confirmIcon") { icon.className = "fa-solid fa-spinner spinner"; icon.classList.add('hidden'); } } } };
-        const togglePassword = () => { const pin = document.getElementById('pwdInput'); const icon = document.getElementById('togglePwd'); if(pin.type === 'password') { pin.type = 'text'; icon.className = "fa-solid fa-eye-slash text-blue-500 cursor-pointer"; } else { pin.type = 'password'; icon.className = "fa-solid fa-eye text-gray-400 cursor-pointer"; } };
-        const updateLiveClock = () => { const d = new Date(); const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]; const hours = d.getHours(); const ampm = hours >= 12 ? 'PM' : 'AM'; const formattedHours = hours % 12 || 12; const formattedMinutes = String(d.getMinutes()).padStart(2, '0'); const formattedSeconds = String(d.getSeconds()).padStart(2, '0'); document.getElementById('liveClock').innerText = `${d.getDate()} ${monthNames[d.getMonth()]} ${d.getFullYear()} | ${formattedHours}:${formattedMinutes}:${formattedSeconds} ${ampm}`; };
-        const closeModal = () => { document.getElementById('modal').style.display = 'none'; };
-        const closeConfirm = () => { document.getElementById('confirmModal').style.display = 'none'; deleteTarget = null; };
-        const clearSearch = () => { document.getElementById('searchInput').value = ''; renderTable(allMedicines); };
-        const handleAutoClear = (input) => { if(input.value.trim() === '') renderTable(allMedicines); };
-        const getLast7Days = () => { const dates = []; const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]; const dayLabels = ["TODAY", "YESTERDAY", "DAY 3", "DAY 4", "DAY 5", "DAY 6", "DAY 7"]; for (let i = 0; i < 7; i++) { const d = new Date(); d.setDate(d.getDate() - i); dates.push({ label: dayLabels[i], dateStr: `${monthNames[d.getMonth()]} ${d.getDate()}` }); } return dates; };
-        const formatDate = (ds) => { if(!ds || ds === '0') return '-'; const d = new Date(ds); if(isNaN(d.getTime())) return ds.toUpperCase(); const m = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]; return `${String(d.getDate()).padStart(2,'0')} ${m[d.getMonth()]} ${d.getFullYear()}`; };
-        const verifyAndLoad = async () => { const u = document.getElementById('uidInput').value.trim().toUpperCase(); const p = document.getElementById('pwdInput').value.trim(); if(!u || !p) { showToast("Please fill in all security fields.", true); return; } sessionID = u; sessionPass = p; setLoading('loginBtn', 'loginIcon', true); await fetchData(); };
-        const fetchData = async () => { if(!sessionID) return; setLoading('reloadBtn', 'reloadIcon', true); document.getElementById('loginError').classList.add('hidden'); try { const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'auth', uid: sessionID, pwd: sessionPass }) }); const d = await r.json(); if(d.success) { allMedicines = d.medicines || d.data || d.records || []; document.getElementById('loginArea').classList.add('hidden'); document.getElementById('mainContent').classList.remove('hidden'); window.scrollTo(0, 0); showToast("Login Successful"); renderTable(allMedicines); } else { document.getElementById('loginError').innerText = d.msg || "Authentication Failed!"; document.getElementById('loginError').classList.remove('hidden'); showToast(d.msg || "Error", true); } } catch (e) { console.error(e); showToast("Network Error Occurred", true); } finally { setLoading('loginBtn', 'loginIcon', false); setLoading('reloadBtn', 'reloadIcon', false); } };
-        const silentReload = async () => { if(!sessionID || document.getElementById('modal').style.display === 'flex' || document.getElementById('confirmModal').style.display === 'flex') return; document.getElementById('syncStatus').innerText = "Syncing..."; try { const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'auth', uid: sessionID, pwd: sessionPass }) }); const d = await r.json(); if(d.success) { allMedicines = d.medicines || d.data || d.records || []; const searchVal = document.getElementById('searchInput').value.trim(); if(!searchVal) renderTable(allMedicines); } } catch(e) { console.error("Auto background refresh failed", e); } finally { document.getElementById('syncStatus').innerText = "24*7 Live Synced"; } };
-        const renderTable = (data) => { if(!data || !Array.isArray(data)) data = []; const h = document.getElementById('tableHeader'); const b = document.getElementById('tableBody'); const last7Days = getLast7Days(); let headerHtml = '<th>SR</th><th>EDIT</th><th>DEL</th><th>MCD</th><th>MED-SHORT</th><th>MED-NAME</th><th>LAST ADDED</th><th>CURRENT STOCK</th><th>LAST ADDED PRICE</th><th>PURCHASING PRICE</th><th>SELLING PRICE</th>'; last7Days.forEach((day, idx) => { if(idx === 0) headerHtml += `<th colspan="2" class="bg-amber-50 border-2 border-amber-200">TODAY<br><span class="text-[7px] text-amber-700">${day.dateStr}</span><br>QTY & AMT</th>`; else headerHtml += `<th>${day.label}<br><span class="text-[7px] text-blue-500">${day.dateStr}</span><br>QTY</th><th class="bg-blue-50">${day.label}<br><span class="text-[7px] text-blue-500">${day.dateStr}</span><br>AMT</th>`; }); headerHtml += '<th class="bg-purple-100 text-purple-900 font-bold">WK-QTY</th><th class="bg-purple-100 text-purple-900 font-bold">WK-AMT</th><th>DATE</th>'; h.innerHTML = headerHtml; const sortedData = [...data].sort((x, y) => Number(x[6] || 0) - Number(y[6] || 0)); b.innerHTML = sortedData.map((r, index) => { let qTotal = 0, aTotal = 0; for (let i = 0; i < 7; i++) { qTotal += Number(r[9 + (i * 2)] || 0); aTotal += Number(r[10 + (i * 2)] || 0); } let srNo = index + 1; let rowHtml = `<td>${srNo}</td><td><button onclick="openModal('update', '${r[1]}')" class="text-blue-600 hover:scale-110 transition duration-150 transform"><i class="fa-solid fa-pen-to-square"></i></button></td><td><button onclick="askDelete('${r[1]}')" class="text-red-600 hover:scale-110 transition duration-150 transform"><i class="fa-solid fa-trash-can"></i></button></td><td class="font-black text-blue-800">${r[1]||0}</td><td>${r[2]||0}</td><td class="text-left font-black uppercase px-2">${r[3]||0}</td><td class="col-highlight">${r[4]||0}</td><td class="col-highlight font-black">${r[5]||0}</td><td class="col-highlight text-blue-600">₹${r[6]||0}</td><td class="col-highlight font-black text-blue-800">₹${r[7]||0}</td><td>₹${r[8]||0}</td>`; for (let i = 0; i < 7; i++) { let qVal = r[9 + (i * 2)] || 0, aVal = r[10 + (i * 2)] || 0; if(i === 0) rowHtml += `<td class="bg-red-50 text-red-600 font-bold border-l-2 border-red-100">${qVal}</td><td class="bg-green-50 text-green-700 font-bold border-r-2 border-green-100">₹${aVal}</td>`; else rowHtml += `<td class="col-qty">${qVal}</td><td class="col-amt">₹${aVal}</td>`; } rowHtml += `<td class="bg-purple-100 text-purple-950 font-black border-x border-purple-200">${qTotal}</td><td class="bg-purple-100 text-purple-950 font-black border-x border-purple-200">₹${aTotal}</td><td class="text-[9px] text-gray-500 font-bold uppercase tracking-tight">${formatDate(r[25])}</td></tr>`; return rowHtml; }).join(''); };
-        const submitData = async () => { const p = { action: window.currentAction, uid: sessionID, pwd: sessionPass, mcd: document.getElementById('editMcd').value, short: document.getElementById('shortName').value, name: document.getElementById('fullName').value, lstStk: Number(document.getElementById('lstStk').value), lstPrc: Number(document.getElementById('lstPrc').value), tabPrc: Number(document.getElementById('tabPrc').value) }; if(!p.short || !p.name) { showToast("Short and Full Names cannot be empty.", true); return; } setLoading('submitBtn', 'submitIcon', true); try { const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(p) }); const d = await r.json(); if(d.success) { allMedicines = d.medicines || d.data || d.records || []; renderTable(allMedicines); closeModal(); showToast("Record Submitted Successfully!"); } else { showToast(d.msg || "Operation failed", true); } } catch(e) { console.error(e); showToast("Failed to Submit Record", true); } finally { setLoading('submitBtn', 'submitIcon', false); } };
-        const askDelete = (mcd) => { deleteTarget = mcd; document.getElementById('confirmModal').style.display = 'flex'; };
-        const confirmDelete = async () => { if(!deleteTarget) return; setLoading('confirmBtn', 'confirmIcon', true); try { const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'delete', uid: sessionID, pwd: sessionPass, mcd: deleteTarget }) }); const d = await r.json(); if(d.success) { allMedicines = d.medicines || d.data || d.records || []; renderTable(allMedicines); closeConfirm(); showToast("Record Deleted Successfully!"); } else { showToast(d.msg || "Failed to delete", true); } } catch(e) { console.error(e); showToast("Failed to Delete Record", true); } finally { setLoading('confirmBtn', 'confirmIcon', false); } };
-        const handleSearch = () => { const t = document.getElementById('searchInput').value.toLowerCase().trim(); const f = allMedicines.filter(m => m.some(v => String(v).toLowerCase().includes(t))); renderTable(f); };
-        const openModal = (mode, mcd = '') => { document.getElementById('modal').style.display = 'flex'; if (mode === 'add') { document.getElementById('modalTitle').innerText = 'ADD NEW MEDICINE'; document.getElementById('editMcd').value = ''; document.querySelectorAll('#modal input:not([type=hidden])').forEach(i => i.value = (i.type === 'number' ? '0' : '')); document.getElementById('stockLabel').innerText = 'Stock Added'; document.getElementById('priceLabel').innerText = 'Price Added'; window.currentAction = 'add'; } else { document.getElementById('modalTitle').innerText = 'UPDATE RECORD: ' + mcd; const m = allMedicines.find(x => x[1] === mcd); document.getElementById('editMcd').value = m[1]; document.getElementById('shortName').value = m[2]; document.getElementById('fullName').value = m[3]; document.getElementById('lstStk').value = 0; document.getElementById('lstPrc').value = 0; document.getElementById('tabPrc').value = m[8]; document.getElementById('stockLabel').innerText = 'Newly Added Stock'; document.getElementById('priceLabel').innerText = 'New Purchase Price'; window.currentAction = 'update'; } };
-        const initEventListeners = () => { document.getElementById('uidInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') document.getElementById('pwdInput').focus(); }); document.getElementById('pwdInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') verifyAndLoad(); }); updateLiveClock(); setInterval(updateLiveClock, 1000); setInterval(silentReload, 8000); };
-        window.onload = initEventListeners;
-    </script>
+<footer class="bg-slate-100 border-t border-slate-200 py-3.5 z-10 mt-auto">
+<div class="max-w-7xl mx-auto px-4 md:px-8 text-center"><p class="text-[0.65rem] font-bold text-slate-500">© 2026 All Rights Reserved | Dr. S. Venkata Subba Reddy Multispeciality Hospital | Architected by Sri Veda Org.</p></div>
+</footer>
+
+<script>
+// 01-HEADER JAVASCRIPT SECTION
+const APP_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbx6fJRcqAZT5jFwby-Vi7WcdJTSyTLZpLk2VCD4YCNkhCQSk5RMXgfPCw4qYhcdvgjR/exec";
+const updateLiveClock = () => { const now = new Date(); const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']; const dd = String(now.getDate()).padStart(2, '0'); const mmm = months[now.getMonth()]; document.getElementById('liveClock').innerText = `${dd}-${mmm}-${now.getFullYear()}`; };
+const executeApiRequest = async (payload) => { try { const r = await fetch(APP_SCRIPT_API_URL, { method: "POST", mode: "cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) }); return await r.json(); } catch(e) { console.error(e); return { status: "error", message: "Network connection failure." }; } };
+const formatTime = (t) => { if (!t) return '-'; const match = String(t).match(/(\d{1,2}):(\d{2}):?(\d{2})?/); if (match) { let hrs = parseInt(match[1]); const mins = match[2]; const ampm = hrs >= 12 ? 'PM' : 'AM'; hrs = hrs % 12 || 12; return `${String(hrs).padStart(2, '0')}:${mins} ${ampm}`; } return String(t); };
+// 02-FORM VALIDATION SECTION
+const togglePassword = () => { const p = document.getElementById('password'); p.type = p.type === 'password' ? 'text' : 'password'; };
+const handleLogin = async (e) => { e.preventDefault(); const btn = document.getElementById('loginBtn'); const orig = btn.innerHTML; btn.disabled = true; btn.innerText = "VERIFYING..."; const res = await executeApiRequest({ action: "login", username: document.getElementById('username').value.trim(), password: document.getElementById('password').value.trim() }); btn.disabled = false; btn.innerHTML = orig; if (res.status === "success") { localStorage.setItem('vsr_logged_doctor', JSON.stringify(res.doctor)); setupView(res.doctor); renderRecords(res.registeredToday, res.patientsToday, res.expensesToday); showToast("Welcome Back!"); } else { showToast(res.message, true); } };
+const showToast = (msg, isErr = false) => { const t = document.getElementById('toast'); const tMsg = document.getElementById('toastMsg'); const tIcon = document.getElementById('toastIcon'); t.className = `fixed top-5 right-5 z-50 flex items-center gap-3 px-4 py-2.5 rounded-xl shadow-2xl text-white font-bold text-xs ${isErr ? 'bg-rose-600' : 'bg-emerald-600'}`; tIcon.innerHTML = isErr ? `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M3.34 16h17.32C22.2 16 23 15.2 23 14.3V9.7C23 8.8 22.2 8 21.3 8H3.3C2.4 8 1.6 8.8 1.6 9.7v4.6c0 .9.8 1.7 1.7 1.7z"></path></svg>` : `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`; tMsg.innerText = msg; t.classList.remove('hidden'); setTimeout(() => { t.classList.add('hidden'); }, 3000); };
+// 03-BUTTON ACTION SECTION
+const setupView = (doctor) => { document.getElementById('docName').innerText = "Dr. " + (doctor.fullName || "").replace(/^(dr\.\s*)+/gi, ""); document.getElementById('docRole').innerText = doctor.role; document.getElementById('docId').innerText = doctor.doctorId; document.getElementById('loginScreen').classList.add('hidden'); document.getElementById('doctorBar').classList.remove('hidden'); document.getElementById('dashboardContent').classList.remove('hidden'); };
+const handleLogout = () => { localStorage.removeItem('vsr_logged_doctor'); document.getElementById('username').value = ""; document.getElementById('password').value = ""; document.getElementById('loginScreen').classList.remove('hidden'); document.getElementById('doctorBar').classList.add('hidden'); document.getElementById('dashboardContent').classList.add('hidden'); showToast("Logged out successfully."); };
+const fetchLatest = async () => { const saved = localStorage.getItem('vsr_logged_doctor'); if (!saved) return; const doc = JSON.parse(saved); const ri = document.getElementById('refreshIcon'); if (ri) ri.classList.add('animate-spin'); document.getElementById('opdBody').innerHTML = '<tr><td colspan="9" class="p-8 text-center text-slate-400 font-bold">Syncing...</td></tr>'; document.getElementById('checkedBody').innerHTML = '<tr><td colspan="9" class="p-8 text-center text-slate-400 font-bold">Syncing...</td></tr>'; document.getElementById('expensesBody').innerHTML = '<tr><td colspan="4" class="p-8 text-center text-slate-400 font-bold">Syncing...</td></tr>'; const res = await executeApiRequest({ action: "fetchRecords", doctorId: doc.doctorId }); if (ri) ri.classList.remove('animate-spin'); if (res.status === "success") { renderRecords(res.registeredToday || res.registered || [], res.patientsToday || res.patients || [], res.expensesToday || res.expenses || []); showToast("డేటా విజయవంతంగా రీఫ్రెష్ చేయబడింది!"); } else { showToast(res.message, true); } };
+const renderRecords = (reg, pat, exp) => { const all = [...(reg || []), ...(pat || [])]; const unique = {}; all.forEach(item => { if (item.pid) unique[item.pid] = item; }); const list = Object.values(unique); const opd = list.filter(item => (parseFloat(item.opdAmount) || 0) > 0); const chk = list.filter(item => (parseFloat(item.opdAmount) || 0) === 0); document.getElementById('statReg').innerText = list.length; document.getElementById('statChk').innerText = chk.length; document.getElementById('statOPD').innerText = opd.length; let sum = 0; opd.forEach(item => sum += (parseFloat(item.opdAmount) || 0)); document.getElementById('statCol').innerText = "₹" + sum.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); let expSum = 0; const expList = exp || []; expList.forEach(item => expSum += (parseFloat(item.amount) || 0)); document.getElementById('statExpenses').innerText = "₹" + expSum.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); renderTableRows('opdBody', opd, 'opdPaidBadge'); renderTableRows('checkedBody', chk, 'checkedBadge'); renderExpensesTable(expList); };
+const renderTableRows = (bodyId, dataList, badgeId) => { const body = document.getElementById(bodyId); const bCount = document.getElementById(badgeId); bCount.innerText = `${dataList.length} Patients`; if (dataList.length === 0) { body.innerHTML = '<tr><td colspan="9" class="py-8 text-center text-slate-400 font-bold">No records found.</td></tr>'; return; } body.innerHTML = dataList.map(item => `<tr class="hover:bg-slate-50 transition-colors border-b border-slate-100"><td class="py-2.5 px-4 font-extrabold text-blue-900">${item.tokenId || '-'}</td><td class="py-2.5 px-4 text-xs font-bold text-slate-500">${item.pid || '-'}</td><td class="py-2.5 px-4 text-slate-700 font-bold">${item.fullName || '-'}</td><td class="py-2.5 px-4 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-extrabold ${item.gender && item.gender.toUpperCase() === 'MALE' ? 'bg-blue-100 text-blue-700' : 'bg-pink-100 text-pink-700'}">${item.age} Y / ${item.gender}</span></td><td class="py-2.5 px-4 font-bold text-slate-500">${item.phoneNumber || '-'}</td><td class="py-2.5 px-4 text-slate-500 font-semibold">${item.village || '-'}</td><td class="py-2.5 px-4"><span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-[9px] font-bold">${item.section || '-'}</span></td><td class="py-2.5 px-4 text-center text-xs font-bold text-slate-400">${formatTime(item.time)}</td><td class="py-2.5 px-4 text-right"><div class="${item.remarks ? 'text-rose-600' : 'text-[#1e3a8a]'} font-bold">₹${(parseFloat(item.opdAmount) || 0).toFixed(2)}</div>${item.remarks ? `<div class="text-[9px] text-rose-500 italic font-bold mt-0.5">${item.remarks}</div>` : ''}</td></tr>`).join(''); };
+const renderExpensesTable = (expensesList) => { const body = document.getElementById('expensesBody'); const badge = document.getElementById('expensesBadge'); badge.innerText = `${expensesList.length} Records`; if (expensesList.length === 0) { body.innerHTML = '<tr><td colspan="4" class="py-8 text-center text-slate-400 font-bold">No expenses registered for today.</td></tr>'; return; } body.innerHTML = expensesList.map((item, idx) => `<tr class="hover:bg-slate-50 transition-colors border-b border-slate-100"><td class="py-2.5 px-4 font-bold text-slate-500">${idx + 1}</td><td class="py-2.5 px-4 text-center text-xs font-bold text-slate-400">${formatTime(item.time)}</td><td class="py-2.5 px-4 text-right font-extrabold text-rose-600">₹${(parseFloat(item.amount) || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td><td class="py-2.5 px-4 text-slate-700 font-bold">${item.reason || '-'}</td></tr>`).join(''); };
+window.onload = () => { const today = new Date(); const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']; const dd = String(today.getDate()).padStart(2, '0'); const mmm = months[today.getMonth()]; document.getElementById('liveDate').innerText = `${dd}-${mmm}-${today.getFullYear()}`; setInterval(updateLiveClock, 1000); updateLiveClock(); const saved = localStorage.getItem('vsr_logged_doctor'); if (saved) { setupView(JSON.parse(saved)); fetchLatest(); } };
+</script>
 </body>
 </html>

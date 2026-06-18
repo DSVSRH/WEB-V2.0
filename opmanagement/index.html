@@ -3,23 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Dr VSR OPD</title>
-
 <link rel="icon" type="image/png" href="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_02_FEVICON_ICON.png">
-
 <link rel="apple-touch-icon" href="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_02_FEVICON_ICON.png">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#1e3a8a">
-
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 <style>
-
-
-/* PART 01-GLOBAL STYLES */
 body { font-family: 'Roboto Slab', serif; background-color: #ffffff; margin: 0; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
 .dot-blink { height: 8px; width: 8px; background-color: #22c55e; border-radius: 50%; display: inline-block; animation: blink 1s infinite; margin-right: 5px; vertical-align: middle; }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
@@ -27,9 +19,6 @@ body { font-family: 'Roboto Slab', serif; background-color: #ffffff; margin: 0; 
 .no-print { display: table-cell; text-align: center; vertical-align: middle; }
 .login-input-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 14px; }
 .login-field { padding-left: 38px !important; }
-
-
-/* PART 02-REGISTRATION SECTION */
 #SVSR_REGISTRATION_MODULE:not(.hidden) { margin: 0; padding: 1rem 0; background-color: #ffffff; display: flex; flex-direction: column; width: 100%; overflow-x: hidden; }
 #SVSR_REGISTRATION_MODULE .framed-card { display: flex; flex-direction: row; width: 100%; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 30px rgba(10, 29, 74, 0.08); border: 1px solid #e2e8f0; overflow: hidden; min-height: 280px; }
 #SVSR_REGISTRATION_MODULE .content-area { width: 100%; display: flex; flex-direction: row; align-items: stretch; position: relative; padding: 15px; gap: 15px; }
@@ -53,9 +42,6 @@ body { font-family: 'Roboto Slab', serif; background-color: #ffffff; margin: 0; 
 @media (max-width: 1024px) { #SVSR_REGISTRATION_MODULE .framed-card { flex-direction: column; height: auto; } #SVSR_REGISTRATION_MODULE .content-area { flex-direction: column; padding: 15px; height: auto; } #SVSR_REGISTRATION_MODULE .order-form { width: 100%; order: 1; padding: 12px; } #SVSR_REGISTRATION_MODULE .sidebar-actions.show-flex { width: 100%; order: 2; flex-direction: row !important; border-left: none; border-top: 1px solid rgba(0,0,0,0.05); padding: 15px 0 0 0; margin-top: 15px; display: flex !important; } }
 * { font-family: 'Roboto Slab', serif; }
 .fa, .fas, .far, .fab, .fa-solid { font-family: "Font Awesome 6 Free" !important; font-weight: 900; }
-
-
-/* PART 03-MODAL AND PRINT STYLES */
 .modal-overlay { background: rgba(0,0,0,0.4); backdrop-filter: blur(2px); }
 @media print { @page { size: auto; margin: 0mm; } body { background: white; -webkit-print-color-adjust: exact; } .no-print, header, footer, #dashboard, #loginPanel, #loader, #toast, .modal-overlay, #SVSR_REGISTRATION_MODULE { display: none !important; } body.print-op-mode #printOpSlip { display: block !important; width: 100%; height: 100%; box-sizing: border-box; } body.print-receipt-mode #printPayReceipt { display: block !important; width: 68mm !important; max-height: 58mm !important; margin: 0 auto; box-sizing: border-box; overflow: hidden; } .print-main-box { border: 2px solid black; padding: 5mm; height: 28.2cm; box-sizing: border-box; position: relative; width: 100%; } .bottom-info-section { display: none !important; } }
 #printOpSlip { display: none; }
@@ -71,441 +57,32 @@ input[type=number] { -moz-appearance: textfield; }
 </head>
 <body>
 
-
 <!-- PART 04-HEADER SECTION -->
-<header class="bg-blue-50/20 border-b border-blue-100/60 p-3 no-print shadow-sm">
-<div class="w-full flex flex-col md:flex-row md:justify-between md:items-start px-2 gap-2">
-<div class="flex items-center space-x-3">
-<img src="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_01_HEDER_LOGO_MAIN.png" alt="Logo" class="h-16">
-<div class="pt-1">
-<h1 class="font-bold text-sm uppercase hd-text" style="color:#228BE6;">Dr. S. Venkata Subba Reddy MULTISPECIALTY Hospital</h1>
-<p class="text-[10px] font-bold uppercase tracking-tight" style="color:#228BE6;">SINCE 1989 - "Best Of Care, Close to Home"</p>
-<div class="patient-corner-box font-bold uppercase tracking-widest">PATIENT CORNER</div>
-</div>
-</div>
-<div class="text-left md:text-right pt-1 w-full md:w-auto">
-<div class="flex items-center justify-end text-gray-500 font-bold text-[10px] mb-1">
-<span class="dot-blink"></span> 24 * 7 LIVE TRACING
-</div>
-<div id="liveDateTime" class="text-[9px] font-bold text-blue-900 uppercase font-bold text-[10px] mb-1">Loading Time...</div>
-</div>
-</div>
-<div id="userBar" class="hidden justify-between items-center px-2 py-2 mt-2 border-t bg-gray-50">
-<div class="flex items-center space-x-2">
-<h2 id="branchHeading" class="text-[11px] font-bold text-blue-950 uppercase">Hospital</h2>
-<span class="text-gray-300">|</span>
-<span id="userNameDisp" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">User: --</span>
-</div>
-<div class="flex items-center space-x-3">
-<!-- Premium Circle Sync Indicator directly replaces old arrow buttons -->
-<button onclick="loadData(true)" id="reloadBtn" class="bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 p-2.5 rounded-full shadow-md border border-blue-100 transition-all duration-300 flex items-center justify-center active:scale-95" title="Live Database Status - Click to Force Sync">
-<span id="reloadIcon" class="relative flex h-3.5 w-3.5">
-<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-<span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500"></span>
-</span>
-</button>
-<button onclick="location.reload()" class="text-red-500 hover:text-red-700 transition transform active:scale-90 px-2" title="Logout">
-<i class="fas fa-power-off text-lg"></i>
-</button>
-</div>
-</div>
-</header>
-
+<header class="bg-blue-50/20 border-b border-blue-100/60 p-3 no-print shadow-sm"><div class="w-full flex flex-col md:flex-row md:justify-between md:items-start px-2 gap-2"><div class="flex items-center space-x-3"><img src="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_01_HEDER_LOGO_MAIN.png" alt="Logo" class="h-16"><div class="pt-1"><h1 class="font-bold text-sm uppercase hd-text" style="color:#228BE6;">Dr. S. Venkata Subba Reddy MULTISPECIALTY Hospital</h1><p class="text-[10px] font-bold uppercase tracking-tight" style="color:#228BE6;">SINCE 1989 - "Best Of Care, Close to Home"</p><div class="patient-corner-box font-bold uppercase tracking-widest">PATIENT CORNER</div></div></div><div class="text-left md:text-right pt-1 w-full md:w-auto"><div class="flex items-center justify-end text-gray-500 font-bold text-[10px] mb-1"><span class="dot-blink"></span> 24 * 7 LIVE TRACING</div><div id="liveDateTime" class="text-[9px] font-bold text-blue-900 uppercase font-bold text-[10px] mb-1">Loading Time...</div></div></div><div id="userBar" class="hidden justify-between items-center px-2 py-2 mt-2 border-t bg-gray-50"><div class="flex items-center space-x-2"><h2 id="branchHeading" class="text-[11px] font-bold text-blue-950 uppercase">Hospital</h2><span class="text-gray-300">|</span><span id="userNameDisp" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">User: --</span></div><div class="flex items-center space-x-3"><button onclick="loadData(true)" id="reloadBtn" class="bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 p-2.5 rounded-full shadow-md border border-blue-100 transition-all duration-300 flex items-center justify-center active:scale-95" title="Live Database Status - Click to Force Sync"><span id="reloadIcon" class="relative flex h-3.5 w-3.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500"></span></span></button><button onclick="logoutUser()" class="text-red-500 hover:text-red-700 transition transform active:scale-90 px-2" title="Logout"><i class="fas fa-power-off text-lg"></i></button></div></div></header>
 
 <!-- PART 05-LOADING AND UTILITY OVERLAYS -->
 <div id="toast">RECORD UPDATED</div>
-<div id="loader" class="fixed inset-0 bg-white/60 z-[100] hidden flex flex-col items-center justify-center">
-<div class="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-</div>
-
+<div id="loader" class="fixed inset-0 bg-white/60 z-[100] hidden flex flex-col items-center justify-center"><div class="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin"></div></div>
 
 <!-- PART 06-STAFF LOGIN PANEL -->
-<main id="loginPanel" class="flex-grow flex items-center justify-center bg-white p-4 relative z-50">
-<div class="w-full max-w-[320px] text-center">
-<img src="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_01_HEDER_LOGO_MAIN.png" class="h-16 mx-auto mb-6">
-<h2 class="text-2xl font-bold text-blue-900 uppercase mb-8 tracking-tight">STAFF LOGIN</h2>
-<div class="space-y-4 px-2">
-<div class="relative"><i class="fas fa-user login-input-icon"></i><input type="text" id="logId" placeholder="Login ID" oninput="this.value = this.value.toUpperCase().replace(/\s/g, '')" onkeydown="moveNext(event,'logPass')" class="w-full login-field py-3 bg-gray-50 border-2 border-gray-100 rounded-xl text-sm outline-none font-bold focus:border-blue-500 transition-all"></div>
-<div class="relative"><i class="fas fa-lock login-input-icon"></i><input type="password" id="logPass" placeholder="Password" onkeydown="submitLogin(event)" class="w-full login-field py-3 bg-gray-50 border-2 border-gray-100 rounded-xl text-sm outline-none font-bold focus:border-blue-500 transition-all"><button onclick="togglePass()" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600"><i id="eyeIcon" class="fas fa-eye"></i></button></div>
-<button onclick="doLogin()" id="loginBtn" class="w-full bg-blue-900 text-white font-bold py-3.5 rounded-xl hover:bg-blue-800 transition text-[12px] uppercase tracking-[3px] flex items-center justify-center shadow-lg"><span id="loginText">LOGIN</span><i id="loginSpin" class="fas fa-circle-notch fa-spin ml-2 hidden"></i></button>
-</div>
-<p id="err" class="text-red-500 text-[10px] mt-4 font-bold hidden"></p>
-</div>
-</main>
-
+<main id="loginPanel" class="flex-grow flex items-center justify-center bg-white p-4 relative z-50"><div class="w-full max-w-[320px] text-center"><img src="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_01_HEDER_LOGO_MAIN.png" class="h-16 mx-auto mb-6"><h2 class="text-2xl font-bold text-blue-900 uppercase mb-8 tracking-tight">STAFF LOGIN</h2><div class="space-y-4 px-2"><div class="relative"><i class="fas fa-user login-input-icon"></i><input type="text" id="logId" placeholder="Login ID" oninput="this.value = this.value.toUpperCase().replace(/\s/g, '')" onkeydown="moveNext(event,'logPass')" class="w-full login-field py-3 bg-gray-50 border-2 border-gray-100 rounded-xl text-sm outline-none font-bold focus:border-blue-500 transition-all"></div><div class="relative"><i class="fas fa-lock login-input-icon"></i><input type="password" id="logPass" placeholder="Password" onkeydown="submitLogin(event)" class="w-full login-field py-3 bg-gray-50 border-2 border-gray-100 rounded-xl text-sm outline-none font-bold focus:border-blue-500 transition-all"><button onclick="togglePass()" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600"><i id="eyeIcon" class="fas fa-eye"></i></button></div><button onclick="doLogin()" id="loginBtn" class="w-full bg-blue-900 text-white font-bold py-3.5 rounded-xl hover:bg-blue-800 transition text-[12px] uppercase tracking-[3px] flex items-center justify-center shadow-lg"><span id="loginText">LOGIN</span><i id="loginSpin" class="fas fa-circle-notch fa-spin ml-2 hidden"></i></button></div><p id="err" class="text-red-500 text-[10px] mt-4 font-bold hidden"></p></div></main>
 
 <!-- PART 07-OP REGISTRATION MODULE -->
-<section id="SVSR_REGISTRATION_MODULE" class="hidden w-full px-0 py-6 bg-white">
-<div class="framed-card w-full">
-<div class="content-area">
-<div id="loadingOverlay" class="loading-overlay">
-<div class="flex flex-col items-center gap-2">
-<div class="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-<p class="text-[10px] font-bold text-[#0a1d4a] uppercase">Processing Entry...</p>
-</div>
-</div>
-<div id="formContainer" class="order-form">
-<div id="headerSection" class="flex justify-between items-center mb-3">
-<div class="flex flex-col">
-<h1 class="text-sm lg:text-base font-black text-[#0a1d4a] uppercase tracking-tight leading-none">OP Registration Portal</h1>
-<div class="h-0.5 w-14 bg-blue-600 rounded-full mt-1"></div>
-</div>
-<div class="bg-red-600 text-white text-[9px] font-black px-2.5 py-0.5 rounded-sm flex items-center gap-1 shadow-sm uppercase tracking-wide">
-<span>LIVE TOKENS</span>
-<div class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
-</div>
-</div>
-<div id="inlineSuccessMessage" class="hidden flex-col items-center justify-center py-8 text-center">
-<div class="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-2">
-<i class="fas fa-check-circle text-2xl"></i>
-</div>
-<h3 class="text-sm font-black text-green-600 uppercase tracking-wider">Registration Successful</h3>
-<p class="text-[10px] text-gray-500 font-bold uppercase mt-1">Patient record has been saved successfully</p>
-</div>
-<form id="tokenForm" class="space-y-3">
-<div class="grid grid-cols-12 gap-2">
-<div class="col-span-12 lg:col-span-4 input-soft-ui">
-<div class="icon-overlay">
-<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-</div>
-<input type="date" id="formDate" required>
-</div>
-<div class="col-span-12 lg:col-span-8 relative">
-<div class="dropdown-trigger" onclick="toggleDropdown(event, 'branchOptions')">
-<span id="doctorDisplay">OBG Gynaecology (ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు)</span>
-<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg>
-</div>
-<div id="branchOptions" class="dropdown-options">
-<div class="dropdown-item" onclick="selectDrop('doctor', 'Orthopaedic', 'Orthopaedic (ఎముకల మరియు కీళ్ల వైద్య నిపునులు)', 'branchOptions')">Orthopaedic (ఎముకల మరియు కీళ్ల వైద్య నిపునులు)</div>
-<div class="dropdown-item" onclick="selectDrop('doctor', 'OPHTHALMOLOGY', 'Ophthalmology (కంటి వైద్య నిపునులు)', 'branchOptions')">Ophthalmology (కంటి వైద్య నిపునులు)</div>
-<div class="dropdown-item" onclick="selectDrop('doctor', 'Anesthesiology', 'Anesthesiology (అనస్థీషియాలజీ)', 'branchOptions')">Anesthesiology (అనస్థీషియాలజీ)</div>
-<div class="dropdown-item" onclick="selectDrop('doctor', 'OBGY – Gynaecology', 'OBG Gynaecology (ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు)', 'branchOptions')">OBG Gynaecology (ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు)</div>
-<div class="dropdown-item" onclick="selectDrop('doctor', 'Homeopathy', 'Homeopathy (హోమియోపతి వైద్యం)', 'branchOptions')">Homeopathy (హోమియోపతి వైద్యం)</div>
-<div class="dropdown-item" onclick="selectDrop('doctor', 'Gynaecology', 'Gynaecology (గైనకాలజీ )', 'branchOptions')">Gynaecology (గైనకాలజీ )</div>
-</div>
-<input type="hidden" id="doctor" value="OBGY – Gynaecology" required>
-</div>
-</div>
-<div class="grid grid-cols-12 gap-2">
-<div class="col-span-12 input-soft-ui">
-<div class="icon-overlay">
-<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-</div>
-<input type="text" id="patientName" placeholder="PATIENT FULL NAME" required oninput="handleTitleCase(this)">
-</div>
-</div>
-<div class="grid grid-cols-12 gap-2">
-<div class="col-span-4 lg:col-span-2 input-soft-ui">
-<div class="icon-overlay"><i class="fas fa-user-clock text-gray-500 text-xs"></i></div>
-<input type="number" id="age" placeholder="AGE" required style="padding-left:28px !important;">
-</div>
-<div class="col-span-8 lg:col-span-4 relative">
-<div class="dropdown-trigger" onclick="toggleDropdown(event, 'genderOptions')">
-<span id="genderDisplay">FEMALE</span>
-<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg>
-</div>
-<div id="genderOptions" class="dropdown-options">
-<div class="dropdown-item" onclick="selectDrop('gender', 'Male', 'MALE', 'genderOptions')">MALE</div>
-<div class="dropdown-item" onclick="selectDrop('gender', 'Female', 'FEMALE', 'genderOptions')">FEMALE</div>
-</div>
-<input type="hidden" id="gender" value="Female" required>
-</div>
-<div class="col-span-12 lg:col-span-6 input-soft-ui">
-<div class="icon-overlay">
-<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.79 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72(12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-</div>
-<input type="tel" id="phoneNumber" placeholder="MOBILE NUMBER (10 DIGITS)" pattern="[0-9]{10}" required>
-</div>
-</div>
-<div class="grid grid-cols-12 gap-2 items-center">
-<div class="col-span-7 input-soft-ui">
-<div class="icon-overlay"><i class="fas fa-location-dot text-gray-500 text-xs"></i></div>
-<input type="text" id="village" placeholder="VILLAGE / LOCATION" required oninput="handleTitleCase(this)">
-</div>
-<div class="col-span-2 input-soft-ui">
-<div class="icon-overlay"><i class="fas fa-indian-rupee-sign text-gray-500 text-xs"></i></div>
-<input type="number" id="amount" placeholder="AMOUNT">
-</div>
-<div class="col-span-3">
-<button type="submit" id="submitBtn" class="w-full btn-confirm flex items-center justify-center gap-2 py-2 text-xs font-semibold">
-<i class="fas fa-check-circle"></i> Confirm
-</button>
-</div>
-</div>
-</form>
-<div id="statusMessage" class="mt-2 text-center text-[10px] font-bold uppercase text-red-600 h-4"></div>
-</div>
-</div>
-</div>
-</section>
-
+<section id="SVSR_REGISTRATION_MODULE" class="hidden w-full px-0 py-6 bg-white"><div class="framed-card w-full"><div class="content-area"><div id="loadingOverlay" class="loading-overlay"><div class="flex flex-col items-center gap-2"><div class="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div><p class="text-[10px] font-bold text-[#0a1d4a] uppercase">Processing Entry...</p></div></div><div id="formContainer" class="order-form"><div id="headerSection" class="flex justify-between items-center mb-3"><div class="flex flex-col"><h1 class="text-sm lg:text-base font-black text-[#0a1d4a] uppercase tracking-tight leading-none">OP Registration Portal</h1><div class="h-0.5 w-14 bg-blue-600 rounded-full mt-1"></div></div><div class="bg-red-600 text-white text-[9px] font-black px-2.5 py-0.5 rounded-sm flex items-center gap-1 shadow-sm uppercase tracking-wide"><span>LIVE TOKENS</span><div class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div></div></div><div id="inlineSuccessMessage" class="hidden flex-col items-center justify-center py-8 text-center"><div class="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-2"><i class="fas fa-check-circle text-2xl"></i></div><h3 class="text-sm font-black text-green-600 uppercase tracking-wider">Registration Successful</h3><p class="text-[10px] text-gray-500 font-bold uppercase mt-1">Patient record has been saved successfully</p></div><form id="tokenForm" class="space-y-3"><div class="grid grid-cols-12 gap-2"><div class="col-span-12 lg:col-span-4 input-soft-ui"><div class="icon-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div><input type="date" id="formDate" required></div><div class="col-span-12 lg:col-span-8 relative"><div class="dropdown-trigger" onclick="toggleDropdown(event, 'branchOptions')"><span id="doctorDisplay">OBG Gynaecology (ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు)</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg></div><div id="branchOptions" class="dropdown-options"><div class="dropdown-item" onclick="selectDrop('doctor', 'Orthopaedic', 'Orthopaedic (ఎముకల మరియు కీళ్ల వైద్య నిపునులు)', 'branchOptions')">Orthopaedic (ఎముకల మరియు కీళ్ల వైద్య నిపునులు)</div><div class="dropdown-item" onclick="selectDrop('doctor', 'OPHTHALMOLOGY', 'Ophthalmology (కంటి వైద్య నిపునులు)', 'branchOptions')">Ophthalmology (కంటి వైద్య నిపునులు)</div><div class="dropdown-item" onclick="selectDrop('doctor', 'Anesthesiology', 'Anesthesiology (అనస్థీషియాలజీ)', 'branchOptions')">Anesthesiology (అనస్థీషియాలజీ)</div><div class="dropdown-item" onclick="selectDrop('doctor', 'OBGY – Gynaecology', 'OBG Gynaecology (ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు)', 'branchOptions')">OBG Gynaecology (ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు)</div><div class="dropdown-item" onclick="selectDrop('doctor', 'Homeopathy', 'Homeopathy (హోమియోపతి వైద్యం)', 'branchOptions')">Homeopathy (హోమియోపతి వైద్యం)</div><div class="dropdown-item" onclick="selectDrop('doctor', 'Gynaecology', 'Gynaecology (గైనకాలజీ )', 'branchOptions')">Gynaecology (గైనకాలజీ )</div></div><input type="hidden" id="doctor" value="OBGY – Gynaecology" required></div></div><div class="grid grid-cols-12 gap-2"><div class="col-span-12 input-soft-ui"><div class="icon-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><input type="text" id="patientName" placeholder="PATIENT FULL NAME" required oninput="handleTitleCase(this)"></div></div><div class="grid grid-cols-12 gap-2"><div class="col-span-4 lg:col-span-2 input-soft-ui"><div class="icon-overlay"><i class="fas fa-user-clock text-gray-500 text-xs"></i></div><input type="number" id="age" placeholder="AGE" required style="padding-left:28px !important;"></div><div class="col-span-8 lg:col-span-4 relative"><div class="dropdown-trigger" onclick="toggleDropdown(event, 'genderOptions')"><span id="genderDisplay">FEMALE</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg></div><div id="genderOptions" class="dropdown-options"><div class="dropdown-item" onclick="selectDrop('gender', 'Male', 'MALE', 'genderOptions')">MALE</div><div class="dropdown-item" onclick="selectDrop('gender', 'Female', 'FEMALE', 'genderOptions')">FEMALE</div></div><input type="hidden" id="gender" value="Female" required></div><div class="col-span-12 lg:col-span-6 input-soft-ui"><div class="icon-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.79 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72(12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div><input type="tel" id="phoneNumber" placeholder="MOBILE NUMBER (10 DIGITS)" pattern="[0-9]{10}" required></div></div><div class="grid grid-cols-12 gap-2 items-center"><div class="col-span-7 input-soft-ui"><div class="icon-overlay"><i class="fas fa-location-dot text-gray-500 text-xs"></i></div><input type="text" id="village" placeholder="VILLAGE / LOCATION" required oninput="handleTitleCase(this)"></div><div class="col-span-2 input-soft-ui"><div class="icon-overlay"><i class="fas fa-indian-rupee-sign text-gray-500 text-xs"></i></div><input type="number" id="amount" placeholder="AMOUNT"></div><div class="col-span-3"><button type="submit" id="submitBtn" class="w-full btn-confirm flex items-center justify-center gap-2 py-2 text-xs font-semibold"><i class="fas fa-check-circle"></i> Confirm</button></div></div></form><div id="statusMessage" class="mt-2 text-center text-[10px] font-bold uppercase text-red-600 h-4"></div></div></div></div></section>
 
 <!-- PART 08-PRINTING SLIPS TEMPLATES -->
-<div id="printOpSlip">
-<div class="print-main-box">
-<div style="position: relative; min-height: 2.8cm; border-bottom: 2px solid black; padding-bottom: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; width: 100%;">
-<img src="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_01_HEDER_LOGO_MAIN.png" style="position:absolute; left:15px; top:-12px; height:3.4cm;">
-<div style="width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-<h1 id="prHospitalName" style="font-size:19px; font-weight:bold; margin:0; text-transform:uppercase; color:#228BE6; line-height:1.2; white-space:nowrap; margin-left:80px;">DR. S. VENKATA SUBBA REDDY MULTISPECIALTY HOSPITAL</h1>
-<div style="font-size:19px; font-weight:bold; color:#228BE6; line-height:1.2; margin-top:2px; white-space:nowrap; margin-left:80px;">డా. ఎస్. వెంకట సుబ్బా రెడ్డి మల్టీ స్పెషాలిటీ హాస్పిటల్</div>
-<p style="font-size:13px; margin:3px 0 0 80px; font-weight:bold; color:#228BE6; white-space:nowrap;">SINCE 1989 - "Best Of Care, Close to Home"</p>
-<div id="doctorHeaderBox" style="width:100%; margin-top:8px; padding-top:8px;">
-<div style="display:flex; justify-content:space-between; gap:20px;">
-<div style="width:48%; text-align:left;">
-<div id="docEnName" style="font-size:14px; font-weight:bold;"></div>
-<div id="docEnRole" style="font-size:12px;"></div>
-<div id="docEnReg" style="font-size:11px;"></div>
-</div>
-<div style="width:48%; text-align:right;">
-<div id="docTeName" style="font-size:14px; font-weight:bold;"></div>
-<div id="docTeRole" style="font-size:12px;"></div>
-<div id="docTeReg" style="font-size:11px;"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0; border-bottom: 1px solid #ddd; padding-bottom: 3px;">
-<div id="prBranchName" style="font-size: 12px; font-weight: bold; text-transform: uppercase; color: #1e3a8a;">BRANCH HOSPITAL</div>
-<div id="prDateDay" style="font-size: 13px; font-weight: bold;">Date & Day</div>
-</div>
-<div style="display: flex; margin-top: 15px; font-size: 16px;">
-<div style="width: 55%; border-right: 1px solid #ddd; padding-right: 15px;">
-<div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-<div><strong>PID : </strong> <span id="prPID"></span></div>
-<div style="margin-right: 14px;"><strong>Token : </strong> <span id="prToken"></span></div>
-</div>
-<div style="margin-bottom: 6px;"><strong>Name : </strong> <span id="prName" style="text-transform: uppercase;"></span></div>
-<div style="margin-bottom: 7px;"><strong>Age/Gender : </strong> <span id="prAgeGen"></span></div>
-<div style="margin-bottom: 11px;"><strong>Village : </strong> <span id="rprVillage"></span></div>
-<div style="margin-top: 20px;">
-<h3 style="font-weight: bold; font-size: 11px; border-bottom: 1px solid #000; display: inline-block;">CONSULTANT:</h3>
-<div style="margin-top: 4px;"><strong><span id="prDocName"></span></strong> (<span id="prDocRole"></span>)</div>
-</div>
-</div>
-<div style="width: 45%; padding-left: 50px;">
-<div style="display: flex; margin-bottom: 6px;"><strong>ML : </strong> <span style="margin-left: auto;">..................</span></div>
-<div style="display: flex; margin-bottom: 6px;"><strong>MH : </strong> <span style="margin-left: auto;">..................</span></div>
-<div style="display: flex; margin-bottom: 6px;"><strong>LMP : </strong> <span style="margin-left: auto;">..................</span></div>
-<div style="display: flex; margin-bottom: 6px;"><strong>EDD : </strong> <span style="margin-left: auto;">..................</span></div>
-<div style="display: flex; margin-bottom: 6px;"><strong>B.P : </strong> <span style="margin-left: auto;">......... / .........</span></div>
-<div style="display: flex; margin-bottom: 6px;"><strong>Weight : </strong> <span style="margin-left: auto;">.................. kg</span></div>
-<div style="display: flex; margin-bottom: 6px;"><strong>Temp : </strong> <span style="margin-left: auto;">.................. F</span></div>
-<div style="display: flex; margin-bottom: 6px;"><strong>PR : </strong> <span style="margin-left: auto;">.................. bpm</span></div>
-</div>
-</div>
-<div style="position: absolute; bottom: 8mm; left: 8mm; right: 8mm;">
-<div style="display: flex; justify-content: space-between; align-items: flex-end;">
-<div style="font-size: 10px; font-weight: bold;"><i class="fas fa-phone-alt"></i> 9063307444 <br> <i class="fas fa-globe"></i> www.drvsrhospital.in</div>
-<div style="text-align: center;">
-<div style="width: 3.5cm; border-top: 1px solid black; margin-bottom: 4px;"></div>
-<p style="font-size: 12px; font-weight: bold; margin: 0;">Doctor Signature</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="printPayReceipt">
-<div style="width: 68mm; max-height: 58mm; margin: 0 auto; padding: 1mm; font-family: 'Roboto Slab', serif; text-align: center; color: black; line-height: 1.1; border: 1px dashed black; box-sizing: border-box; overflow: hidden; font-size: 8px;">
-<div style="font-size: 9px; font-weight: bold; text-transform: uppercase;">Dr. S. Venkata Subba Reddy MULTISPECIALTY Hospital</div>
-<div style="font-size: 8px; font-weight: bold; margin-bottom: 2px;">Allagadda</div>
-<div style="border-top: 1px dashed black; border-bottom: 1px dashed black; padding: 2px 0; margin: 2px 0;">
-<div style="font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">TOKEN NO</div>
-<div id="rcptTokenBig" style="font-size: 32px; font-weight: 900; margin: 1px 0; line-height: 1;">08</div>
-</div>
-<div style="text-align: left; font-size: 8px; margin: 4px 0; line-height: 1.2;">
-<div style="margin-bottom: 2px;"><strong>PATIENT NAME:</strong> <span id="rcptName" style="text-transform: uppercase;"></span></div>
-<div style="margin-bottom: 2px;"><strong>VILLAGE:</strong> <span id="rcptVillage" style="text-transform: uppercase;"></span></div>
-<div style="margin-bottom: 2px;"><strong>AGE/GENDER:</strong> <span id="rcptAgeGen"></span></div>
-<div style="margin-bottom: 2px;"><strong>PID:</strong> <span id="rcptPID"></span></div>
-</div>
-<div style="border-top: 1px dashed black; padding-top: 4px; margin-top: 4px; font-size: 9px; font-weight: bold; text-transform: uppercase;">
-OP AMOUNT <span id="rcptAmt">100</span> PAID
-</div>
-<div style="margin-top: 4px; font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">THANKYOU</div>
-</div>
-</div>
-
+<div id="printOpSlip"><div class="print-main-box"><div style="position: relative; min-height: 2.8cm; border-bottom: 2px solid black; padding-bottom: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; width: 100%;"><img src="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_01_HEDER_LOGO_MAIN.png" style="position:absolute; left:15px; top:-12px; height:3.4cm;"><div style="width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;"><h1 id="prHospitalName" style="font-size:19px; font-weight:bold; margin:0; text-transform:uppercase; color:#228BE6; line-height:1.2; white-space:nowrap; margin-left:80px;">DR. S. VENKATA SUBBA REDDY MULTISPECIALTY HOSPITAL</h1><div style="font-size:19px; font-weight:bold; color:#228BE6; line-height:1.2; margin-top:2px; white-space:nowrap; margin-left:80px;">డా. ఎస్. వెంకట సుబ్బా రెడ్డి మల్టీ స్పెషాలిటీ హాస్పిటల్</div><p style="font-size:13px; margin:3px 0 0 80px; font-weight:bold; color:#228BE6; white-space:nowrap;">SINCE 1989 - "Best Of Care, Close to Home"</p><div id="doctorHeaderBox" style="width:100%; margin-top:8px; padding-top:8px;"><div style="display:flex; justify-content:space-between; gap:20px;"><div style="width:48%; text-align:left;"><div id="docEnName" style="font-size:14px; font-weight:bold;"></div><div id="docEnRole" style="font-size:12px;"></div><div id="docEnReg" style="font-size:11px;"></div></div><div style="width:48%; text-align:right;"><div id="docTeName" style="font-size:14px; font-weight:bold;"></div><div id="docTeRole" style="font-size:12px;"></div><div id="docTeReg" style="font-size:11px;"></div></div></div></div></div></div></div><div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0; border-bottom: 1px solid #ddd; padding-bottom: 3px;"><div id="prBranchName" style="font-size: 12px; font-weight: bold; text-transform: uppercase; color: #1e3a8a;">BRANCH HOSPITAL</div><div id="prDateDay" style="font-size: 13px; font-weight: bold;">Date & Day</div></div><div style="display: flex; margin-top: 15px; font-size: 16px;"><div style="width: 55%; border-right: 1px solid #ddd; padding-right: 15px;"><div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><div><strong>PID : </strong> <span id="prPID"></span></div><div style="margin-right: 14px;"><strong>Token : </strong> <span id="prToken"></span></div></div><div style="margin-bottom: 6px;"><strong>Name : </strong> <span id="prName" style="text-transform: uppercase;"></span></div><div style="margin-bottom: 7px;"><strong>Age/Gender : </strong> <span id="prAgeGen"></span></div><div style="margin-bottom: 11px;"><strong>Village : </strong> <span id="rprVillage"></span></div><div style="margin-top: 20px;"><h3 style="font-weight: bold; font-size: 11px; border-bottom: 1px solid #000; display: inline-block;">CONSULTANT:</h3><div style="margin-top: 4px;"><strong><span id="prDocName"></span></strong> (<span id="prDocRole"></span>)</div></div></div><div style="width: 45%; padding-left: 50px;"><div style="display: flex; margin-bottom: 6px;"><strong>ML : </strong> <span style="margin-left: auto;">..................</span></div><div style="display: flex; margin-bottom: 6px;"><strong>MH : </strong> <span style="margin-left: auto;">..................</span></div><div style="display: flex; margin-bottom: 6px;"><strong>LMP : </strong> <span style="margin-left: auto;">..................</span></div><div style="display: flex; margin-bottom: 6px;"><strong>EDD : </strong> <span style="margin-left: auto;">..................</span></div><div style="display: flex; margin-bottom: 6px;"><strong>B.P : </strong> <span style="margin-left: auto;">......... / .........</span></div><div style="display: flex; margin-bottom: 6px;"><strong>Weight : </strong> <span style="margin-left: auto;">.................. kg</span></div><div style="display: flex; margin-bottom: 6px;"><strong>Temp : </strong> <span style="margin-left: auto;">.................. F</span></div><div style="display: flex; margin-bottom: 6px;"><strong>PR : </strong> <span style="margin-left: auto;">.................. bpm</span></div></div></div><div style="position: absolute; bottom: 8mm; left: 8mm; right: 8mm;"><div style="display: flex; justify-content: space-between; align-items: flex-end;"><div style="font-size: 10px; font-weight: bold;"><i class="fas fa-phone-alt"></i> 9063307444 <br> <i class="fas fa-globe"></i> www.drvsrhospital.in</div><div style="text-align: center;"><div style="width: 3.5cm; border-top: 1px solid black; margin-bottom: 4px;"></div><p style="font-size: 12px; font-weight: bold; margin: 0;">Doctor Signature</p></div></div></div></div></div></div>
+<div id="printPayReceipt"><div style="width: 68mm; max-height: 58mm; margin: 0 auto; padding: 1mm; font-family: 'Roboto Slab', serif; text-align: center; color: black; line-height: 1.1; border: 1px dashed black; box-sizing: border-box; overflow: hidden; font-size: 8px;"><div style="font-size: 9px; font-weight: bold; text-transform: uppercase;">Dr. S. Venkata Subba Reddy MULTISPECIALTY Hospital</div><div style="font-size: 8px; font-weight: bold; margin-bottom: 2px;">Allagadda</div><div style="border-top: 1px dashed black; border-bottom: 1px dashed black; padding: 2px 0; margin: 2px 0;"><div style="font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">TOKEN NO</div><div id="rcptTokenBig" style="font-size: 32px; font-weight: 900; margin: 1px 0; line-height: 1;">08</div></div><div style="text-align: left; font-size: 8px; margin: 4px 0; line-height: 1.2;"><div style="margin-bottom: 2px;"><strong>PATIENT NAME:</strong> <span id="rcptName" style="text-transform: uppercase;"></span></div><div style="margin-bottom: 2px;"><strong>VILLAGE:</strong> <span id="rcptVillage" style="text-transform: uppercase;"></span></div><div style="margin-bottom: 2px;"><strong>AGE/GENDER:</strong> <span id="rcptAgeGen"></span></div><div style="margin-bottom: 2px;"><strong>PID:</strong> <span id="rcptPID"></span></div></div><div style="border-top: 1px dashed black; padding-top: 4px; margin-top: 4px; font-size: 9px; font-weight: bold; text-transform: uppercase;">OP AMOUNT <span id="rcptAmt">100</span> PAID</div><div style="margin-top: 4px; font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">THANKYOU</div></div></div>
 
 <!-- PART 09-DASHBOARD AND FOOTER -->
-<div id="dashboard" class="hidden flex-grow bg-white">
-<div class="w-full">
-<div class="w-full overflow-hidden border border-gray-200 rounded-lg bg-white mb-8 shadow-sm">
-<div class="bg-blue-100/30 p-3 text-[12px] font-bold text-blue-900 flex justify-between items-center px-4 border-b border-blue-100">
-<div class="flex gap-2 items-center">
-<i class="fas fa-calendar-day text-blue-500"></i>
-<span>TODAY OPs</span>
-</div>
-<span id="todayCounter" class="text-[10px] bg-red-100 text-red-700 px-2.5 py-0.5 rounded-full font-bold">Pending Members: 0</span>
-</div>
-<table class="w-full compact-table">
-<thead class="bg-gray-50 text-gray-400 uppercase text-[8px] font-bold">
-<tr><th>S.No</th><th>Date</th><th>PID</th><th>Token</th><th>Patient Name</th><th>Phone</th><th>Age/Gen</th><th>Village</th><th>Doc ID</th><th>OPD Amount</th><th>DELETE</th></tr>
-</thead>
-<tbody id="todayBody"></tbody>
-</table>
-</div>
-<div id="opdPaidContainer" class="w-full">
-<div id="morningCard" class="w-full overflow-hidden border border-gray-200 rounded-lg bg-white mb-8 shadow-sm">
-<div class="bg-blue-100/30 p-3 text-[12px] font-bold text-blue-900 flex justify-between items-center px-4 border-b border-blue-100">
-<div class="flex gap-2 items-center">
-<i class="fas fa-sun text-yellow-500"></i>
-<span>MORNING OPD PAID LIST</span>
-</div>
-<span id="morningCounter" class="text-[10px] bg-green-100 text-green-700 px-2.5 py-0.5 rounded-full font-bold">Paid: 0 | Total: ₹0</span>
-</div>
-<table class="w-full compact-table">
-<thead class="bg-gray-50 text-gray-400 uppercase text-[8px] font-bold">
-<tr><th>S.No</th><th>Date</th><th>PID</th><th>Token</th><th>Patient Name</th><th>Phone</th><th>Age/Gen</th><th>Village</th><th>Doc ID</th><th>OPD Amount</th><th>PRINT</th><th>RECIPT</th></tr>
-</thead>
-<tbody id="morningPaidBody"></tbody>
-</table>
-</div>
-<div id="eveningCard" class="w-full overflow-hidden border border-gray-200 rounded-lg bg-white mb-8 shadow-sm">
-<div class="bg-blue-100/30 p-3 text-[12px] font-bold text-blue-900 flex justify-between items-center px-4 border-b border-blue-100">
-<div class="flex gap-2 items-center">
-<i class="fas fa-moon text-indigo-500"></i>
-<span>EVENING OPD PAID LIST</span>
-</div>
-<span id="eveningCounter" class="text-[10px] bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full font-bold">Paid: 0 | Total: ₹0</span>
-</div>
-<table class="w-full compact-table">
-<thead class="bg-gray-50 text-gray-400 uppercase text-[8px] font-bold">
-<tr><th>S.No</th><th>Date</th><th>PID</th><th>Token</th><th>Patient Name</th><th>Phone</th><th>Age/Gen</th><th>Village</th><th>Doc ID</th><th>OPD Amount</th><th>PRINT</th><th>RECIPT</th></tr>
-</thead>
-<tbody id="eveningPaidBody"></tbody>
-</table>
-</div>
-</div>
-<div class="w-full overflow-hidden border border-gray-200 rounded-lg bg-white mb-8 shadow-sm">
-<div class="bg-blue-100/30 p-3 text-[12px] font-bold text-blue-900 flex justify-between items-center px-4 border-b border-blue-100">
-<div class="flex gap-2 items-center">
-<i class="fas fa-user-edit text-blue-600"></i>
-<span>OPD MODIFICATION</span>
-</div>
-<div class="flex gap-2 items-center">
-<input type="text" id="pidInput" placeholder="Enter Patient ID" class="px-2 py-1 text-[10px] border border-blue-200 rounded focus:outline-none focus:ring-1 focus:ring-blue-400">
-<button onclick="verifyPatient()" class="bg-blue-600 text-white px-3 py-1 text-[10px] font-bold rounded hover:bg-blue-700">VERIFY</button>
-</div>
-</div>
-<div class="p-5" id="modificationDetails">
-<div class="flex flex-col md:flex-row gap-8">
-<div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 text-[12px]">
-<div class="flex items-center justify-between border-b border-gray-100 pb-2">
-<span class="font-bold text-gray-700 w-1/3">Patient Name</span>
-<span class="text-gray-600 flex-1 px-3 text-center bg-gray-50 rounded h-6">--</span>
-<button class="text-blue-500 hover:text-blue-700 ml-3" title="Edit"><i class="fas fa-pencil-alt"></i></button>
-</div>
-<div class="flex items-center justify-between border-b border-gray-100 pb-2">
-<span class="font-bold text-gray-700 w-1/3">Village</span>
-<span class="text-gray-600 flex-1 px-3 text-center bg-gray-50 rounded h-6">--</span>
-<button class="text-blue-500 hover:text-blue-700 ml-3" title="Edit"><i class="fas fa-pencil-alt"></i></button>
-</div>
-<div class="flex items-center justify-between border-b border-gray-100 pb-2">
-<span class="font-bold text-gray-700 w-1/3">Phone</span>
-<span class="text-gray-600 flex-1 px-3 text-center bg-gray-50 rounded h-6">--</span>
-<button class="text-blue-500 hover:text-blue-700 ml-3" title="Edit"><i class="fas fa-pencil-alt"></i></button>
-</div>
-<div class="flex items-center justify-between border-b border-gray-100 pb-2">
-<span class="font-bold text-gray-700 w-1/3">Doc ID</span>
-<span class="text-gray-600 flex-1 px-3 text-center bg-gray-50 rounded h-6">--</span>
-<button class="text-blue-500 hover:text-blue-700 ml-3" title="Edit"><i class="fas fa-pencil-alt"></i></button>
-</div>
-<div class="flex items-center justify-between border-b border-gray-100 pb-2">
-<span class="font-bold text-gray-700 w-1/3">Age/Gen</span>
-<span class="text-gray-600 flex-1 px-3 text-center bg-gray-50 rounded h-6">--</span>
-<button class="text-blue-500 hover:text-blue-700 ml-3" title="Edit"><i class="fas fa-pencil-alt"></i></button>
-</div>
-<div class="flex items-center justify-between border-b border-gray-100 pb-2">
-<span class="font-bold text-gray-700 w-1/3">OPD Amount</span>
-<span class="text-gray-600 flex-1 px-3 text-center bg-gray-50 rounded h-6">--</span>
-<button class="text-blue-500 hover:text-blue-700 ml-3" title="Edit"><i class="fas fa-pencil-alt"></i></button>
-</div>
-</div>
-<div class="w-full md:w-1/3">
-<label class="block font-bold text-gray-700 text-[12px] mb-2 uppercase">REASON</label>
-<textarea class="w-full border border-gray-300 rounded p-3 text-[12px] focus:outline-none focus:ring-1 focus:ring-blue-400" rows="5" id="modReason" placeholder="Enter reason for modification"></textarea>
-<div class="mt-4 flex justify-end">
-<button onclick="submitModification()" class="bg-blue-600 text-white px-5 py-2 text-[12px] font-bold rounded hover:bg-blue-700 transition-colors">UPDATE</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="w-full overflow-hidden border border-gray-200 rounded-lg bg-white mb-8 shadow-sm">
-<div class="bg-blue-100/30 p-3 text-[12px] font-bold text-blue-900 flex gap-2 items-center px-4 border-b border-blue-100">
-<i class="fas fa-calendar-alt text-purple-500"></i>
-<span>FUTURE REGISTERED OPs</span>
-</div>
-<table class="w-full compact-table">
-<thead class="bg-gray-50 text-gray-400 uppercase text-[8px] font-bold">
-<tr><th>S.No</th><th>Date</th><th>PID</th><th>Token</th><th>Patient Name</th><th>Phone</th><th>Age/Gen</th><th>Village</th><th>Doc ID</th><th>OPD Amount</th><th>DELETE</th></tr>
-</thead>
-<tbody id="futureRegisteredBody"></tbody>
-</table>
-</div>
+<div id="dashboard" class="hidden flex-grow bg-white"><div class="w-full"><div class="w-full overflow-hidden border border-gray-200 rounded-lg bg-white mb-8 shadow-sm"><div class="bg-blue-100/30 p-3 text-[12px] font-bold text-blue-900 flex justify-between items-center px-4 border-b border-blue-100"><div class="flex gap-2 items-center"><i class="fas fa-calendar-day text-blue-500"></i><span>TODAY OPs</span></div><span id="todayCounter" class="text-[10px] bg-red-100 text-red-700 px-2.5 py-0.5 rounded-full font-bold">Pending Members: 0</span></div><table class="w-full compact-table"><thead class="bg-gray-50 text-gray-400 uppercase text-[8px] font-bold"><tr><th>S.No</th><th>Date</th><th>PID</th><th>Token</th><th>Patient Name</th><th>Phone</th><th>Age/Gen</th><th>Village</th><th>Doc ID</th><th>OPD Amount</th><th>DELETE</th></tr></thead><tbody id="todayBody"></tbody></table></div><div id="opdPaidContainer" class="w-full"><div id="morningCard" class="w-full overflow-hidden border border-gray-200 rounded-lg bg-white mb-8 shadow-sm"><div class="bg-blue-100/30 p-3 text-[12px] font-bold text-blue-900 flex justify-between items-center px-4 border-b border-blue-100"><div class="flex gap-2 items-center"><i class="fas fa-sun text-yellow-500"></i><span>MORNING OPD PAID LIST</span></div><span id="morningCounter" class="text-[10px] bg-green-100 text-green-700 px-2.5 py-0.5 rounded-full font-bold">Paid: 0 | Total: ₹0</span></div><table class="w-full compact-table"><thead class="bg-gray-50 text-gray-400 uppercase text-[8px] font-bold"><tr><th>S.No</th><th>Date</th><th>PID</th><th>Token</th><th>Patient Name</th><th>Phone</th><th>Age/Gen</th><th>Village</th><th>Doc ID</th><th>OPD Amount</th><th>PRINT</th><th>RECIPT</th></tr></thead><tbody id="morningPaidBody"></tbody></table></div><div id="eveningCard" class="w-full overflow-hidden border border-gray-200 rounded-lg bg-white mb-8 shadow-sm"><div class="bg-blue-100/30 p-3 text-[12px] font-bold text-blue-900 flex justify-between items-center px-4 border-b border-blue-100"><div class="flex gap-2 items-center"><i class="fas fa-moon text-indigo-500"></i><span>EVENING OPD PAID LIST</span></div><span id="eveningCounter" class="text-[10px] bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full font-bold">Paid: 0 | Total: ₹0</span></div><table class="w-full compact-table"><thead class="bg-gray-50 text-gray-400 uppercase text-[8px] font-bold"><tr><th>S.No</th><th>Date</th><th>PID</th><th>Token</th><th>Patient Name</th><th>Phone</th><th>Age/Gen</th><th>Village</th><th>Doc ID</th><th>OPD Amount</th><th>PRINT</th><th>RECIPT</th></tr></thead><tbody id="eveningPaidBody"></tbody></table></div></div><div class="w-full overflow-hidden border border-gray-200 rounded-lg bg-white mb-8 shadow-sm"><div class="bg-blue-100/30 p-3 text-[12px] font-bold text-blue-900 flex justify-between items-center px-4 border-b border-blue-100"><div class="flex gap-2 items-center"><i class="fas fa-user-edit text-blue-600"></i><span>OPD MODIFICATION</span></div><div class="flex gap-2 items-center"><input type="text" id="pidInput" placeholder="Enter Patient ID" class="px-2 py-1 text-[10px] border border-blue-200 rounded focus:outline-none focus:ring-1 focus:ring-blue-400"><button onclick="verifyPatient()" class="bg-blue-600 text-white px-3 py-1 text-[10px] font-bold rounded hover:bg-blue-700">VERIFY</button></div></div><div class="p-5" id="modificationDetails"><div class="flex flex-col md:flex-row gap-8"><div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 text-[12px]"><div class="flex items-center justify-between border-b border-gray-100 pb-2"><span class="font-bold text-gray-700 w-1/3">Patient Name</span><span class="text-gray-600 flex-1 px-3 text-center bg-gray-50 rounded h-6">--</span><button class="text-blue-500 hover:text-blue-700 ml-3" title="Edit"><i class="fas fa-pencil-alt"></i></button></div><div class="flex items-center justify-between border-b border-gray-100 pb-2"><span class="font-bold text-gray-700 w-1/3">Village</span><span class="text-gray-600 flex-1 px-3 text-center bg-gray-50 rounded h-6">--</span><button class="text-blue-500 hover:text-blue-700 ml-3" title="Edit"><i class="fas fa-pencil-alt"></i></button></div><div class="flex items-center justify-between border-b border-gray-100 pb-2"><span class="font-bold text-gray-700 w-1/3">Phone</span><span class="text-gray-600 flex-1 px-3 text-center bg-gray-50 rounded h-6">--</span><button class="text-blue-500 hover:text-blue-700 ml-3" title="Edit"><i class="fas fa-pencil-alt"></i></button></div><div class="flex items-center justify-between border-b border-gray-100 pb-2"><span class="font-bold text-gray-700 w-1/3">Doc ID</span><span class="text-gray-600 flex-1 px-3 text-center bg-gray-50 rounded h-6">--</span><button class="text-blue-500 hover:text-blue-700 ml-3" title="Edit"><i class="fas fa-pencil-alt"></i></button></div><div class="flex items-center justify-between border-b border-gray-100 pb-2"><span class="font-bold text-gray-700 w-1/3">Age/Gen</span><span class="text-gray-600 flex-1 px-3 text-center bg-gray-50 rounded h-6">--</span><button class="text-blue-500 hover:text-blue-700 ml-3" title="Edit"><i class="fas fa-pencil-alt"></i></button></div><div class="flex items-center justify-between border-b border-gray-100 pb-2"><span class="font-bold text-gray-700 w-1/3">OPD Amount</span><span class="text-gray-600 flex-1 px-3 text-center bg-gray-50 rounded h-6">--</span><button class="text-blue-500 hover:text-blue-700 ml-3" title="Edit"><i class="fas fa-pencil-alt"></i></button></div></div><div class="w-full md:w-1/3"><label class="block font-bold text-gray-700 text-[12px] mb-2 uppercase">REASON</label><textarea class="w-full border border-gray-300 rounded p-3 text-[12px] focus:outline-none focus:ring-1 focus:ring-blue-400" rows="5" id="modReason" placeholder="Enter reason for modification"></textarea><div class="mt-4 flex justify-end"><button onclick="submitModification()" class="bg-blue-600 text-white px-5 py-2 text-[12px] font-bold rounded hover:bg-blue-700 transition-colors">UPDATE</button></div></div></div></div></div><div class="w-full overflow-hidden border border-gray-200 rounded-lg bg-white mb-8 shadow-sm"><div class="bg-blue-100/30 p-3 text-[12px] font-bold text-blue-900 flex gap-2 items-center px-4 border-b border-blue-100"><i class="fas fa-calendar-alt text-purple-500"></i><span>FUTURE REGISTERED OPs</span></div><table class="w-full compact-table"><thead class="bg-gray-50 text-gray-400 uppercase text-[8px] font-bold"><tr><th>S.No</th><th>Date</th><th>PID</th><th>Token</th><th>Patient Name</th><th>Phone</th><th>Age/Gen</th><th>Village</th><th>Doc ID</th><th>OPD Amount</th><th>DELETE</th></tr></thead><tbody id="futureRegisteredBody"></tbody></table></div><div class="w-full overflow-hidden border border-gray-200 rounded-2xl bg-white mb-8 shadow-sm"><div class="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 p-4 text-[12px] font-bold text-emerald-950 flex gap-2 items-center px-5 border-b border-emerald-100/60"><i class="fas fa-wallet text-emerald-600 text-sm animate-pulse"></i><span class="tracking-wide">HOSPITAL DAILY EXPENSES MODULE</span></div><div class="p-6 bg-slate-50/50"><div class="flex flex-col lg:flex-row gap-4 items-end"><div class="w-full lg:w-1/4"><label class="block font-bold text-slate-700 text-[10px] uppercase mb-1.5 tracking-wider">Expense Amount (₹)</label><div class="relative bg-white border border-slate-200 rounded-xl shadow-inner flex items-center px-3.5 py-2.5 gap-2.5 focus-within:ring-2 focus-within:ring-emerald-500/20 focus-within:border-emerald-500 transition-all"><i class="fas fa-indian-rupee-sign text-emerald-600 text-xs"></i><input type="number" id="expenseAmount" placeholder="0.00" class="w-full bg-transparent outline-none text-xs font-bold text-slate-800 border-none p-0 focus:ring-0"></div></div><div class="flex-1 w-full"><label class="block font-bold text-slate-700 text-[10px] uppercase mb-1.5 tracking-wider">Expense Reason / Category Details</label><div class="relative bg-white border border-slate-200 rounded-xl shadow-inner flex items-center px-3.5 py-2.5 gap-2.5 focus-within:ring-2 focus-within:ring-emerald-500/20 focus-within:border-emerald-500 transition-all"><i class="fas fa-file-invoice text-emerald-600 text-xs"></i><input type="text" id="expenseReason" placeholder="Describe the reason for this expenditure..." class="w-full bg-transparent outline-none text-xs font-bold text-slate-800 border-none p-0 focus:ring-0"></div></div><div class="w-full lg:w-auto"><button onclick="submitExpense()" class="w-full lg:w-auto bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-2.5 text-[11px] font-black uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-600/20 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"><i class="fas fa-paper-plane"></i> Record Expense</button></div></div></div></div><footer class="footer-always no-print"><p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest text-center">&#9400; 2026 All Rights Reserved | Dr. S. Venkata Subba Reddy Multispeciality Hospital | Architected by Sri Veda Org.</p></footer><div id="confirmModal" class="fixed inset-0 modal-overlay z-[200] hidden flex items-center justify-center p-4"><div class="bg-white rounded-2xl p-6 max-w-[280px] w-full text-center shadow-2xl border border-gray-100"><div id="modalIconBox" class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"></div><h4 id="modalTitle" class="font-bold text-gray-900 mb-2 uppercase text-[11px] tracking-tight">Title</h4><p id="modalMsg" class="text-[10px] text-gray-500 mb-6 leading-relaxed">Message</p><div class="flex space-x-3"><button onclick="closeModal()" class="flex-1 py-2.5 bg-gray-100 rounded-xl text-[10px] font-bold text-gray-600 hover:bg-gray-200 transition uppercase">No</button><button id="finalConfirm" class="flex-1 py-2.5 text-white rounded-xl text-[10px] font-bold shadow-lg transition uppercase">Yes</button></div></div></div></div></div>
 
-<!-- PART 09.5 - EXPENSES MODULE (HD DESIGNED) -->
-<div class="w-full overflow-hidden border border-gray-200 rounded-2xl bg-white mb-8 shadow-sm">
-<div class="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 p-4 text-[12px] font-bold text-emerald-950 flex gap-2 items-center px-5 border-b border-emerald-100/60">
-<i class="fas fa-wallet text-emerald-600 text-sm animate-pulse"></i>
-<span class="tracking-wide">HOSPITAL DAILY EXPENSES MODULE</span>
-</div>
-<div class="p-6 bg-slate-50/50">
-<div class="flex flex-col lg:flex-row gap-4 items-end">
-  <div class="w-full lg:w-1/4">
-    <label class="block font-bold text-slate-700 text-[10px] uppercase mb-1.5 tracking-wider">Expense Amount (₹)</label>
-    <div class="relative bg-white border border-slate-200 rounded-xl shadow-inner flex items-center px-3.5 py-2.5 gap-2.5 focus-within:ring-2 focus-within:ring-emerald-500/20 focus-within:border-emerald-500 transition-all">
-      <i class="fas fa-indian-rupee-sign text-emerald-600 text-xs"></i>
-      <input type="number" id="expenseAmount" placeholder="0.00" class="w-full bg-transparent outline-none text-xs font-bold text-slate-800 border-none p-0 focus:ring-0">
-    </div>
-  </div>
-  <div class="flex-1 w-full">
-    <label class="block font-bold text-slate-700 text-[10px] uppercase mb-1.5 tracking-wider">Expense Reason / Category Details</label>
-    <div class="relative bg-white border border-slate-200 rounded-xl shadow-inner flex items-center px-3.5 py-2.5 gap-2.5 focus-within:ring-2 focus-within:ring-emerald-500/20 focus-within:border-emerald-500 transition-all">
-      <i class="fas fa-file-invoice text-emerald-600 text-xs"></i>
-      <input type="text" id="expenseReason" placeholder="Describe the reason for this expenditure..." class="w-full bg-transparent outline-none text-xs font-bold text-slate-800 border-none p-0 focus:ring-0">
-    </div>
-  </div>
-  <div class="w-full lg:w-auto">
-    <button onclick="submitExpense()" class="w-full lg:w-auto bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-2.5 text-[11px] font-black uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-600/20 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
-      <i class="fas fa-paper-plane"></i> Record Expense
-    </button>
-  </div>
-</div>
-</div>
-</div>
-
-<footer class="footer-always no-print">
-<p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest text-center">&#9400; 2026 All Rights Reserved | Dr. S. Venkata Subba Reddy Multispeciality Hospital | Architected by Sri Veda Org.</p>
-</footer>
-<div id="confirmModal" class="fixed inset-0 modal-overlay z-[200] hidden flex items-center justify-center p-4">
-<div class="bg-white rounded-2xl p-6 max-w-[280px] w-full text-center shadow-2xl border border-gray-100">
-<div id="modalIconBox" class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"></div>
-<h4 id="modalTitle" class="font-bold text-gray-900 mb-2 uppercase text-[11px] tracking-tight">Title</h4>
-<p id="modalMsg" class="text-[10px] text-gray-500 mb-6 leading-relaxed">Message</p>
-<div class="flex space-x-3">
-<button onclick="closeModal()" class="flex-1 py-2.5 bg-gray-100 rounded-xl text-[10px] font-bold text-gray-600 hover:bg-gray-200 transition uppercase">No</button>
-<button id="finalConfirm" class="flex-1 py-2.5 text-white rounded-xl text-[10px] font-bold shadow-lg transition uppercase">Yes</button>
-</div>
-</div>
-</div>
-</div>
-</div>
 <script>
-
-
 /* PART 04-GLOBAL VARIABLES AND API CONFIGURATION */
-// Web App URL 1: For operator sign-in and daily real-time registration list fetching
 const URL_LOGIN_FETCH = "https://script.google.com/macros/s/AKfycbxldSmD8_kM5OC0MIzdTW60-4vnlyfmwANhhSYwW8csTtvOfEY1LqdiV5et0PLqKKT2/exec";
-
-// Web App URL 2: Explicitly for processing, building and inserting new OP ticket records
 const URL_REGISTRATION = "https://script.google.com/macros/s/AKfycbw5nJW1XOboPguHxlvqsZo-nWVjDZ1zeirfl9js6alruSKhg2MkUB8ocWYpec4PrhiT/exec";
-
-// Web App URL 3: Explicitly for executing administrative actions (Amount Modifications, Financial Expenses, and Records Archiving)
 const URL_MOD_EXPENSE_ARCHIVE = "https://script.google.com/macros/s/AKfycbwbZtjAY6nxmlcUkW8fjyPOrZ2LGgZs65oXNOHwubfaKZju6rrHTbna6-8NUk6i0L5z/exec";
-
-let user = null; let activeAction = null; let activeSNo = null; let globalPatientList = []; let activeModRecord = null;
+let user = null, activeAction = null, activeSNo = null, globalPatientList = [], activeModRecord = null;
 const DOC_INFO = {
 "TN01": { enName: "DR. T.N. LAKSHMI REDDY MBBS., M.S. Orthopaedic, FIJR, FIA, FIPT", enRole: "Orthopaedic", enReg: "Regd. No. APMC/FMR/96871", teName: "డా. టి.ఎన్. లక్ష్మి రెడ్డి MBBS., M.S. Orthopaedic, FIJR, FIA, FIPT", teRole: "ఎముకల మరియు కీళ్ల వైద్యం", teReg: "రిజిస్ట్రేషన్ నెం. APMC/FMR/96871" },
 "SC02": { enName: "DR. S. CHANDRIKA MBBS., M.S. Ophthalmology", enRole: "Ophthalmology", enReg: "Regd. No. APMC/FMR/98519", teName: "డా. ఎస్. చంద్రిక MBBS., M.S. Ophthalmology", teRole: "కంటి వైద్యం", teReg: "రిజిస్ట్రేషన్ నెం. APMC/FMR/98519" },
@@ -515,108 +92,110 @@ const DOC_INFO = {
 "SS06": { enName: "DR. S. SIVA NAGESWARAMMA M.B.B.S. (Hom)", enRole: "Gynaecology", enReg: "Regd. No. 4686", teName: "డా. ఎస్. శివ నాగేశ్వరమ్మ M.B.B.S. (Hom)", teRole: "స్త్రీ వ్యాధి నిపునులు", teReg: "రిజిస్ట్రేషన్ నెం. 4686" }
 };
 
+/* COMPRESSED ONE-LINE JAVASCRIPT FUNCTIONS */
+const parseSheetDate = (d) => { if (!d) return null; if (d instanceof Date) return d; const p = String(d).match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/); return p ? new Date(parseInt(p[3], 10), parseInt(p[2], 10) - 1, parseInt(p[1], 10)) : (isNaN(new Date(d).getTime()) ? null : new Date(d)); };
+const formatDate = (d) => d ? `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}` : "";
+const updateClock = () => { document.getElementById('liveDateTime').innerText = `${new Date().toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })} | ${new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}`; };
+const togglePass = () => { const p = document.getElementById('logPass'), i = document.getElementById('eyeIcon'); if(p.type === 'password') { p.type = 'text'; i.className = 'fas fa-eye-slash'; } else { p.type = 'password'; i.className = 'fas fa-eye'; } };
+const showToast = (m = "RECORD UPDATED") => { const t = document.getElementById('toast'); t.style.display = 'block'; t.innerText = m; setTimeout(() => t.style.display = 'none', 3000); };
+const setLoginLoading = (l) => { const b = document.getElementById('loginBtn'), t = document.getElementById('loginText'), s = document.getElementById('loginSpin'); if(l) { b.classList.add('btn-loading'); t.innerText = 'VERIFYING...'; s.classList.remove('hidden'); } else { b.classList.remove('btn-loading'); t.innerText = 'LOGIN'; s.classList.add('hidden'); } };
+const closeModal = () => { document.getElementById('confirmModal').classList.add('hidden'); activeSNo = null; activeAction = null; };
+const moveNext = (e, n) => { if(e.key==='Enter') { e.preventDefault(); document.getElementById(n).focus(); } };
+const submitLogin = (e) => { if(e.key==='Enter') { e.preventDefault(); doLogin(); } };
+const applyDefaultInputs = () => { document.getElementById('gender').value = 'Female'; document.getElementById('genderDisplay').innerText = 'FEMALE'; document.getElementById('doctor').value = 'OBGY – Gynaecology'; document.getElementById('doctorDisplay').innerText = 'OBG Gynaecology (ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు)'; };
+const doLogin = async () => { const i = document.getElementById('logId').value.trim().toUpperCase(), p = document.getElementById('logPass').value, e = document.getElementById('err'); if(!i||!p){e.innerText="Please fill all fields.";e.classList.remove('hidden');return;} setLoginLoading(true); e.classList.add('hidden'); try { const r=await fetch(`${URL_LOGIN_FETCH}?action=login&id=${i}&pass=${p}`), d=await r.json(); if(d.success){ user=d.userProfile; localStorage.setItem('hospitalUser', JSON.stringify(user)); applyLoggedUserSession(); } else { e.innerText=d.message; e.classList.remove('hidden'); } } catch(x){showToast("Login Service Error.");} finally {setLoginLoading(false);} };
+const applyLoggedUserSession = () => { if(!user) return; document.getElementById('loginPanel').classList.add('hidden'); document.getElementById('userBar').classList.remove('hidden'); document.getElementById('userBar').classList.add('flex'); document.getElementById('dashboard').classList.remove('hidden'); document.getElementById('SVSR_REGISTRATION_MODULE').classList.remove('hidden'); document.getElementById('userNameDisp').innerText = `Operator: ${user.fullName}`; const bh = document.getElementById('branchHeading'); bh.innerText = user.branchSite.toLowerCase() === 'main-1' ? "BONE EYE TRAUMA CARE HOSPITAL" : (user.branchSite.toLowerCase() === 'main-2' ? "DR. S VENKATA SUBBA REDDY HOSPITAL" : user.branchSite.toUpperCase()); applyDefaultInputs(); loadData(); };
+const checkAutoLogin = () => { const s = localStorage.getItem('hospitalUser'); if(s) { try { user=JSON.parse(s); applyLoggedUserSession(); } catch(err){ localStorage.removeItem('hospitalUser'); } } };
+const logoutUser = () => { localStorage.removeItem('hospitalUser'); location.reload(); };
+const loadData = async (isRefresh = false) => { if(!user) return; const icon = document.getElementById('reloadIcon'); if(isRefresh && icon) icon.classList.add('opacity-50'); try { const r=await fetch(`${URL_LOGIN_FETCH}?action=fetch&branch=${user.branchSite}`), d=await r.json(); globalPatientList = d; renderT(d); if(isRefresh) showToast("DATA REFRESHED"); } catch(x){console.error(x);} finally { if(isRefresh && icon) icon.classList.remove('opacity-50'); } };
+const reorderOPDSections = () => { const hr = new Date().getHours(), c = document.getElementById('opdPaidContainer'), m = document.getElementById('morningCard'), e = document.getElementById('eveningCard'); if (hr >= 15) c.insertBefore(e, m); else c.insertBefore(m, e); };
+const askMove = (s, f = false) => { activeSNo = s; activeAction = 'delete'; showModal('delete', s); };
+const showModal = (type, sNo) => { activeSNo = sNo; activeAction = type; const m = document.getElementById('confirmModal'), icon = document.getElementById('modalIconBox'), title = document.getElementById('modalTitle'), msg = document.getElementById('modalMsg'), btn = document.getElementById('finalConfirm'); if(type === 'update') { const a = document.getElementById(`amt-${sNo}`).value; icon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 bg-blue-50 text-blue-600"; icon.innerHTML = '<i class="fas fa-check-circle text-xl"></i>'; title.innerText = "Confirm Update"; msg.innerText = `Are you sure you want to verify payment of ₹${a}?`; btn.className = "flex-1 py-2.5 bg-blue-600 text-white rounded-xl text-[10px] font-bold hover:bg-blue-700 transition shadow-lg"; } else { icon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 bg-red-50 text-red-500"; icon.innerHTML = '<i class="fas fa-trash-alt text-xl"></i>'; title.innerText = "Confirm Delete"; msg.innerText = "Are you sure you want to delete this record?"; btn.className = "flex-1 py-2.5 bg-red-600 text-white rounded-xl text-[10px] font-bold hover:bg-red-700 shadow-lg transition shadow-md"; } m.classList.remove('hidden'); };
+const printOpSlip = (p) => { const now = new Date(), dayName = now.toLocaleDateString('en-US', { weekday: 'long' }), fullDate = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); let branchName = user.branchSite.toLowerCase() === 'main-1' ? "BONE EYE TRAUMA CARE HOSPITAL" : (user.branchSite.toLowerCase() === 'main-2' ? "DR. S VENKATA SUBBA REDDY HOSPITAL" : user.branchSite.toUpperCase()); const setElVal = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; }; setElVal('prHospitalName', "DR. S. VENKATA SUBBA REDDY MULTISPECIALTY HOSPITAL"); setElVal('prBranchName', branchName); setElVal('prDateDay', `${dayName}, ${fullDate}`); setElVal('prPID', p.patientId); setElVal('prToken', String(p.tokenNumber).replace(/^[A-Za-z]+/, '')); setElVal('prName', p.patientName); setElVal('prAgeGen', `${p.patientAge} / ${p.patientGender}`); setElVal('rprVillage', p.villageName); setElVal('prDocName', p.doctorName); setElVal('prDocRole', DOC_INFO[p.doctorId]?.enRole || "Consultant"); const docInfo = DOC_INFO[p.doctorId]; if (docInfo) { document.getElementById('docEnName').innerText = docInfo.enName; document.getElementById('docEnRole').innerText = docInfo.enRole; document.getElementById('docEnReg').innerText = docInfo.enReg; document.getElementById('docTeName').innerText = docInfo.teName; document.getElementById('docTeRole').innerText = docInfo.teRole; document.getElementById('docTeReg').innerText = docInfo.teReg; } document.body.classList.add('print-op-mode'); window.print(); document.body.classList.remove('print-op-mode'); };
+const printPaymentReceipt = (p) => { const cleanToken = String(p.tokenNumber).replace(/^[A-Za-z]+/, '').padStart(2, '0'); document.getElementById('rcptTokenBig').innerText = cleanToken; document.getElementById('rcptName').innerText = p.patientName; document.getElementById('rcptVillage').innerText = p.villageName; document.getElementById('rcptAgeGen').innerText = `${p.patientAge} / ${p.patientGender}`; document.getElementById('rcptPID').innerText = p.patientId; document.getElementById('rcptAmt').innerText = p.opdAmountPaid; document.body.classList.add('print-receipt-mode'); window.print(); document.body.classList.remove('print-receipt-mode'); };
+const verifyPatient = () => { const pid = document.getElementById('pidInput').value.trim().toUpperCase(); if (!pid) { showToast("PLEASE ENTER PATIENT ID"); return; } const record = globalPatientList.find(p => p.patientId === pid); if (!record) { showToast("PATIENT NOT FOUND"); return; } activeModRecord = record; activeModRecord.originalAmount = record.opdAmountPaid || ''; const detailsDiv = document.getElementById('modificationDetails'); const spans = detailsDiv.querySelectorAll('span.text-gray-600'); spans[0].innerHTML = `<input type="text" id="modName" value="${record.patientName}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[1].innerHTML = `<input type="text" id="modVillage" value="${record.villageName}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[2].innerHTML = `<input type="text" id="modPhone" value="${record.phoneNumber}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[3].innerHTML = `<input type="text" id="modDocId" value="${record.doctorId}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[4].innerHTML = `<input type="text" id="modAgeGen" value="${record.patientAge}/${record.patientGender}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[5].innerHTML = `<input type="number" id="modAmount" value="${record.opdAmountPaid || ''}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; showToast("DETAILS LOADED SUCCESSFUL"); };
+const submitModification = async () => { if (!activeModRecord) { showToast("VERIFY A PATIENT FIRST"); return; } const sNo = activeModRecord.serialNumber, name = document.getElementById('modName').value.trim(), village = document.getElementById('modVillage').value.trim(), phone = document.getElementById('modPhone').value.trim(), docId = document.getElementById('modDocId').value.trim(), ageGen = document.getElementById('modAgeGen').value.trim().split('/'), age = ageGen[0] || activeModRecord.patientAge, gender = ageGen[1] || activeModRecord.patientGender, amount = document.getElementById('modAmount').value.trim(), reason = document.getElementById('modReason').value.trim(); if (String(amount) !== String(activeModRecord.originalAmount) && !reason) { showToast("REASON IS MANDATORY TO MODIFY AMOUNT"); document.getElementById('modReason').focus(); return; } const localRec = globalPatientList.find(x => x.serialNumber === sNo); if (localRec) { localRec.patientName = name; localRec.villageName = village; localRec.phoneNumber = phone; localRec.doctorId = docId; localRec.patientAge = age; localRec.patientGender = gender; localRec.opdAmountPaid = amount; } renderT(globalPatientList); showToast("SAVING MODIFICATIONS..."); try { const modData = new FormData(); modData.append("action", "modify"); modData.append("sNo", sNo); modData.append("patientId", activeModRecord.patientId); modData.append("patientName", name); modData.append("village", village); modData.append("phoneNumber", phone); modData.append("doctorId", docId); modData.append("age", age); modData.append("gender", gender); modData.append("amount", amount); modData.append("reason", reason); await fetch(URL_MOD_EXPENSE_ARCHIVE, { method: 'POST', body: modData }); showToast("RECORD MODIFICATION SAVED"); document.getElementById('modReason').value = ''; setTimeout(() => loadData(false), 500); } catch(x) { showToast("Failed to sync modifications"); } };
+const submitExpense = async () => { const amt = document.getElementById('expenseAmount').value.trim(), reason = document.getElementById('expenseReason').value.trim(); if (!amt || !reason) { showToast("PLEASE FILL AMOUNT AND REASON"); return; } showToast("SUBMITTING EXPENSE..."); try { const expData = new FormData(); expData.append("action", "expense"); expData.append("amount", amt); expData.append("reason", reason); await fetch(URL_MOD_EXPENSE_ARCHIVE, { method: 'POST', body: expData }); showToast("EXPENSE RECORDED SUCCESSFULLY"); document.getElementById('expenseAmount').value = ''; document.getElementById('expenseReason').value = ''; } catch(x) { showToast("Failed to save expense"); } };
+const handleTitleCase = (el) => { el.value = el.value.toLowerCase().split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' '); };
+const toggleDropdown = (e, id) => { e.stopPropagation(); document.querySelectorAll('.dropdown-options').forEach(d => { if(d.id !== id) d.classList.remove('show'); }); document.getElementById(id).classList.toggle('show'); };
+const selectDrop = (hiddenId, val, label, dropId) => { document.getElementById(hiddenId).value = val; document.getElementById(hiddenId + 'Display').innerText = label; document.getElementById(dropId).classList.remove('show'); };
+const SET_DEFAULT_TIMESTAMP = () => { document.getElementById('formDate').value = new Date().toISOString().split('T')[0]; };
+const RESET_REGISTRATION_INTERFACE = () => { document.getElementById('tokenForm').reset(); applyDefaultInputs(); SET_DEFAULT_TIMESTAMP(); };
 
-/* PART 05-UTILITY FUNCTIONS FOR DATE PARSING AND FORMATTING */
-function parseSheetDate(dateStr) { if (!dateStr) return null; if (dateStr instanceof Date) return dateStr; const parts = String(dateStr).match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/); if (parts) { return new Date(parseInt(parts[3], 10), parseInt(parts[2], 10) - 1, parseInt(parts[1], 10)); } const d = new Date(dateStr); return isNaN(d.getTime()) ? null : d; }
-function formatDate(dateObj) { if (!dateObj) return ""; const day = String(dateObj.getDate()).padStart(2, '0'); const month = String(dateObj.getMonth() + 1).padStart(2, '0'); const year = dateObj.getFullYear(); return `${day}/${month}/${year}`; }
-
-
-/* PART 06-CLOCK UPDATE AND UI TOGGLE HELPERS */
-function updateClock() { const now = new Date(); const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }; const dateStr = now.toLocaleDateString('en-US', options); const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }); document.getElementById('liveDateTime').innerText = `${dateStr} | ${timeStr}`; }
-setInterval(updateClock, 1000); updateClock();
-function togglePass() { const p = document.getElementById('logPass'); const i = document.getElementById('eyeIcon'); if(p.type === 'password') { p.type = 'text'; i.classList.replace('fa-eye', 'fa-eye-slash'); } else { p.type = 'password'; i.classList.replace('fa-eye-slash', 'fa-eye'); } }
-function showToast(msg = "RECORD UPDATED") { const t = document.getElementById('toast'); t.style.display = 'block'; t.innerText = msg; setTimeout(() => { t.style.display = 'none'; }, 3000); }
-function setLoginLoading(isLoading) { const btn = document.getElementById('loginBtn'); const text = document.getElementById('loginText'); const spin = document.getElementById('loginSpin'); if(isLoading) { btn.classList.add('btn-loading'); text.innerText = 'VERIFYING...'; spin.classList.remove('hidden'); } else { btn.classList.remove('btn-loading'); text.innerText = 'LOGIN'; spin.classList.add('hidden'); } }
-function closeModal() { document.getElementById('confirmModal').classList.add('hidden'); activeSNo = null; activeAction = null; }
-function moveNext(e,nextId){ if(e.key==='Enter'){ e.preventDefault(); document.getElementById(nextId).focus(); } }
-function submitLogin(e){ if(e.key==='Enter'){ e.preventDefault(); doLogin(); } }
-
-
-/* PATIENT GENDER & DOCTOR DEFAULTS HELPER */
-function applyDefaultInputs() {
-  document.getElementById('gender').value = 'Female';
-  document.getElementById('genderDisplay').innerText = 'FEMALE';
-  document.getElementById('doctor').value = 'OBGY – Gynaecology'; // Updated to OBGY – Gynaecology to map perfectly with Google Sheets backend DOCTORE_IDENTI_DIRECTORE HY04
-  document.getElementById('doctorDisplay').innerText = 'OBG Gynaecology (ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు)';
+/* RENDER TABLE LOGIC WITHOUT PAGE RELOADING */
+function renderT(list) {
+  const mb=document.getElementById('morningPaidBody'), eb=document.getElementById('eveningPaidBody'), tb=document.getElementById('todayBody'), fb=document.getElementById('futureRegisteredBody'); mb.innerHTML=''; eb.innerHTML=''; tb.innerHTML=''; fb.innerHTML=''; let mi=1, ei=1, ti=1, fi=1, morningSum = 0, eveningSum = 0; const todayStr = formatDate(new Date());
+  list.forEach((p)=>{
+    const isP=p.opdAmountPaid!==undefined && p.opdAmountPaid!==null && String(p.opdAmountPaid).trim()!=="" && Number(p.opdAmountPaid)>0; const parsedDate = parseSheetDate(p.entryDate); const recordDate = parsedDate ? formatDate(parsedDate) : todayStr; const rowContent = `<td>${recordDate}</td><td class="font-bold text-blue-900">${p.patientId}</td><td class="font-bold text-gray-900">${p.tokenNumber}</td><td class="font-bold uppercase text-gray-800">${p.patientName}</td><td class="text-gray-500">${p.phoneNumber}</td><td class="text-gray-400 font-bold">${p.patientAge}/${p.patientGender}</td><td class="text-gray-500">${p.villageName}</td><td class="font-bold text-blue-700">${p.doctorId}</td>`;
+    if(recordDate !== todayStr) {
+      fb.innerHTML += `<tr class="hover:bg-gray-50 transition"><td>${fi++}</td><td>${recordDate}</td><td class="font-bold text-blue-900">${p.patientId}</td><td class="font-bold text-gray-900">${p.tokenNumber}</td><td class="font-bold uppercase text-gray-800">${p.patientName}</td><td class="text-gray-500">${p.phoneNumber}</td><td class="text-gray-400 font-bold">${p.patientAge}/${p.patientGender}</td><td class="text-gray-500">${p.villageName}</td><td class="font-bold text-blue-700">${p.doctorId}</td><td class="font-bold text-green-700">${p.opdAmountPaid || '0'}</td><td class="no-print"><button id="btnDel-${p.serialNumber}" onclick="askMove('${p.serialNumber}', false)" class="text-red-500 hover:text-red-700 transition flex justify-center items-center w-full"><i id="icoDel-${p.serialNumber}" class="fas fa-trash-alt"></i><i id="spinDel-${p.serialNumber}" class="fas fa-circle-notch fa-spin hidden"></i></button></td></tr>`;
+    } else {
+      if(isP) {
+        const dt = new Date(p.entryTime); const hour = dt.getHours(); const paidRow = `<tr class="hover:bg-gray-50 transition"><td>${hour < 15 ? mi++ : ei++}</td>${rowContent}<td class="font-bold text-green-700 text-center">${p.opdAmountPaid}</td><td class="no-print"><button onclick='printOpSlip(${JSON.stringify(p)})' class="text-blue-600 hover:text-black transition flex justify-center items-center w-full"><i class="fas fa-print mr-1"></i> OP PRINT</button></td><td class="no-print"><button onclick='printPaymentReceipt(${JSON.stringify(p)})' class="text-emerald-600 hover:text-black transition flex justify-center items-center w-full"><i class="fas fa-file-invoice mr-1"></i> RECEIPT PRINT</button></td></tr>`;
+        if(hour < 15){ mb.innerHTML += paidRow; morningSum += Number(p.opdAmountPaid); } else { eb.innerHTML += paidRow; eveningSum += Number(p.opdAmountPaid); }
+      } else {
+        tb.innerHTML += `<tr class="hover:bg-gray-50 transition"><td>${ti++}</td><td>${recordDate}</td><td class="font-bold text-blue-900">${p.patientId}</td><td class="font-bold text-gray-900">${p.tokenNumber}</td><td class="font-bold uppercase text-gray-800">${p.patientName}</td><td class="text-gray-500">${p.phoneNumber}</td><td class="text-gray-400 font-bold">${p.patientAge}/${p.patientGender}</td><td class="text-gray-500">${p.villageName}</td><td class="font-bold text-blue-700">${p.doctorId}</td><td><div class="flex items-center justify-center space-x-1"><input type="number" id="amt-${p.serialNumber}" value="${p.opdAmountPaid||''}" class="w-14 border rounded px-1.5 py-0.5 text-[10px] outline-none font-bold focus:border-blue-500"><button id="btnVer-${p.serialNumber}" onclick="showModal('update', '${p.serialNumber}')" class="bg-blue-600 text-white px-2 py-0.5 rounded text-[9px] font-bold hover:bg-black transition flex items-center justify-center min-w-[45px]"><span id="txtVer-${p.serialNumber}">VERIFY</span><i id="spinVer-${p.serialNumber}" class="fas fa-circle-notch fa-spin hidden"></i></button></div></td><td class="no-print"><button id="btnDel-${p.serialNumber}" onclick="askMove('${p.serialNumber}', false)" class="text-red-500 hover:text-red-700 transition flex justify-center items-center w-full"><i id="icoDel-${p.serialNumber}" class="fas fa-trash-alt"></i><i id="spinDel-${p.serialNumber}" class="fas fa-circle-notch fa-spin hidden"></i></button></td></tr>`;
+      }
+    }
+  });
+  document.getElementById('todayCounter').innerText = `Pending Members: ${ti - 1}`;
+  document.getElementById('morningCounter').innerText = `Paid: ${mi - 1} | Total: ₹${morningSum}`;
+  document.getElementById('eveningCounter').innerText = `Paid: ${ei - 1} | Total: ₹${eveningSum}`;
+  reorderOPDSections();
 }
 
 
-/* PART 07-AUTHENTICATION LOGIC */
-async function doLogin() { const i = document.getElementById('logId').value.trim().toUpperCase(); const p = document.getElementById('logPass').value; const e = document.getElementById('err'); if(!i||!p){e.innerText="Please fill all fields.";e.classList.remove('hidden');return;} setLoginLoading(true); e.classList.add('hidden'); try { const r=await fetch(`${URL_LOGIN_FETCH}?action=login&id=${i}&pass=${p}`); const d=await r.json(); if(d.success){ user=d.userProfile; document.getElementById('loginPanel').classList.add('hidden'); document.getElementById('userBar').classList.remove('hidden'); document.getElementById('userBar').classList.add('flex'); document.getElementById('dashboard').classList.remove('hidden'); document.getElementById('SVSR_REGISTRATION_MODULE').classList.remove('hidden'); document.getElementById('userNameDisp').innerText = `Operator: ${user.fullName}`; const bh = document.getElementById('branchHeading'); if(user.branchSite.toLowerCase() === 'main-1') bh.innerText = "BONE EYE TRAUMA CARE HOSPITAL"; else if(user.branchSite.toLowerCase() === 'main-2') bh.innerText = "DR. S VENKATA SUBBA REDDY HOSPITAL"; else bh.innerText = user.branchSite.toUpperCase(); applyDefaultInputs(); loadData(); } else { e.innerText=d.message; e.classList.remove('hidden'); } } catch(x){showToast("Login Service Error.");} finally {setLoginLoading(false);} }
-
-
-/* PART 08-DATA FETCHING AND RENDERING */
-async function loadData(isRefresh = false) { 
-  const icon = document.getElementById('reloadIcon'); 
-  if(isRefresh && icon) {
-    icon.classList.add('opacity-50'); 
-  } 
-  try { 
-    const r=await fetch(`${URL_LOGIN_FETCH}?action=fetch&branch=${user.branchSite}`); 
-    const d=await r.json(); 
-    globalPatientList = d; 
-    renderT(d); 
-    if(isRefresh) showToast("DATA REFRESHED"); 
-  } catch(x){
-    console.error(x);
-  } finally { 
-    if(isRefresh && icon) {
-      icon.classList.remove('opacity-50'); 
-    } 
-  } 
-}
-
-// Background dynamic sync interval: fetches data silently from the spreadsheet every 5 seconds
-setInterval(() => {
-  if (user && user.branchSite) {
-    loadData(false);
+/* UPDATE AND DELETE EVENT HANDLERS - LOCAL RE-RENDERING WITH NO RE-LOADS */
+document.getElementById('finalConfirm').onclick = async () => {
+  const s = activeSNo, action = activeAction; if(!s) return; closeModal();
+  if(action === 'update') {
+    const a = document.getElementById(`amt-${s}`).value; if(!a) return;
+    const localRec = globalPatientList.find(x => x.serialNumber === s);
+    if (localRec) { localRec.opdAmountPaid = a; localRec.entryTime = new Date().toISOString(); }
+    renderT(globalPatientList); showToast("PAYMENT UPDATING...");
+    try {
+      await fetch(`${URL_LOGIN_FETCH}?action=update&sNo=${s}&amt=${a}`);
+      showToast("PAYMENT UPDATED ON SHEET");
+      setTimeout(() => loadData(false), 500);
+    } catch(x){showToast("Update Sync Failed");}
+  } else {
+    const localIdx = globalPatientList.findIndex(x => x.serialNumber === s);
+    if (localIdx !== -1) globalPatientList.splice(localIdx, 1);
+    renderT(globalPatientList); showToast("REMOVING RECORD...");
+    try {
+      await fetch(`${URL_LOGIN_FETCH}?action=archive&sNo=${s}`);
+      showToast("RECORD DELETED FROM SHEET");
+      setTimeout(() => loadData(false), 500);
+    } catch(x){showToast("Deletion Sync Failed");}
   }
-}, 5000);
+};
 
-function renderT(list) { const mb=document.getElementById('morningPaidBody'), eb=document.getElementById('eveningPaidBody'), tb=document.getElementById('todayBody'), fb=document.getElementById('futureRegisteredBody'); mb.innerHTML=''; eb.innerHTML=''; tb.innerHTML=''; fb.innerHTML=''; let mi=1, ei=1, ti=1, fi=1; let morningSum = 0; let eveningSum = 0; const todayStr = formatDate(new Date()); list.forEach((p)=>{ const isP=p.opdAmountPaid!==undefined && p.opdAmountPaid!==null && String(p.opdAmountPaid).trim()!=="" && Number(p.opdAmountPaid)>0; const parsedDate = parseSheetDate(p.entryDate); const recordDate = parsedDate ? formatDate(parsedDate) : todayStr; const rowContent = `<td>${recordDate}</td><td class="font-bold text-blue-900">${p.patientId}</td><td class="font-bold text-gray-900">${p.tokenNumber}</td><td class="font-bold uppercase text-gray-800">${p.patientName}</td><td class="text-gray-500">${p.phoneNumber}</td><td class="text-gray-400 font-bold">${p.patientAge}/${p.patientGender}</td><td class="text-gray-500">${p.villageName}</td><td class="font-bold text-blue-700">${p.doctorId}</td>`; if(recordDate !== todayStr) { fb.innerHTML += `<tr class="hover:bg-gray-50 transition"><td>${fi++}</td><td>${recordDate}</td><td class="font-bold text-blue-900">${p.patientId}</td><td class="font-bold text-gray-900">${p.tokenNumber}</td><td class="font-bold uppercase text-gray-800">${p.patientName}</td><td class="text-gray-500">${p.phoneNumber}</td><td class="text-gray-400 font-bold">${p.patientAge}/${p.patientGender}</td><td class="text-gray-500">${p.villageName}</td><td class="font-bold text-blue-700">${p.doctorId}</td><td class="font-bold text-green-700">${p.opdAmountPaid || '0'}</td><td class="no-print"><button id="btnDel-${p.serialNumber}" onclick="askMove('${p.serialNumber}', false)" class="text-red-500 hover:text-red-700 transition flex justify-center items-center w-full"><i id="icoDel-${p.serialNumber}" class="fas fa-trash-alt"></i><i id="spinDel-${p.serialNumber}" class="fas fa-circle-notch fa-spin hidden"></i></button></td></tr>`; } else { if(isP) { const dt = new Date(p.entryTime); const hour = dt.getHours(); const paidRow = `<tr class="hover:bg-gray-50 transition"><td>${hour < 15 ? mi++ : ei++}</td>${rowContent}<td class="font-bold text-green-700 text-center">${p.opdAmountPaid}</td><td class="no-print"><button onclick='printOpSlip(${JSON.stringify(p)})' class="text-blue-600 hover:text-black transition flex justify-center items-center w-full"><i class="fas fa-print mr-1"></i> OP PRINT</button></td><td class="no-print"><button onclick='printPaymentReceipt(${JSON.stringify(p)})' class="text-emerald-600 hover:text-black transition flex justify-center items-center w-full"><i class="fas fa-file-invoice mr-1"></i> RECEIPT PRINT</button></td></tr>`; if(hour < 15){ mb.innerHTML += paidRow; morningSum += Number(p.opdAmountPaid); } else { eb.innerHTML += paidRow; eveningSum += Number(p.opdAmountPaid); } } else { tb.innerHTML += `<tr class="hover:bg-gray-50 transition"><td>${ti++}</td><td>${recordDate}</td><td class="font-bold text-blue-900">${p.patientId}</td><td class="font-bold text-gray-900">${p.tokenNumber}</td><td class="font-bold uppercase text-gray-800">${p.patientName}</td><td class="text-gray-500">${p.phoneNumber}</td><td class="text-gray-400 font-bold">${p.patientAge}/${p.patientGender}</td><td class="text-gray-500">${p.villageName}</td><td class="font-bold text-blue-700">${p.doctorId}</td><td><div class="flex items-center justify-center space-x-1"><input type="number" id="amt-${p.serialNumber}" value="${p.opdAmountPaid||''}" class="w-14 border rounded px-1.5 py-0.5 text-[10px] outline-none font-bold focus:border-blue-500"><button id="btnVer-${p.serialNumber}" onclick="showModal('update', '${p.serialNumber}')" class="bg-blue-600 text-white px-2 py-0.5 rounded text-[9px] font-bold hover:bg-black transition flex items-center justify-center min-w-[45px]"><span id="txtVer-${p.serialNumber}">VERIFY</span><i id="spinVer-${p.serialNumber}" class="fas fa-circle-notch fa-spin hidden"></i></button></div></td><td class="no-print"><button id="btnDel-${p.serialNumber}" onclick="askMove('${p.serialNumber}', false)" class="text-red-500 hover:text-red-700 transition flex justify-center items-center w-full"><i id="icoDel-${p.serialNumber}" class="fas fa-trash-alt"></i><i id="spinDel-${p.serialNumber}" class="fas fa-circle-notch fa-spin hidden"></i></button></td></tr>`; } } }); document.getElementById('todayCounter').innerText = `Pending Members: ${ti - 1}`; document.getElementById('morningCounter').innerText = `Paid: ${mi - 1} | Total: ₹${morningSum}`; document.getElementById('eveningCounter').innerText = `Paid: ${ei - 1} | Total: ₹${eveningSum}`; reorderOPDSections(); }
-function reorderOPDSections() { const hr = new Date().getHours(); const container = document.getElementById('opdPaidContainer'); const morning = document.getElementById('morningCard'); const evening = document.getElementById('eveningCard'); if (hr >= 15) { container.insertBefore(evening, morning); } else { container.insertBefore(morning, evening); } }
+/* OP REGISTRATION WITH LOCAL STATE SUCCESS UPDATE & NO HARD-RELOADS */
+document.getElementById("tokenForm").addEventListener("submit", async function(e) {
+  e.preventDefault(); const doctorVal = document.getElementById("doctor").value; if (!doctorVal) { document.getElementById('statusMessage').innerText = "Please select a Clinical Department."; return; }
+  document.getElementById('loadingOverlay').style.display = 'flex';
+  const patName = document.getElementById("patientName").value, patAge = document.getElementById("age").value, patGen = document.getElementById("gender").value, patPhone = document.getElementById("phoneNumber").value, patVillage = document.getElementById("village").value, patAmount = document.getElementById("amount").value, tempSNo = "TEMP-" + Date.now();
+  const localNewPatient = { serialNumber: tempSNo, patientId: "PID-NEW", tokenNumber: "WAIT", patientName: patName, phoneNumber: patPhone, patientAge: patAge, patientGender: patGen, villageName: patVillage, doctorId: doctorVal, doctorName: DOC_INFO[doctorVal]?.enName || "Consultant", entryDate: formatDate(new Date()), entryTime: new Date().toISOString(), opdAmountPaid: patAmount };
+  globalPatientList.push(localNewPatient); renderT(globalPatientList);
+  const formData = new FormData(); formData.append("doctor", doctorVal); formData.append("patientName", patName); formData.append("age", patAge); formData.append("gender", patGen); formData.append("phoneNumber", patPhone); formData.append("village", patVillage); formData.append("amount", patAmount);
+  try {
+    const response = await fetch(URL_REGISTRATION, { method: 'POST', body: formData }), data = await response.json();
+    if(data.result === "success") {
+      const idx = globalPatientList.findIndex(x => x.serialNumber === tempSNo);
+      if (idx !== -1) { globalPatientList[idx].patientId = data.patientId || "PID-VSR"; globalPatientList[idx].tokenNumber = data.tokenNumber || "T01"; }
+      renderT(globalPatientList); document.getElementById('tokenForm').classList.add('hidden'); document.getElementById('headerSection').classList.add('hidden');
+      const inlineSuccess = document.getElementById('inlineSuccessMessage'); inlineSuccess.classList.remove('hidden'); inlineSuccess.classList.add('flex');
+      setTimeout(() => {
+        inlineSuccess.classList.add('hidden'); inlineSuccess.classList.remove('flex');
+        document.getElementById('tokenForm').classList.remove('hidden'); document.getElementById('headerSection').classList.remove('hidden');
+        RESET_REGISTRATION_INTERFACE(); loadData(false);
+      }, 2000);
+    } else { document.getElementById('statusMessage').innerText = "Error: " + data.message; }
+  } catch(err) { document.getElementById('statusMessage').innerText = "Submission failed. Check connection."; } finally { document.getElementById('loadingOverlay').style.display = 'none'; }
+});
 
-
-/* PART 09-MODAL AND PRINTING PROCEDURES */
-function askMove(s, isFromPaid = false) { activeSNo = s; activeAction = 'delete'; showModal('delete', s); }
-function showModal(type, sNo) { activeSNo = sNo; activeAction = type; const m = document.getElementById('confirmModal'); const icon = document.getElementById('modalIconBox'); const title = document.getElementById('modalTitle'); const msg = document.getElementById('modalMsg'); const btn = document.getElementById('finalConfirm'); if(type === 'update') { const a = document.getElementById(`amt-${sNo}`).value; icon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 bg-blue-50 text-blue-600"; icon.innerHTML = '<i class="fas fa-check-circle text-xl"></i>'; title.innerText = "Confirm Update"; msg.innerText = `Are you sure you want to verify payment of ₹${a}?`; btn.className = "flex-1 py-2.5 bg-blue-600 text-white rounded-xl text-[10px] font-bold hover:bg-blue-700 transition shadow-lg"; } else { icon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 bg-red-50 text-red-500"; icon.innerHTML = '<i class="fas fa-trash-alt text-xl"></i>'; title.innerText = "Confirm Delete"; msg.innerText = "Are you sure you want to delete this record?"; btn.className = "flex-1 py-2.5 bg-red-600 text-white rounded-xl text-[10px] font-bold hover:bg-red-700 shadow-lg transition shadow-md"; } m.classList.remove('hidden'); }
-function printOpSlip(p) { const now = new Date(); const dayName = now.toLocaleDateString('en-US', { weekday: 'long' }); const fullDate = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); let branchName = user.branchSite.toLowerCase() === 'main-1' ? "BONE EYE TRAUMA CARE HOSPITAL" : (user.branchSite.toLowerCase() === 'main-2' ? "DR. S VENKATA SUBBA REDDY HOSPITAL" : user.branchSite.toUpperCase()); const setElVal = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; }; setElVal('prHospitalName', "DR. S. VENKATA SUBBA REDDY MULTISPECIALTY HOSPITAL"); setElVal('prBranchName', branchName); setElVal('prDateDay', `${dayName}, ${fullDate}`); setElVal('prPID', p.patientId); setElVal('prToken', String(p.tokenNumber).replace(/^[A-Za-z]+/, '')); setElVal('prName', p.patientName); setElVal('prAgeGen', `${p.patientAge} / ${p.patientGender}`); setElVal('rprVillage', p.villageName); setElVal('rprVillage2', p.villageName); setElVal('prDocName', p.doctorName); setElVal('prDocRole', DOC_INFO[p.doctorId]?.enRole || "Consultant"); const docInfo = DOC_INFO[p.doctorId]; if (docInfo) { document.getElementById('docEnName').innerText = docInfo.enName; document.getElementById('docEnRole').innerText = docInfo.enRole; document.getElementById('docEnReg').innerText = docInfo.enReg; document.getElementById('docTeName').innerText = docInfo.teName; document.getElementById('docTeRole').innerText = docInfo.teRole; document.getElementById('docTeReg').innerText = docInfo.teReg; } document.body.classList.add('print-op-mode'); window.print(); document.body.classList.remove('print-op-mode'); }
-function printPaymentReceipt(p) { const cleanToken = String(p.tokenNumber).replace(/^[A-Za-z]+/, '').padStart(2, '0'); document.getElementById('rcptTokenBig').innerText = cleanToken; document.getElementById('rcptName').innerText = p.patientName; document.getElementById('rcptVillage').innerText = p.villageName; document.getElementById('rcptAgeGen').innerText = `${p.patientAge} / ${p.patientGender}`; document.getElementById('rcptPID').innerText = p.patientId; document.getElementById('rcptAmt').innerText = p.opdAmountPaid; document.body.classList.add('print-receipt-mode'); window.print(); document.body.classList.remove('print-receipt-mode'); }
-
-
-/* PART 10-FINAL EVENT HANDLERS AND SUBMISSION */
-document.getElementById('finalConfirm').onclick = async () => { const s = activeSNo; const action = activeAction; if(!s) return; closeModal(); if(action === 'update') { const a = document.getElementById(`amt-${s}`).value; if(!a) return; const localRec = globalPatientList.find(x => x.serialNumber === s); if (localRec) { localRec.opdAmountPaid = a; localRec.entryTime = new Date().toISOString(); } renderT(globalPatientList); showToast("PAYMENT UPDATING..."); try { await fetch(`${URL_MOD_EXPENSE_ARCHIVE}?action=update&sNo=${s}&amt=${a}`); await loadData(); showToast("PAYMENT UPDATED ON SHEET"); } catch(x){showToast("Update Sync Failed");} } else { const localIdx = globalPatientList.findIndex(x => x.serialNumber === s); if (localIdx !== -1) { globalPatientList.splice(localIdx, 1); } renderT(globalPatientList); showToast("REMOVING RECORD..."); try { await fetch(`${URL_MOD_EXPENSE_ARCHIVE}?action=archive&sNo=${s}`); await loadData(); showToast("RECORD DELETED FROM SHEET"); } catch(x){showToast("Deletion Sync Failed");} } };
-function verifyPatient() { const pid = document.getElementById('pidInput').value.trim().toUpperCase(); if (!pid) { showToast("PLEASE ENTER PATIENT ID"); return; } const record = globalPatientList.find(p => p.patientId === pid); if (!record) { showToast("PATIENT NOT FOUND"); return; } activeModRecord = record; activeModRecord.originalAmount = record.opdAmountPaid || ''; const detailsDiv = document.getElementById('modificationDetails'); const spans = detailsDiv.querySelectorAll('span.text-gray-600'); spans[0].innerHTML = `<input type="text" id="modName" value="${record.patientName}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[1].innerHTML = `<input type="text" id="modVillage" value="${record.villageName}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[2].innerHTML = `<input type="text" id="modPhone" value="${record.phoneNumber}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[3].innerHTML = `<input type="text" id="modDocId" value="${record.doctorId}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[4].innerHTML = `<input type="text" id="modAgeGen" value="${record.patientAge}/${record.patientGender}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[5].innerHTML = `<input type="number" id="modAmount" value="${record.opdAmountPaid || ''}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; showToast("DETAILS LOADED SUCCESSFUL"); }
-async function submitModification() { if (!activeModRecord) { showToast("VERIFY A PATIENT FIRST"); return; } const sNo = activeModRecord.serialNumber; const name = document.getElementById('modName').value.trim(); const village = document.getElementById('modVillage').value.trim(); const phone = document.getElementById('modPhone').value.trim(); const docId = document.getElementById('modDocId').value.trim(); const ageGen = document.getElementById('modAgeGen').value.trim().split('/'); const age = ageGen[0] || activeModRecord.patientAge; const gender = ageGen[1] || activeModRecord.patientGender; const amount = document.getElementById('modAmount').value.trim(); const reason = document.getElementById('modReason').value.trim(); if (String(amount) !== String(activeModRecord.originalAmount)) { if (!reason) { showToast("REASON IS MANDATORY TO MODIFY AMOUNT"); document.getElementById('modReason').focus(); return; } } const localRec = globalPatientList.find(x => x.serialNumber === sNo); if (localRec) { localRec.patientName = name; localRec.villageName = village; localRec.phoneNumber = phone; localRec.doctorId = docId; localRec.patientAge = age; localRec.patientGender = gender; localRec.opdAmountPaid = amount; } renderT(globalPatientList); showToast("SAVING MODIFICATIONS..."); try { const modData = new FormData(); modData.append("action", "modify");
-        modData.append("sNo", sNo);
-        modData.append("patientId", activeModRecord.patientId);
-        modData.append("patientName", name);
-        modData.append("village", village);
-        modData.append("phoneNumber", phone);
-        modData.append("doctorId", docId);
-        modData.append("age", age);
-        modData.append("gender", gender);
-        modData.append("amount", amount);
-        modData.append("reason", reason);
-        await fetch(URL_MOD_EXPENSE_ARCHIVE, { method: 'POST', body: modData });
-        await loadData();
-        showToast("RECORD MODIFICATION SAVED");
-        document.getElementById('modReason').value = '';
-      } catch(x) {
-        showToast("Failed to sync modifications");
-      } }
-async function submitExpense() { const amt = document.getElementById('expenseAmount').value.trim(); const reason = document.getElementById('expenseReason').value.trim(); if (!amt || !reason) { showToast("PLEASE FILL AMOUNT AND REASON"); return; } showToast("SUBMITTING EXPENSE..."); try { const expData = new FormData(); expData.append("action", "expense"); expData.append("amount", amt); expData.append("reason", reason); await fetch(URL_MOD_EXPENSE_ARCHIVE, { method: 'POST', body: expData }); showToast("EXPENSE RECORDED SUCCESSFULLY"); document.getElementById('expenseAmount').value = ''; document.getElementById('expenseReason').value = ''; } catch(x) { showToast("Failed to save expense"); } }
-function handleTitleCase(el) { el.value = el.value.toLowerCase().split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' '); }
-function toggleDropdown(e, id) { e.stopPropagation(); document.querySelectorAll('.dropdown-options').forEach(d => { if(d.id !== id) d.classList.remove('show'); }); document.getElementById(id).classList.toggle('show'); }
-function selectDrop(hiddenId, val, label, dropId) { document.getElementById(hiddenId).value = val; document.getElementById(hiddenId + 'Display').innerText = label; document.getElementById(dropId).classList.remove('show'); }
-function SET_DEFAULT_TIMESTAMP() { const N = new Date(); document.getElementById('formDate').value = N.toISOString().split('T')[0]; }
-function RESET_REGISTRATION_INTERFACE() { location.reload(); }
-function PROCEDURE_INITIATE_TOKEN_DOWNLOAD() { const btn = document.getElementById('dlBtn'); btn.innerText = "CAPTURING..."; btn.disabled = true; setTimeout(() => { const ticket = document.getElementById('ticketCapture'); html2canvas(ticket, { scale: 3, backgroundColor: '#ffffff' }).then(canvas => { const link = document.createElement('a'); link.download = 'SVSR_Hospital_Token.png'; link.href = canvas.toDataURL(); link.click(); btn.innerText = "Print"; btn.disabled = false; }); }, 800); }
-function PROCEDURE_INITIATE_TOKEN_SHARE() { const btn = document.getElementById('shBtn'); btn.innerText = "SHARING..."; btn.disabled = true; setTimeout(() => { const ticket = document.getElementById('ticketCapture'); html2canvas(ticket, { scale: 3 }).then(canvas => { canvas.toBlob(blob => { if (navigator.share && blob) { const file = new File([blob], 'SVSR_Token.png', { type: 'image/png' }); navigator.share({ files: [file], title: 'Patient Entry Token' }).then(() => { btn.innerText = "Share"; btn.disabled = false; }).catch(() => { fallbackCopyText(); }); } else { fallbackCopyText(); } }); }); }, 800); function fallbackCopyText() { const pName = document.getElementById('resName').innerText; const tokenNo = document.getElementById('resToken').innerText; const shareText = `SVSR Hospital Token No: ${tokenNo} for Patient: ${pName}`; const el = document.createElement('textarea'); el.value = shareText; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); showToast("Token info copied to clipboard! Share details anywhere."); btn.innerText = "Share"; btn.disabled = false; } }
-SET_DEFAULT_TIMESTAMP();
-document.getElementById("tokenForm").addEventListener("submit", async function(e) { e.preventDefault(); const doctorVal = document.getElementById("doctor").value; if (!doctorVal) { document.getElementById('statusMessage').innerText = "Please select a Clinical Department."; return; } document.getElementById('loadingOverlay').style.display = 'flex'; const patName = document.getElementById("patientName").value; const patAge = document.getElementById("age").value; const patGen = document.getElementById("gender").value; const patPhone = document.getElementById("phoneNumber").value; const patVillage = document.getElementById("village").value; const patAmount = document.getElementById("amount").value; const tempSNo = "TEMP-" + Date.now(); const localNewPatient = { serialNumber: tempSNo, patientId: "PID-NEW", tokenNumber: "WAIT", patientName: patName, phoneNumber: patPhone, patientAge: patAge, patientGender: patGen, villageName: patVillage, doctorId: doctorVal, doctorName: DOC_INFO[doctorVal]?.enName || "Consultant", entryDate: formatDate(new Date()), entryTime: new Date().toISOString(), opdAmountPaid: patAmount }; globalPatientList.push(localNewPatient); renderT(globalPatientList); const formData = new FormData(); formData.append("doctor", doctorVal); formData.append("patientName", patName); formData.append("age", patAge); formData.append("gender", patGen); formData.append("phoneNumber", patPhone); formData.append("village", patVillage); formData.append("amount", patAmount); try { const response = await fetch(URL_REGISTRATION, { method: 'POST', body: formData }); const data = await response.json(); if(data.result === "success") { const idx = globalPatientList.findIndex(x => x.serialNumber === tempSNo); if (idx !== -1) { globalPatientList[idx].patientId = data.patientId || "PID-VSR"; globalPatientList[idx].tokenNumber = data.tokenNumber || "T01"; } renderT(globalPatientList); document.getElementById('tokenForm').classList.add('hidden'); document.getElementById('headerSection').classList.add('hidden'); const inlineSuccess = document.getElementById('inlineSuccessMessage'); inlineSuccess.classList.remove('hidden'); inlineSuccess.classList.add('flex'); setTimeout(() => { inlineSuccess.classList.add('hidden'); inlineSuccess.classList.remove('flex'); document.getElementById('tokenForm').classList.remove('hidden'); document.getElementById('headerSection').classList.remove('hidden'); document.getElementById('tokenForm').reset();
-            applyDefaultInputs(); // Re-apply the default inputs (Female / OBG Gynaecology) after submission reset
-            loadData(); }, 2000); } else { document.getElementById('statusMessage').innerText = "Error: " + data.message; } } catch(err) { document.getElementById('statusMessage').innerText = "Submission failed. Check connection."; } finally { document.getElementById('loadingOverlay').style.display = 'none'; } });
+/* STARTUP CYCLE INITIALIZATION */
+window.onload = function() { setInterval(updateClock, 1000); updateClock(); SET_DEFAULT_TIMESTAMP(); checkAutoLogin(); };
 </script>
 </body>
 </html>

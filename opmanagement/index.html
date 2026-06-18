@@ -43,9 +43,64 @@ body { font-family: 'Roboto Slab', serif; background-color: #ffffff; margin: 0; 
 * { font-family: 'Roboto Slab', serif; }
 .fa, .fas, .far, .fab, .fa-solid { font-family: "Font Awesome 6 Free" !important; font-weight: 900; }
 .modal-overlay { background: rgba(0,0,0,0.4); backdrop-filter: blur(2px); }
-@media print { @page { size: auto; margin: 0mm; } body { background: white; -webkit-print-color-adjust: exact; } .no-print, header, footer, #dashboard, #loginPanel, #loader, #toast, .modal-overlay, #SVSR_REGISTRATION_MODULE { display: none !important; } body.print-op-mode #printOpSlip { display: block !important; width: 100%; height: 100%; box-sizing: border-box; } body.print-receipt-mode #printPayReceipt { display: block !important; width: 68mm !important; max-height: 58mm !important; margin: 0 auto; box-sizing: border-box; overflow: hidden; } .print-main-box { border: 2px solid black; padding: 5mm; height: 28.2cm; box-sizing: border-box; position: relative; width: 100%; } .bottom-info-section { display: none !important; } }
-#printOpSlip { display: none; }
-#printPayReceipt { display: none; }
+
+/* --- 1. CSS CODE SECTION (A4 Page Layout Styles) --- */
+#printOpSlip { 
+    display: none; 
+}
+#printPayReceipt { 
+    display: none; 
+}
+
+@media print { 
+    /* Force A4 Size paper layout with 5mm margins */
+    @page { 
+        size: A4; 
+        margin: 5mm; 
+    } 
+    
+    body { 
+        background: white; 
+        -webkit-print-color-adjust: exact; 
+    } 
+    
+    /* Hide non-printable system UI blocks during printing */
+    .no-print, header, footer, #dashboard, #loginPanel, #loader, #toast, .modal-overlay, #SVSR_REGISTRATION_MODULE { 
+        display: none !important; 
+    } 
+    
+    /* Display the OP print container on print activation */
+    body.print-op-mode #printOpSlip { 
+        display: block !important; 
+        width: 100%; 
+        height: 100%; 
+        box-sizing: border-box; 
+    } 
+    
+    /* Triggers small thermal receipt block if printing receipt */
+    body.print-receipt-mode #printPayReceipt { 
+        display: block !important; 
+        width: 68mm !important; 
+        max-height: 58mm !important; 
+        margin: 0 auto; 
+        box-sizing: border-box; 
+        overflow: hidden; 
+    }
+
+    /* Dimensions & layout structure for standard A4 box */
+    .print-main-box { 
+        border: 2px solid black; 
+        padding: 5mm; 
+        height: 28.2cm; 
+        box-sizing: border-box; 
+        position: relative; 
+        width: 100%; 
+    } 
+    .bottom-info-section { 
+        display: none !important; 
+    }
+}
+
 .hd-text { text-shadow: 0px 1px 1px rgba(0,0,0,0.05); }
 .patient-corner-box { background: #1e3a8a; color: white; padding: 2px 8px; border-radius: 4px; display: inline-block; font-size: 10px; margin-top: 4px; }
 .btn-loading { pointer-events: none; opacity: 0.7; }
@@ -71,7 +126,106 @@ input[type=number] { -moz-appearance: textfield; }
 <section id="SVSR_REGISTRATION_MODULE" class="hidden w-full px-0 py-6 bg-white"><div class="framed-card w-full"><div class="content-area"><div id="loadingOverlay" class="loading-overlay"><div class="flex flex-col items-center gap-2"><div class="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div><p class="text-[10px] font-bold text-[#0a1d4a] uppercase">Processing Entry...</p></div></div><div id="formContainer" class="order-form"><div id="headerSection" class="flex justify-between items-center mb-3"><div class="flex flex-col"><h1 class="text-sm lg:text-base font-black text-[#0a1d4a] uppercase tracking-tight leading-none">OP Registration Portal</h1><div class="h-0.5 w-14 bg-blue-600 rounded-full mt-1"></div></div><div class="bg-red-600 text-white text-[9px] font-black px-2.5 py-0.5 rounded-sm flex items-center gap-1 shadow-sm uppercase tracking-wide"><span>LIVE TOKENS</span><div class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div></div></div><div id="inlineSuccessMessage" class="hidden flex-col items-center justify-center py-8 text-center"><div class="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-2"><i class="fas fa-check-circle text-2xl"></i></div><h3 class="text-sm font-black text-green-600 uppercase tracking-wider">Registration Successful</h3><p class="text-[10px] text-gray-500 font-bold uppercase mt-1">Patient record has been saved successfully</p></div><form id="tokenForm" class="space-y-3"><div class="grid grid-cols-12 gap-2"><div class="col-span-12 lg:col-span-4 input-soft-ui"><div class="icon-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div><input type="date" id="formDate" required></div><div class="col-span-12 lg:col-span-8 relative"><div class="dropdown-trigger" onclick="toggleDropdown(event, 'branchOptions')"><span id="doctorDisplay">OBG Gynaecology (ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు)</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg></div><div id="branchOptions" class="dropdown-options"><div class="dropdown-item" onclick="selectDrop('doctor', 'Orthopaedic', 'Orthopaedic (ఎముకల మరియు కీళ్ల వైద్య నిపునులు)', 'branchOptions')">Orthopaedic (ఎముకల మరియు కీళ్ల వైద్య నిపునులు)</div><div class="dropdown-item" onclick="selectDrop('doctor', 'OPHTHALMOLOGY', 'Ophthalmology (కంటి వైద్య నిపునులు)', 'branchOptions')">Ophthalmology (కంటి వైద్య నిపునులు)</div><div class="dropdown-item" onclick="selectDrop('doctor', 'Anesthesiology', 'Anesthesiology (అనస్థీషియాలజీ)', 'branchOptions')">Anesthesiology (అనస్థీషియాలజీ)</div><div class="dropdown-item" onclick="selectDrop('doctor', 'OBGY – Gynaecology', 'OBG Gynaecology (ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు)', 'branchOptions')">OBG Gynaecology (ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు)</div><div class="dropdown-item" onclick="selectDrop('doctor', 'Homeopathy', 'Homeopathy (హోమియోపతి వైద్యం)', 'branchOptions')">Homeopathy (హోమియోపతి వైద్యం)</div><div class="dropdown-item" onclick="selectDrop('doctor', 'Gynaecology', 'Gynaecology (గైనకాలజీ )', 'branchOptions')">Gynaecology (గైనకాలజీ )</div></div><input type="hidden" id="doctor" value="OBGY – Gynaecology" required></div></div><div class="grid grid-cols-12 gap-2"><div class="col-span-12 input-soft-ui"><div class="icon-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><input type="text" id="patientName" placeholder="PATIENT FULL NAME" required oninput="handleTitleCase(this)"></div></div><div class="grid grid-cols-12 gap-2"><div class="col-span-4 lg:col-span-2 input-soft-ui"><div class="icon-overlay"><i class="fas fa-user-clock text-gray-500 text-xs"></i></div><input type="number" id="age" placeholder="AGE" required style="padding-left:28px !important;"></div><div class="col-span-8 lg:col-span-4 relative"><div class="dropdown-trigger" onclick="toggleDropdown(event, 'genderOptions')"><span id="genderDisplay">FEMALE</span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg></div><div id="genderOptions" class="dropdown-options"><div class="dropdown-item" onclick="selectDrop('gender', 'Male', 'MALE', 'genderOptions')">MALE</div><div class="dropdown-item" onclick="selectDrop('gender', 'Female', 'FEMALE', 'genderOptions')">FEMALE</div></div><input type="hidden" id="gender" value="Female" required></div><div class="col-span-12 lg:col-span-6 input-soft-ui"><div class="icon-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.79 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72(12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div><input type="tel" id="phoneNumber" placeholder="MOBILE NUMBER (10 DIGITS)" pattern="[0-9]{10}" required></div></div><div class="grid grid-cols-12 gap-2 items-center"><div class="col-span-7 input-soft-ui"><div class="icon-overlay"><i class="fas fa-location-dot text-gray-500 text-xs"></i></div><input type="text" id="village" placeholder="VILLAGE / LOCATION" required oninput="handleTitleCase(this)"></div><div class="col-span-2 input-soft-ui"><div class="icon-overlay"><i class="fas fa-indian-rupee-sign text-gray-500 text-xs"></i></div><input type="number" id="amount" placeholder="AMOUNT"></div><div class="col-span-3"><button type="submit" id="submitBtn" class="w-full btn-confirm flex items-center justify-center gap-2 py-2 text-xs font-semibold"><i class="fas fa-check-circle"></i> Confirm</button></div></div></form><div id="statusMessage" class="mt-2 text-center text-[10px] font-bold uppercase text-red-600 h-4"></div></div></div></div></section>
 
 <!-- PART 08-PRINTING SLIPS TEMPLATES -->
-<div id="printOpSlip"><div class="print-main-box"><div style="position: relative; min-height: 2.8cm; border-bottom: 2px solid black; padding-bottom: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; width: 100%;"><img src="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_01_HEDER_LOGO_MAIN.png" style="position:absolute; left:15px; top:-12px; height:3.4cm;"><div style="width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;"><h1 id="prHospitalName" style="font-size:19px; font-weight:bold; margin:0; text-transform:uppercase; color:#228BE6; line-height:1.2; white-space:nowrap; margin-left:80px;">DR. S. VENKATA SUBBA REDDY MULTISPECIALTY HOSPITAL</h1><div style="font-size:19px; font-weight:bold; color:#228BE6; line-height:1.2; margin-top:2px; white-space:nowrap; margin-left:80px;">డా. ఎస్. వెంకట సుబ్బా రెడ్డి మల్టీ స్పెషాలిటీ హాస్పిటల్</div><p style="font-size:13px; margin:3px 0 0 80px; font-weight:bold; color:#228BE6; white-space:nowrap;">SINCE 1989 - "Best Of Care, Close to Home"</p><div id="doctorHeaderBox" style="width:100%; margin-top:8px; padding-top:8px;"><div style="display:flex; justify-content:space-between; gap:20px;"><div style="width:48%; text-align:left;"><div id="docEnName" style="font-size:14px; font-weight:bold;"></div><div id="docEnRole" style="font-size:12px;"></div><div id="docEnReg" style="font-size:11px;"></div></div><div style="width:48%; text-align:right;"><div id="docTeName" style="font-size:14px; font-weight:bold;"></div><div id="docTeRole" style="font-size:12px;"></div><div id="docTeReg" style="font-size:11px;"></div></div></div></div></div></div></div><div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0; border-bottom: 1px solid #ddd; padding-bottom: 3px;"><div id="prBranchName" style="font-size: 12px; font-weight: bold; text-transform: uppercase; color: #1e3a8a;">BRANCH HOSPITAL</div><div id="prDateDay" style="font-size: 13px; font-weight: bold;">Date & Day</div></div><div style="display: flex; margin-top: 15px; font-size: 16px;"><div style="width: 55%; border-right: 1px solid #ddd; padding-right: 15px;"><div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><div><strong>PID : </strong> <span id="prPID"></span></div><div style="margin-right: 14px;"><strong>Token : </strong> <span id="prToken"></span></div></div><div style="margin-bottom: 6px;"><strong>Name : </strong> <span id="prName" style="text-transform: uppercase;"></span></div><div style="margin-bottom: 7px;"><strong>Age/Gender : </strong> <span id="prAgeGen"></span></div><div style="margin-bottom: 11px;"><strong>Village : </strong> <span id="rprVillage"></span></div><div style="margin-top: 20px;"><h3 style="font-weight: bold; font-size: 11px; border-bottom: 1px solid #000; display: inline-block;">CONSULTANT:</h3><div style="margin-top: 4px;"><strong><span id="prDocName"></span></strong> (<span id="prDocRole"></span>)</div></div></div><div style="width: 45%; padding-left: 50px;"><div style="display: flex; margin-bottom: 6px;"><strong>ML : </strong> <span style="margin-left: auto;">..................</span></div><div style="display: flex; margin-bottom: 6px;"><strong>MH : </strong> <span style="margin-left: auto;">..................</span></div><div style="display: flex; margin-bottom: 6px;"><strong>LMP : </strong> <span style="margin-left: auto;">..................</span></div><div style="display: flex; margin-bottom: 6px;"><strong>EDD : </strong> <span style="margin-left: auto;">..................</span></div><div style="display: flex; margin-bottom: 6px;"><strong>B.P : </strong> <span style="margin-left: auto;">......... / .........</span></div><div style="display: flex; margin-bottom: 6px;"><strong>Weight : </strong> <span style="margin-left: auto;">.................. kg</span></div><div style="display: flex; margin-bottom: 6px;"><strong>Temp : </strong> <span style="margin-left: auto;">.................. F</span></div><div style="display: flex; margin-bottom: 6px;"><strong>PR : </strong> <span style="margin-left: auto;">.................. bpm</span></div></div></div><div style="position: absolute; bottom: 8mm; left: 8mm; right: 8mm;"><div style="display: flex; justify-content: space-between; align-items: flex-end;"><div style="font-size: 10px; font-weight: bold;"><i class="fas fa-phone-alt"></i> 9063307444 <br> <i class="fas fa-globe"></i> www.drvsrhospital.in</div><div style="text-align: center;"><div style="width: 3.5cm; border-top: 1px solid black; margin-bottom: 4px;"></div><p style="font-size: 12px; font-weight: bold; margin: 0;">Doctor Signature</p></div></div></div></div></div></div>
+<!-- --- 2. BODY SECTION (HTML Layout of #printOpSlip) --- -->
+<div id="printOpSlip">
+    <div class="print-main-box">
+        <!-- Left Header Logo and Centralized Bilingual Headers -->
+        <div style="position: relative; min-height: 2.8cm; border-bottom: 2px solid black; padding-bottom: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; width: 100%;">
+            <img src="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_01_HEDER_LOGO_MAIN.png" style="position: absolute; left: 15px; top: -12px; height: 3.4cm;">
+            
+            <div style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <!-- English Name -->
+                <h1 id="prHospitalName" style="font-size: 19px; font-weight: bold; margin: 0; text-transform: uppercase; color: #1e3a8a; line-height: 1.2; white-space: nowrap; margin-left: 80px;">DR. S. VENKATA SUBBA REDDY MULTISPECIALTY HOSPITAL</h1>
+                
+                <!-- Telugu Name -->
+                <div style="font-size: 19px; font-weight: bold; color: #1e3a8a; line-height: 1.2; margin-top: 2px; white-space: nowrap; margin-left: 80px;">
+                    డా. ఎస్. వెంకట సుబ్బా రెడ్డి మల్టీ స్పెషాలిటీ హాస్పిటల్
+                </div>
+                
+                <p style="font-size: 13px; margin: 3px 0 0 80px; font-weight: bold; color: #444; white-space: nowrap;">SINCE 1989 - "Best Of Care, Close to Home"</p>
+                
+                <!-- Doctor Specialized Headers dynamically populated -->
+                <div id="doctorHeaderBox" style="width: 100%; margin-top: 8px; padding-top: 8px;">
+                    <div style="display: flex; justify-content: space-between; gap: 20px;">
+                        <!-- English Doctor Profile Left -->
+                        <div style="width: 48%; text-align: left;">
+                            <div id="docEnName" style="font-size: 14px; font-weight: bold;"></div>
+                            <div id="docEnRole" style="font-size: 12px;"></div>
+                            <div id="docEnReg" style="font-size: 11px;"></div>
+                        </div>
+                        <!-- Telugu Doctor Profile Right -->
+                        <div style="width: 48%; text-align: right;">
+                            <div id="docTeName" style="font-size: 14px; font-weight: bold;"></div>
+                            <div id="docTeRole" style="font-size: 12px;"></div>
+                            <div id="docTeReg" style="font-size: 11px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Branch Context and Execution DateTime Row -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0; border-bottom: 1px solid #ddd; padding-bottom: 3px;">
+            <div id="prBranchName" style="font-size: 12px; font-weight: bold; text-transform: uppercase; color: #1e3a8a;">BRANCH HOSPITAL</div>
+            <div id="prDateDay" style="font-size: 13px; font-weight: bold;">Date & Day</div>
+        </div>
+
+        <!-- Divided Patient Credentials & Physical Vitals Section -->
+        <div style="display: flex; margin-top: 15px; font-size: 16px;">
+            <!-- Left Data Hand: Dynamic Patient Credentials -->
+            <div style="width: 55%; border-right: 1px solid #ddd; padding-right: 15px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <div><strong>PID : </strong> <span id="prPID"></span></div>
+                    <div style="margin-right: 14px;"><strong>Token : </strong> <span id="prToken"></span></div>
+                </div>
+                <div style="margin-bottom: 6px;">
+                    <strong>Name : </strong> <span id="prName" style="text-transform: uppercase;"></span>
+                </div>
+                <div style="margin-bottom: 7px;">
+                    <strong>Age/Gender : </strong> <span id="prAgeGen"></span>
+                </div>
+                <div style="margin-bottom: 11px;">
+                    <strong>Village : </strong> <span id="rprVillage"></span>
+                </div>
+                <div style="margin-top: 20px;">
+                    <h3 style="font-weight: bold; font-size: 11px; border-bottom: 1px solid #000; display: inline-block;">
+                        CONSULTANT:
+                    </h3>
+                    <div style="margin-top: 4px;">
+                        <strong><span id="prDocName"></span></strong> (<span id="prDocRole"></span>)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Data Hand: Physical Vitals Grid -->
+            <div style="width: 45%; padding-left: 50px;">
+                <div style="display: flex; margin-bottom: 6px;"><strong>ML : </strong> <span style="margin-left: auto;">..................</span></div>
+                <div style="display: flex; margin-bottom: 6px;"><strong>MH : </strong> <span style="margin-left: auto;">..................</span></div>
+                <div style="display: flex; margin-bottom: 6px;"><strong>LMP : </strong> <span style="margin-left: auto;">..................</span></div>
+                <div style="display: flex; margin-bottom: 6px;"><strong>EDD : </strong> <span style="margin-left: auto;">..................</span></div>
+                <div style="display: flex; margin-bottom: 6px;"><strong>B.P : </strong> <span style="margin-left: auto;">......... / .........</span></div>
+                <div style="display: flex; margin-bottom: 6px;"><strong>Weight : </strong> <span style="margin-left: auto;">.................. kg</span></div>
+                <div style="display: flex; margin-bottom: 6px;"><strong>Temp : </strong> <span style="margin-left: auto;">.................. F</span></div>
+                <div style="display: flex; margin-bottom: 6px;"><strong>PR : </strong> <span style="margin-left: auto;">.................. bpm</span></div>
+            </div>
+        </div>
+
+        <!-- Footer / Sign-off Section Positioned Absolute at Bottom Edge -->
+        <div style="position: absolute; bottom: 8mm; left: 8mm; right: 8mm;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                <div style="font-size: 10px; font-weight: bold;">
+                    <i class="fas fa-phone-alt"></i> 9063307444 <br> 
+                    <i class="fas fa-globe"></i> www.drvsrhospital.in
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 3.5cm; border-top: 1px solid black; margin-bottom: 4px;"></div>
+                    <p style="font-size: 12px; font-weight: bold; margin: 0;">Doctor Signature</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="printPayReceipt"><div style="width: 68mm; max-height: 58mm; margin: 0 auto; padding: 1mm; font-family: 'Roboto Slab', serif; text-align: center; color: black; line-height: 1.1; border: 1px dashed black; box-sizing: border-box; overflow: hidden; font-size: 8px;"><div style="font-size: 9px; font-weight: bold; text-transform: uppercase;">Dr. S. Venkata Subba Reddy MULTISPECIALTY Hospital</div><div style="font-size: 8px; font-weight: bold; margin-bottom: 2px;">Allagadda</div><div style="border-top: 1px dashed black; border-bottom: 1px dashed black; padding: 2px 0; margin: 2px 0;"><div style="font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">TOKEN NO</div><div id="rcptTokenBig" style="font-size: 32px; font-weight: 900; margin: 1px 0; line-height: 1;">08</div></div><div style="text-align: left; font-size: 8px; margin: 4px 0; line-height: 1.2;"><div style="margin-bottom: 2px;"><strong>PATIENT NAME:</strong> <span id="rcptName" style="text-transform: uppercase;"></span></div><div style="margin-bottom: 2px;"><strong>VILLAGE:</strong> <span id="rcptVillage" style="text-transform: uppercase;"></span></div><div style="margin-bottom: 2px;"><strong>AGE/GENDER:</strong> <span id="rcptAgeGen"></span></div><div style="margin-bottom: 2px;"><strong>PID:</strong> <span id="rcptPID"></span></div></div><div style="border-top: 1px dashed black; padding-top: 4px; margin-top: 4px; font-size: 9px; font-weight: bold; text-transform: uppercase;">OP AMOUNT <span id="rcptAmt">100</span> PAID</div><div style="margin-top: 4px; font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">THANKYOU</div></div></div>
 
 <!-- PART 09-DASHBOARD AND FOOTER -->
@@ -83,14 +237,121 @@ const URL_LOGIN_FETCH = "https://script.google.com/macros/s/AKfycbxldSmD8_kM5OC0
 const URL_REGISTRATION = "https://script.google.com/macros/s/AKfycbw5nJW1XOboPguHxlvqsZo-nWVjDZ1zeirfl9js6alruSKhg2MkUB8ocWYpec4PrhiT/exec";
 const URL_MOD_EXPENSE_ARCHIVE = "https://script.google.com/macros/s/AKfycbwbZtjAY6nxmlcUkW8fjyPOrZ2LGgZs65oXNOHwubfaKZju6rrHTbna6-8NUk6i0L5z/exec";
 let user = null, activeAction = null, activeSNo = null, globalPatientList = [], activeModRecord = null;
+
+/* --- 3. JAVASCRIPT HEADLINE SECTION (OP SLIP LOGIC & DOCTOR CONSTANTS) --- */
 const DOC_INFO = {
-"TN01": { enName: "DR. T.N. LAKSHMI REDDY MBBS., M.S. Orthopaedic, FIJR, FIA, FIPT", enRole: "Orthopaedic", enReg: "Regd. No. APMC/FMR/96871", teName: "డా. టి.ఎన్. లక్ష్మి రెడ్డి MBBS., M.S. Orthopaedic, FIJR, FIA, FIPT", teRole: "ఎముకల మరియు కీళ్ల వైద్యం", teReg: "రిజిస్ట్రేషన్ నెం. APMC/FMR/96871" },
-"SC02": { enName: "DR. S. CHANDRIKA MBBS., M.S. Ophthalmology", enRole: "Ophthalmology", enReg: "Regd. No. APMC/FMR/98519", teName: "డా. ఎస్. చంద్రిక MBBS., M.S. Ophthalmology", teRole: "కంటి వైద్యం", teReg: "రిజిస్ట్రేషన్ నెం. APMC/FMR/98519" },
-"SY03": { enName: "DR. S. YASHWANTH REDDY M.B.B.S., M.D. Anesthesiology", enRole: "Anesthesiology", enReg: "Regd. No. APMC/FMR/118411", teName: "డా. ఎస్. యశ్వంత్ రెడ్డి M.B.B.S., M.D. Anesthesiology", teRole: "అనస్థీషియాలజీ", teReg: "రిజిస్ట్రేషన్ నెం. APMC/FMR/118411" },
-"HY04": { enName: "DR. P. HANEESHA REDDY M.B.B.S., M.S. OBG – Gynaecology", enRole: "OBG – Gynaecology", enReg: "Regd. No. APMC/FMR/97996", teName: "డా. పి. హనీషా రెడ్డి M.B.B.S., M.S. OBG – Gynaecology", teRole: "ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు", teReg: "రిజిస్ట్రేషన్ నెం. APMC/FMR/97996" },
-"SN05": { enName: "DR. S. NARASIMHA REDDY M.B.B.S. Hom", enRole: "Homeopathy", enReg: "Regd. No. 4678", teName: "డా. ఎస్. నరసింహ రెడ్డి M.B.B.S. Hom", teRole: "హోమియోపతి (హోమియోపతి వైద్యం)", teReg: "రిజిస్ట్రేషన్ నెం. 4678" },
-"SS06": { enName: "DR. S. SIVA NAGESWARAMMA M.B.B.S. (Hom)", enRole: "Gynaecology", enReg: "Regd. No. 4686", teName: "డా. ఎస్. శివ నాగేశ్వరమ్మ M.B.B.S. (Hom)", teRole: "స్త్రీ వ్యాధి నిపునులు", teReg: "రిజిస్ట్రేషన్ నెం. 4686" }
+"TN01": {
+enName: "DR. T.N. LAKSHMI REDDY   MBBS., M.S. Orthopaedic, FIJR, FIA, FIPT",
+enRole: "Orthopaedic",
+enReg: "Regd. No. APMC/FMR/96871",
+teName: "డా. టి.ఎన్. లక్ష్మి రెడ్డి MBBS., M.S. Orthopaedic, FIJR, FIA, FIPT",
+teRole: "ఎముకల మరియు కీళ్ల వైద్యం",
+teReg: "రిజిస్ట్రేషన్ నెం. APMC/FMR/96871"
+},
+"SC02": {
+enName: "DR. S. CHANDRIKA   MBBS., M.S. Ophthalmology",
+enRole: "Ophthalmology",
+enReg: "Regd. No. APMC/FMR/98519",
+teName: "డా. ఎస్. చంద్రిక    MBBS., M.S. Ophthalmology",
+teRole: "కంటి వైద్యం",
+teReg: "రిజిస్ట్రేషన్ నెం. APMC/FMR/98519"
+},
+"SY03": {
+enName: "DR. S. YASHWANTH REDDY   M.B.B.S., M.D. Anesthesiology",
+enRole: "Anesthesiology",
+enReg: "Regd. No. APMC/FMR/118411",
+teName: "డా. ఎస్. యశ్వంత్ రెడ్డి    M.B.B.S., M.D. Anesthesiology",
+teRole: "అనస్థీషియాలజీ",
+teReg: "రిజిస్ట్రేషన్ నెం. APMC/FMR/118411"
+},
+"HY04": {
+enName: "DR. P. HANEESHA REDDY M.B.B.S., M.S. OBG – Gynaecology",
+enRole: "OBG – Gynaecology",
+enReg: "Regd. No. APMC/FMR/97996",
+teName: "డా. పి. హనీషా రెడ్డి  M.B.B.S., M.S. OBG – Gynaecology",
+teRole: "ప్రసూతి మరియు స్త్రీ వ్యాధి నిపునులు",
+teReg: "రిజిస్ట్రేషన్ నెం. APMC/FMR/97996"
+},
+"SN05": {
+enName: "DR. S. NARASIMHA REDDY  M.B.B.S. Hom",
+enRole: "Homeopathy",
+enReg: "Regd. No. 4678",
+teName: "డా. ఎస్. నరసింహ రెడ్డి  M.B.B.S. Hom",
+teRole: "హోమియోపతి (హోమియోపతి వైద్యం)",
+teReg: "రిజిస్ట్రేషన్ నెం. 4678"
+},
+"SS06": {
+enName: "DR. S. SIVA NAGESWARAMMA   M.B.B.S. (Hom)",
+enRole: "Gynaecology",
+enReg: "Regd. No. 4686",
+teName: "డా. ఎస్. శివ నాగేశ్వరమ్మ   M.B.B.S. (Hom)",
+teRole: "స్త్రీ వ్యాధి నిపునులు",
+teReg: "రిజిస్ట్రేషన్ నెం. 4686"
+}
 };
+
+/**
+ * Main Print Processing function for generating the OP Slip
+ */
+function printOpSlip(p) {
+const now = new Date();
+const dayName = now.toLocaleDateString('en-US', { weekday: 'long' });
+const fullDate = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+// Evaluate branch configurations based on user login data
+let branchName = user.branchSite.toLowerCase() === 'main-1' ? "BONE EYE TRAUMA CARE HOSPITAL" : (user.branchSite.toLowerCase() === 'main-2' ? "DR. S VENKATA SUBBA REDDY HOSPITAL" : user.branchSite.toUpperCase()); 
+
+// Direct Helper logic to write values in DOM
+const setElVal = (id, val) => { 
+    const el = document.getElementById(id); 
+    if (el) el.innerText = val; 
+}; 
+
+// Rendering Header & Branch Values
+setElVal('prHospitalName', "DR. S. VENKATA SUBBA REDDY MULTISPECIALTY HOSPITAL"); 
+setElVal('prBranchName', branchName); 
+setElVal('prDateDay', `${dayName}, ${fullDate}`); 
+
+// Rendering Patient Profile Values
+setElVal('prPID', p.patientId); 
+setElVal('prToken', String(p.tokenNumber).replace(/^[A-Za-z]+/, ''));   
+setElVal('prName', p.patientName); 
+setElVal('prAgeGen', `${p.patientAge} / ${p.patientGender}`); 
+setElVal('rprVillage', p.villageName);
+setElVal('prDocName', p.doctorName); 
+setElVal('prDocRole', DOC_INFO[p.doctorId]?.enRole || "Consultant");
+
+// Pull and render custom specialized Bilingual Doctor Headers
+const docInfo = DOC_INFO[p.doctorId];
+if (docInfo) {
+    document.getElementById('docEnName').innerText = docInfo.enName;
+    document.getElementById('docEnRole').innerText = docInfo.enRole;
+    document.getElementById('docEnReg').innerText = docInfo.enReg;
+
+    document.getElementById('docTeName').innerText = docInfo.teName;
+    document.getElementById('docTeRole').innerText = docInfo.teRole;
+    document.getElementById('docTeReg').innerText = docInfo.teReg;
+}
+
+// Set Bottom Copy elements (Secondary information nodes)
+setElVal('prBotDoc', p.doctorName); 
+setElVal('prBotRole', DOC_INFO[p.doctorId]?.enRole || "Consultant"); 
+setElVal('prBotDate', `${fullDate}`); 
+setElVal('prBotPID', p.patientId); 
+setElVal('prBotName', p.patientName); 
+setElVal('prBotPhone', p.phoneNumber); 
+setElVal('prBotVillage', p.villageName); 
+setElVal('prBotAmt', p.opdAmountPaid); 
+
+// Apply OP print styling mode context to trigger targeted CSS layout rules
+document.body.classList.add('print-op-mode'); 
+
+// Open system print preview dialog
+window.print(); 
+
+// Reset layout mode back to default dashboard interface once print is dismissed
+document.body.classList.remove('print-op-mode'); 
+}
 
 /* COMPRESSED ONE-LINE JAVASCRIPT FUNCTIONS */
 const parseSheetDate = (d) => { if (!d) return null; if (d instanceof Date) return d; const p = String(d).match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/); return p ? new Date(parseInt(p[3], 10), parseInt(p[2], 10) - 1, parseInt(p[1], 10)) : (isNaN(new Date(d).getTime()) ? null : new Date(d)); };
@@ -111,7 +372,7 @@ const loadData = async (isRefresh = false) => { if(!user) return; const icon = d
 const reorderOPDSections = () => { const hr = new Date().getHours(), c = document.getElementById('opdPaidContainer'), m = document.getElementById('morningCard'), e = document.getElementById('eveningCard'); if (hr >= 15) c.insertBefore(e, m); else c.insertBefore(m, e); };
 const askMove = (s, f = false) => { activeSNo = s; activeAction = 'delete'; showModal('delete', s); };
 const showModal = (type, sNo) => { activeSNo = sNo; activeAction = type; const m = document.getElementById('confirmModal'), icon = document.getElementById('modalIconBox'), title = document.getElementById('modalTitle'), msg = document.getElementById('modalMsg'), btn = document.getElementById('finalConfirm'); if(type === 'update') { const a = document.getElementById(`amt-${sNo}`).value; icon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 bg-blue-50 text-blue-600"; icon.innerHTML = '<i class="fas fa-check-circle text-xl"></i>'; title.innerText = "Confirm Update"; msg.innerText = `Are you sure you want to verify payment of ₹${a}?`; btn.className = "flex-1 py-2.5 bg-blue-600 text-white rounded-xl text-[10px] font-bold hover:bg-blue-700 transition shadow-lg"; } else { icon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 bg-red-50 text-red-500"; icon.innerHTML = '<i class="fas fa-trash-alt text-xl"></i>'; title.innerText = "Confirm Delete"; msg.innerText = "Are you sure you want to delete this record?"; btn.className = "flex-1 py-2.5 bg-red-600 text-white rounded-xl text-[10px] font-bold hover:bg-red-700 shadow-lg transition shadow-md"; } m.classList.remove('hidden'); };
-const printOpSlip = (p) => { const now = new Date(), dayName = now.toLocaleDateString('en-US', { weekday: 'long' }), fullDate = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); let branchName = user.branchSite.toLowerCase() === 'main-1' ? "BONE EYE TRAUMA CARE HOSPITAL" : (user.branchSite.toLowerCase() === 'main-2' ? "DR. S VENKATA SUBBA REDDY HOSPITAL" : user.branchSite.toUpperCase()); const setElVal = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; }; setElVal('prHospitalName', "DR. S. VENKATA SUBBA REDDY MULTISPECIALTY HOSPITAL"); setElVal('prBranchName', branchName); setElVal('prDateDay', `${dayName}, ${fullDate}`); setElVal('prPID', p.patientId); setElVal('prToken', String(p.tokenNumber).replace(/^[A-Za-z]+/, '')); setElVal('prName', p.patientName); setElVal('prAgeGen', `${p.patientAge} / ${p.patientGender}`); setElVal('rprVillage', p.villageName); setElVal('prDocName', p.doctorName); setElVal('prDocRole', DOC_INFO[p.doctorId]?.enRole || "Consultant"); const docInfo = DOC_INFO[p.doctorId]; if (docInfo) { document.getElementById('docEnName').innerText = docInfo.enName; document.getElementById('docEnRole').innerText = docInfo.enRole; document.getElementById('docEnReg').innerText = docInfo.enReg; document.getElementById('docTeName').innerText = docInfo.teName; document.getElementById('docTeRole').innerText = docInfo.teRole; document.getElementById('docTeReg').innerText = docInfo.teReg; } document.body.classList.add('print-op-mode'); window.print(); document.body.classList.remove('print-op-mode'); };
+
 const printPaymentReceipt = (p) => { const cleanToken = String(p.tokenNumber).replace(/^[A-Za-z]+/, '').padStart(2, '0'); document.getElementById('rcptTokenBig').innerText = cleanToken; document.getElementById('rcptName').innerText = p.patientName; document.getElementById('rcptVillage').innerText = p.villageName; document.getElementById('rcptAgeGen').innerText = `${p.patientAge} / ${p.patientGender}`; document.getElementById('rcptPID').innerText = p.patientId; document.getElementById('rcptAmt').innerText = p.opdAmountPaid; document.body.classList.add('print-receipt-mode'); window.print(); document.body.classList.remove('print-receipt-mode'); };
 const verifyPatient = () => { const pid = document.getElementById('pidInput').value.trim().toUpperCase(); if (!pid) { showToast("PLEASE ENTER PATIENT ID"); return; } const record = globalPatientList.find(p => p.patientId === pid); if (!record) { showToast("PATIENT NOT FOUND"); return; } activeModRecord = record; activeModRecord.originalAmount = record.opdAmountPaid || ''; const detailsDiv = document.getElementById('modificationDetails'); const spans = detailsDiv.querySelectorAll('span.text-gray-600'); spans[0].innerHTML = `<input type="text" id="modName" value="${record.patientName}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[1].innerHTML = `<input type="text" id="modVillage" value="${record.villageName}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[2].innerHTML = `<input type="text" id="modPhone" value="${record.phoneNumber}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[3].innerHTML = `<input type="text" id="modDocId" value="${record.doctorId}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[4].innerHTML = `<input type="text" id="modAgeGen" value="${record.patientAge}/${record.patientGender}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; spans[5].innerHTML = `<input type="number" id="modAmount" value="${record.opdAmountPaid || ''}" class="w-full text-center bg-transparent font-bold text-gray-800 outline-none">`; showToast("DETAILS LOADED SUCCESSFUL"); };
 const submitModification = async () => { if (!activeModRecord) { showToast("VERIFY A PATIENT FIRST"); return; } const sNo = activeModRecord.serialNumber, name = document.getElementById('modName').value.trim(), village = document.getElementById('modVillage').value.trim(), phone = document.getElementById('modPhone').value.trim(), docId = document.getElementById('modDocId').value.trim(), ageGen = document.getElementById('modAgeGen').value.trim().split('/'), age = ageGen[0] || activeModRecord.patientAge, gender = ageGen[1] || activeModRecord.patientGender, amount = document.getElementById('modAmount').value.trim(), reason = document.getElementById('modReason').value.trim(); if (String(amount) !== String(activeModRecord.originalAmount) && !reason) { showToast("REASON IS MANDATORY TO MODIFY AMOUNT"); document.getElementById('modReason').focus(); return; } const localRec = globalPatientList.find(x => x.serialNumber === sNo); if (localRec) { localRec.patientName = name; localRec.villageName = village; localRec.phoneNumber = phone; localRec.doctorId = docId; localRec.patientAge = age; localRec.patientGender = gender; localRec.opdAmountPaid = amount; } renderT(globalPatientList); showToast("SAVING MODIFICATIONS..."); try { const modData = new FormData(); modData.append("action", "modify"); modData.append("sNo", sNo); modData.append("patientId", activeModRecord.patientId); modData.append("patientName", name); modData.append("village", village); modData.append("phoneNumber", phone); modData.append("doctorId", docId); modData.append("age", age); modData.append("gender", gender); modData.append("amount", amount); modData.append("reason", reason); await fetch(URL_MOD_EXPENSE_ARCHIVE, { method: 'POST', body: modData }); showToast("RECORD MODIFICATION SAVED"); document.getElementById('modReason').value = ''; setTimeout(() => loadData(false), 500); } catch(x) { showToast("Failed to sync modifications"); } };
@@ -143,7 +404,6 @@ function renderT(list) {
   document.getElementById('eveningCounter').innerText = `Paid: ${ei - 1} | Total: ₹${eveningSum}`;
   reorderOPDSections();
 }
-
 
 /* UPDATE AND DELETE EVENT HANDLERS - LOCAL RE-RENDERING WITH NO RE-LOADS */
 document.getElementById('finalConfirm').onclick = async () => {

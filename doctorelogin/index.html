@@ -205,7 +205,7 @@ html, body {
 
 <script>
 // 01-HEADER JAVASCRIPT SECTION
-const APP_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbx6fJRcqAZT5jFwby-Vi7WcdJTSyTLZpLk2VCD4YCNkhCQSk5RMXgfPCw4qYhcdvgjR/exec";
+const APP_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbycmFwnVU0bUfsudCc7jmXUGjCAlZz-ShKjbuttrfWHJke3x4_3qEN3mxO6eXRaJkY_/exec";
 const updateLiveClock = () => { const now = new Date(); const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']; const dd = String(now.getDate()).padStart(2, '0'); const mmm = months[now.getMonth()]; document.getElementById('liveClock').innerText = `${dd}-${mmm}-${now.getFullYear()}`; };
 const executeApiRequest = async (payload) => { try { const r = await fetch(APP_SCRIPT_API_URL, { method: "POST", mode: "cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) }); return await r.json(); } catch(e) { console.error(e); return { status: "error", message: "Network connection failure." }; } };
 const formatTime = (t) => { if (!t) return '-'; const match = String(t).match(/(\d{1,2}):(\d{2}):?(\d{2})?/); if (match) { let hrs = parseInt(match[1]); const mins = match[2]; const ampm = hrs >= 12 ? 'PM' : 'AM'; hrs = hrs % 12 || 12; return `${String(hrs).padStart(2, '0')}:${mins} ${ampm}`; } return String(t); };

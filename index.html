@@ -989,7 +989,7 @@
 /* 06-టైమింగ్స్ సెక్షన్ */
     function alertEmergency() { alert("Emergency Line Selected: Please call 9063307444 immediately for rapid trauma ambulance dispatch."); }
 /* 07-రిజిస్ట్రేషన్ సెక్షన్ */
-    const GLOBAL_DEPLOYED_URL = "https://script.google.com/macros/s/AKfycbzpFykGRcPZ-kNrDakEapcrlf7DReuAwmMYyAXEH5_J-Lx8MBD8OwA2dU-M65qsm1FOKw/exec";
+    const GLOBAL_DEPLOYED_URL = "https://script.google.com/macros/s/AKfycbzuRu4ZaS6ZH0sNyzRvbc1i9EVSK5sCrRiO4HpO7RlqZcvNB68LwGA5FSk0rvTOCRjM/exec";
     function handleTitleCase(el) { el.value = el.value.toLowerCase().split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' '); }
     function toggleDropdown(e, id) { e.stopPropagation(); document.querySelectorAll('.dropdown-options').forEach(d => { if(d.id !== id) d.classList.remove('show'); }); document.getElementById(id).classList.toggle('show'); }
     function selectDrop(hiddenId, val, label, dropId) { document.getElementById(hiddenId).value = val; document.getElementById(hiddenId + 'Display').innerText = label; document.getElementById(dropId).classList.remove('show'); }

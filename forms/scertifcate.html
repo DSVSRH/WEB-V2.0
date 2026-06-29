@@ -1,163 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sterilaization Certificate</title>
-<link rel="icon" type="image/png" href="https://sh-alg.github.io/SM-IMG/01-SMH-FEVICON_ICON.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FORMS - VSR</title>
+
+<link rel="manifest" href="manifest.json">
+
+<link rel="icon" href="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_02_FEVICON_ICON.png" type="image/png">
+
+<link rel="apple-touch-icon" href="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_02_FEVICON_ICON.png">
+
+<meta name="theme-color" content="#1e3a8a">
+
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-body { font-family: 'Roboto Slab', serif; background-color: #ffffff; padding: 10px; margin: 0; }
-.a4-page { width: 210mm; height: 140mm; min-height: 10mm; padding: 3mm 6mm; margin: 120px auto 40px auto; background: #ffffff; border: 2.5px solid #1e3a8a; box-sizing: border-box; display: flex; flex-direction: column; position: relative; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); overflow: hidden;   }
-.header-container { display: flex; flex-direction: column; border-bottom: 2.5px solid #1e3a8a; padding-bottom: 10px; margin-bottom: 10px; }
-.header-top { display: flex; align-items: center; justify-content: flex-start; gap: 15px; width: 100%; }
-.logo-img { height: 90px; width: 110px; object-fit: contain; }
-.hospital-name { font-size: 1.23rem; font-weight: 900; color:#1e3a8a; text-transform: uppercase; line-height: 1.2; }
-.since-box { font-size: 0.9rem; font-weight: 800; color:#000000;background-color:#7FD3FF; padding: 3px 10px; border-radius: 4px; border: 1px solid #1e3a8a; }
-.receipt-headline { font-size: 1.05rem; font-weight: 800; color: #1e3a8a; text-decoration: underline; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; margin-top: 4px; margin-bottom: 4px; }
-.receipt-paragraph { font-size: 0.9rem; line-height: 2.4; color: #1e293b; text-align: justify; font-weight: 600; text-transform: uppercase; }
-.line-input { border: none; border-bottom: 1.5px dotted #1e3a8a; outline: none; padding: 0 4px; font-weight: 800; color: #1e3a8a; text-align: center; background: transparent; font-size: 0.90rem; min-width: 100px; display: inline-block; vertical-align: bottom; }
-.date-input-container { position: relative; display: inline-flex; align-items: center; }
-.date-input-container input[type="date"] { position: absolute; opacity: 0; width: 100%; cursor: pointer; }
-.date-field { border:none;border-bottom:1.5px dotted #1e3a8a;outline:none;padding:0 4px;color:#1e3a8a;font-weight:800;width:110px;text-align:center;font-size:0.75rem;cursor:pointer; }
-.controls-wrapper { position: fixed; top: 12px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 1000; }
-.btn { padding: 8px 20px; background-color: #1e3a8a; color: white; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
-.search-box { background:linear-gradient(135deg,#e0e7ff,#c7d2fe);border:2px solid #1e3a8a;padding:3px 12px;border-radius:8px;display:flex;align-items:center;gap:8px;font-weight:800;color:#1e3a8a;box-shadow:0 2px 4px rgba(0,0,0,0.1);height:34px; }
-.search-box input { border:1px solid #1e3a8a;outline:none;padding:2px 6px;height:24px;border-radius:4px;font-weight:700;background:#ffffff;width:240px;font-size:12px; }
 
-@media print {
-    @page { size: A4; margin: 12mm 10mm 10mm 10mm; }
-    body { padding: 0; margin: 0; background: #ffffff; }
-    .controls-wrapper, .status-msg, .fa-calendar-alt { display: none !important; }
-    .a4-page { width: 100% !important; max-width: 190mm !important; height: 130mm !important; margin: 2mm auto 0 auto !important; padding: 4mm 8mm !important; box-shadow: none !important; border: 3px solid #1e3a8a !important; box-sizing: border-box !important; }
-}
-</style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto Slab', serif; background-color: #eef2f6 !important; }
+        .shadow-3d { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.8); }
+        .input-3d { border: 1px solid #d1d5db; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body, html { padding: 0 !important; margin: 0 !important; background: #ffffff !important; }
+            .print-container { width: 100% !important; border: none !important; box-shadow: none !important; background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+        }
+        
+        iframe {
+            width: 100%;
+            min-height: 1400px;
+            border: none;
+            background-color: #ffffff !important;
+        }
+    </style>
 </head>
-<body>
+<body class="min-h-screen">
 
-<div class="controls-wrapper">
-    <div class="flex gap-4">
-        <button class="btn bg-rose-600" onclick="confirmReset()"><i class="fa-solid fa-trash-can"></i> RESET</button>
-        <button class="btn btn-save bg-emerald-600" id="commitBtn_9381" onclick="handleSaveOrUpdate_7182()"><i class="fa-solid fa-cloud-arrow-up" id="saveIcon"></i> <span id="btnText_992">SAVE</span></button>
-        <button class="btn btn-print bg-blue-500" onclick="window.print()"><i class="fa-solid fa-print"></i> PRINT</button>
-    </div>
-	
-<div class="search-box">
-   IP No:
-    <input
-        type="text"
-        id="searchInput_8822"
-        placeholder="Enter Certificate No"
-        oninput="this.value=this.value.toUpperCase()"
-        onkeydown="handleSearchEnter(event)"
-    >
-    <button
-        id="verifyBtn_7722"
-        class="btn"
-        style="padding:2px 10px;height:24px;font-size:11px;min-width:90px;"
-        onclick="performSearch_9281()"
-    >
-        <i id="verifyIcon_7722" class="fa-solid fa-check"></i>
-        VERIFY
-    </button>
-</div>
-    <div id="statusMsg_991" class="text-xs font-bold text-blue-900 text-center"></div>
-</div>
-
-<div class="a4-page">
-    <div class="header-container">
-        <div class="header-top">
-            <img src="https://dsvsrh.github.io/DRSVR-IMG-2026/IMG_01_HEDER_LOGO_MAIN.png" class="logo-img">
-            <div class="header-text">
-                <h1 class="hospital-name">Dr. S. Venkata Subba Reddy Multispecialty Hospital</h1>
-                <div class="flex items-center gap-4 mt-2"> <span class="text-sm font-bold text-blue-600">"Best Of Care, Close to Home"</span> <span class="font-bold text-blue-900 ml-auto"><i class="fas fa-phone-alt"></i> 9063307444</span></div>
+    <!-- Login Screen -->
+    <div id="login-screen" class="fixed inset-0 flex items-center justify-center z-50 p-4">
+        <div class="bg-white p-6 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] border-t border-l border-gray-100 w-full max-w-[300px]">
+            <div class="flex justify-center mb-6">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-900 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Hidden elements required by Google Apps Script to prevent JS error -->
-    <input type="hidden" id="deliveryTime" value="">
-    <input type="hidden" id="childGender_1011" value="MALE">
-
-    <div class="flex-grow flex flex-col justify-start">
-        <div class="flex justify-between w-full mt-2 font-bold text-blue-900 border-b border-blue-900/30 pb-1 text-xs">
-            <div>IP No: <span id="receiptNumDisplay_9182" class="text-rose-600 font-extrabold">[New]</span></div>
-            <div class="date-input-container" style="height:16px;">Date:
-                <input type="text" id="receiptDate_8471" class="date-field" placeholder="DD MON YYYY" readonly>
-                <input type="date" onchange="formatDate(this, 'receiptDate_8471')">
-                <i class="fas fa-calendar-alt ml-2 text-blue-900 cursor-pointer"></i>
+            <h2 class="text-xl font-bold text-center text-blue-900 mb-6 uppercase tracking-wider">Admin Login</h2>
+            <div class="space-y-4">
+                <div class="relative">
+                    <div class="absolute left-1 top-1 p-2 bg-blue-100 rounded-lg">
+                        <svg class="w-4 h-4 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    </div>
+                    <input type="text" id="username" placeholder="USERNAME" oninput="this.value = this.value.toUpperCase()" class="w-full pl-12 pr-3 py-3 input-3d rounded-xl focus:ring-2 focus:ring-blue-500 text-sm uppercase font-bold tracking-widest">
+                </div>
+                <div class="relative">
+                    <div class="absolute left-1 top-1 p-2 bg-blue-100 rounded-lg">
+                        <svg class="w-4 h-4 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    </div>
+                    <input type="password" id="password" placeholder="PASSWORD" class="w-full pl-12 pr-3 py-3 input-3d rounded-xl focus:ring-2 focus:ring-blue-500 text-sm font-bold tracking-widest">
+                </div>
+                <button onclick="handleLogin()" class="w-full bg-blue-900 text-white p-3 rounded-xl font-bold text-sm hover:bg-blue-800 transition transform hover:scale-[1.02] shadow-xl uppercase tracking-widest">Access System</button>
             </div>
-        </div>
-        <div class="receipt-headline">STERILAIZATION CERTIFICATE</div>
-        <p class="receipt-paragraph">
-            THIS IS TO CERTIFY THAT SMT. <span contenteditable="plaintext-only" id="smtName_1004" class="line-input"></span>
-            W/O SRI <span contenteditable="plaintext-only" id="sriName_1005" class="line-input"></span>
-            NATIVE OF <span contenteditable="plaintext-only" id="nativePlace_1006" class="line-input"></span>
-            MANDAL <span contenteditable="plaintext-only" id="mandalName_1007" class="line-input"></span>
-            DIST <span contenteditable="plaintext-only" id="distName_1008" class="line-input"></span>
-            STERILAIZATION ON
-            <span class="date-input-container">
-                <input type="text" id="deliveryDate_1009" class="date-field" placeholder="DD MON YYYY" readonly>
-                <input type="date" onchange="formatDate(this, 'deliveryDate_1009')">
-                <i class="fas fa-calendar-alt ml-2 text-blue-900 cursor-pointer"></i>
-            </span>.
-           
-            CHILDREN <select id="deliveryOrder_1010" class="line-input w-16 text-blue-900"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
-            M+F : LCB
-        </p>
-    </div>
-    <div class="flex justify-between items-center text-[0.7rem] font-bold italic mb-1">
-        <div>Generated digitally. Authenticated record.</div>
-        <div>Authorized Signatory</div>
-    </div>
-
-    <hr style="border:none;border-top:1px solid #1e3a8a;margin-bottom:4px;">
-
-    <div class="footer-wrapper">
-        <div class="footer text-center text-blue-900">
-            <p class="text-[0.7rem] font-bold">Address : Church Masjid Street, ALLAGADDA , Nandyal District, Andhra Pradesh - 518543.</p>
-            <p class="text-[0.5rem] font-bold mt-0.5">© 2026 All Rights Reserved | Dr. S. Venkata Subba Reddy Multispeciality Hospital | Architected by Sri Veda Org.</p>
+            <p id="login-error" class="text-red-500 text-[10px] text-center mt-3 hidden uppercase font-bold">Invalid Credentials</p>
         </div>
     </div>
-</div>
 
-<div id="resetPopup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center;">
-    <div style="background:#fff;padding:20px;border-radius:10px;text-align:center;min-width:300px;">
-        <h3>Are You Sure To Reset ?</h3>
-        <div style="margin-top:15px;">
-            <button class="btn bg-red-600" onclick="doReset()">YES</button>
-            <button class="btn bg-green-600" onclick="closeResetPopup()">NO</button>
+    <!-- Main Content -->
+    <div id="main-app" class="hidden max-w-5xl mx-auto p-4 w-full">
+        <div class="mb-2 flex flex-col md:flex-row justify-between items-center gap-2 no-print">
+            <div class="flex items-center gap-3">
+                <h1 class="text-sm font-bold text-gray-800 uppercase tracking-wide">Dr. VSR Hospital Document Manager :</h1>
+                <div class="flex items-center gap-1.5 bg-white px-2 py-0.5 rounded-full border border-gray-200 shadow-sm">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span class="text-[9px] font-bold text-green-700 uppercase tracking-widest">Admins access</span>
+                </div>
+            </div>
+            <select id="docSelect" onchange="showForm(this.value)" class="w-full md:w-60 p-1.5 border border-gray-300 rounded-lg shadow-sm text-xs font-bold uppercase tracking-wide">
+                <option value="https://dsvsrh.github.io/WEB-V2.0/forms/01deliverycertificate.html">01 Delivery Certificate</option>
+                <option value="https://dsvsrh.github.io/WEB-V2.0/forms/02feereceipt.html">02 Fee Receipt</option>
+                <option value="https://dsvsrh.github.io/WEB-V2.0/forms/03ipbill.html">03 IP Bill</option>
+                <option value="https://dsvsrh.github.io/WEB-V2.0/forms/04dischargesummary.html">04 Discharge Summary</option>
+                <option value="https://dsvsrh.github.io/WEB-V2.0/forms/05anaesthesiaconsentformenglish.html">05 Anaesthesia Consent (English)</option>
+                <option value="https://dsvsrh.github.io/WEB-V2.0/forms/06anaesthesiaconsentformtelugu.html">06 Anaesthesia Consent (Telugu)</option>
+                <option value="https://dsvsrh.github.io/WEB-V2.0/forms/07paymentdeclarationform.html">07 Payment Declaration</option>
+                <option value="https://dsvsrh.github.io/WEB-V2.0/forms/08highriskconsentform.html">08 High Risk Consent</option>
+                <option value="https://dsvsrh.github.io/WEB-V2.0/forms/09surgicalconsentform.HTML">09 Surgical Consent</option>
+                <option value="https://dsvsrh.github.io/WEB-V2.0/forms/10deathcertificate.html">10 Death Certificate</option>
+				<option value="https://dsvsrh.github.io/WEB-V2.0/forms/scertifcate.html">11 Sterilaization Certificate</option>
+                <option value="https://dsvsrh.github.io/WEB-V2.0/forms/letterpad.html">12 Letter Pad</option>
+            </select>
+        </div>
+
+        <div id="form-container" class="print-container bg-white shadow-3d rounded-lg border border-gray-100 p-0 mt-2">
+            <div id="active-form-content"></div>
         </div>
     </div>
-</div>
 
-<div id="successPopup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99999;align-items:center;justify-content:center;">
-    <div style="background:#fff;padding:30px;border-radius:15px;text-align:center;min-width:350px;">
-        <i class="fa-solid fa-circle-check" style="font-size:60px;color:#16a34a;"></i>
-        <h2 style="margin-top:15px;font-weight:800;color:#16a34a;">SUCCESS</h2>
-        <p id="successText" style="font-weight:700;margin-top:10px;"></p>
-        <button class="btn bg-green-600" onclick="closeSuccessPopup()">OK</button>
-    </div>
-</div>
+    <script>
+        // Login Credentials
+        const USERNAME = "SV01";
+        const PASSWORD = "1111";
 
-<script>
-const URL = "https://script.google.com/macros/s/AKfycbx4A46Cwcpa7thvEdD6GUWDzvP6bST_dOOfLvZ0dvXax5GzEGZqAXRH7FH4Cvn1tHq5/exec";
-const saveFormData = () => { const formData = { certNo: localStorage.getItem('vsr_cert') || '', receiptDate: document.getElementById('receiptDate_8471').value, deliveryDate: document.getElementById('deliveryDate_1009').value, deliveryTime: document.getElementById('deliveryTime').value, motherName: document.getElementById('smtName_1004').innerText, fatherName: document.getElementById('sriName_1005').innerText, village: document.getElementById('nativePlace_1006').innerText, mandal: document.getElementById('mandalName_1007').innerText, dist: document.getElementById('distName_1008').innerText, deliveryOrder: document.getElementById('deliveryOrder_1010').value, childGender: document.getElementById('childGender_1011').value }; localStorage.setItem('vsr_form_data', JSON.stringify(formData)); };
-const loadFormData = () => { const data = JSON.parse(localStorage.getItem('vsr_form_data') || '{}'); if (!Object.keys(data).length) return; document.getElementById('receiptDate_8471').value = data.receiptDate || ''; document.getElementById('deliveryDate_1009').value = data.deliveryDate || ''; document.getElementById('deliveryTime').value = data.deliveryTime || ''; document.getElementById('smtName_1004').innerText = data.motherName || ''; document.getElementById('sriName_1005').innerText = data.fatherName || ''; document.getElementById('nativePlace_1006').innerText = data.village || ''; document.getElementById('mandalName_1007').innerText = data.mandal || ''; document.getElementById('distName_1008').innerText = data.dist || ''; document.getElementById('deliveryOrder_1010').value = data.deliveryOrder || '1'; document.getElementById('childGender_1011').value = data.childGender || 'MALE'; if (data.certNo) { document.getElementById('receiptNumDisplay_9182').innerText = data.certNo; } };
-window.addEventListener('load', loadFormData);
-document.addEventListener('input', saveFormData);
-document.addEventListener('change', saveFormData);
-const formatDate = (input, targetId) => { const d = new Date(input.value); const m = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]; document.getElementById(targetId).value = `${("0"+d.getDate()).slice(-2)} ${m[d.getMonth()]} ${d.getFullYear()}`; saveFormData(); };
-const normalizeDate = (v) => { if (!v || !v.includes('T')) return v; const d = new Date(v); const m = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]; return `${("0"+d.getDate()).slice(-2)} ${m[d.getMonth()]} ${d.getFullYear()}`; };
-const confirmReset = () => { document.getElementById('resetPopup').style.display = 'flex'; };
-const closeResetPopup = () => { document.getElementById('resetPopup').style.display = 'none'; };
-const doReset = () => { localStorage.removeItem('vsr_cert'); localStorage.removeItem('vsr_form_data'); document.getElementById('searchInput_8822').value = ''; document.getElementById('receiptNumDisplay_9182').innerText = '[New]'; document.getElementById('receiptDate_8471').value = ''; document.getElementById('deliveryDate_1009').value = ''; document.getElementById('deliveryTime').value = ''; document.getElementById('smtName_1004').innerText = ''; document.getElementById('sriName_1005').innerText = ''; document.getElementById('nativePlace_1006').innerText = ''; document.getElementById('mandalName_1007').innerText = ''; document.getElementById('distName_1008').innerText = ''; document.getElementById('deliveryOrder_1010').selectedIndex = 0; document.getElementById('childGender_1011').value = 'MALE'; closeResetPopup(); window.location.reload(); };
-const performSearch_9281 = () => { const q = document.getElementById('searchInput_8822').value.trim(); if (!q) { document.getElementById('verifyBtn_7722').disabled = false; document.getElementById('verifyIcon_7722').className = 'fa-solid fa-check'; return; } document.getElementById('verifyBtn_7722').disabled = true; document.getElementById('verifyIcon_7722').className = 'fa-solid fa-spinner fa-spin'; fetch(`${URL}?certNo=${encodeURIComponent(q)}`).then(r => r.json()).then(d => { if (d.status === "success") { document.getElementById('smtName_1004').innerText = d.data['Mothers Name'] || ''; document.getElementById('sriName_1005').innerText = d.data['Father Name'] || ''; document.getElementById('nativePlace_1006').innerText = d.data['village'] || ''; document.getElementById('mandalName_1007').innerText = d.data['Mandal'] || ''; document.getElementById('distName_1008').innerText = d.data['Dist'] || ''; document.getElementById('receiptDate_8471').value = normalizeDate(d.data['Date']); document.getElementById('deliveryDate_1009').value = normalizeDate(d.data['On Date']); document.getElementById('deliveryTime').value = d.data['Time'] || ''; document.getElementById('receiptNumDisplay_9182').innerText = q; localStorage.setItem('vsr_cert', q); saveFormData(); document.getElementById('verifyBtn_7722').disabled = false; document.getElementById('verifyIcon_7722').className = 'fa-solid fa-check'; } else { document.getElementById('verifyBtn_7722').disabled = false; document.getElementById('verifyIcon_7722').className = 'fa-solid fa-check'; alert('Certificate Not Found'); } }).catch(err => { document.getElementById('verifyBtn_7722').disabled = false; document.getElementById('verifyIcon_7722').className = 'fa-solid fa-check'; console.error(err); alert('Search Error'); }); };
-const handleSearchEnter = (event) => { if (event.key === 'Enter') { event.preventDefault(); performSearch_9281(); } };
-const handleSaveOrUpdate_7182 = () => { const receiptDate = document.getElementById('receiptDate_8471').value.trim(); const deliveryDate = document.getElementById('deliveryDate_1009').value.trim(); const motherName = document.getElementById('smtName_1004').innerText.trim(); const fatherName = document.getElementById('sriName_1005').innerText.trim(); const mandalName = document.getElementById('mandalName_1007').innerText.trim(); if (!receiptDate) { alert("Please Select Certificate Date"); return; } if (!deliveryDate) { alert("Please Select Sterilization Date"); return; } if (!motherName) { alert("Please Enter Mother Name"); return; } if (!fatherName) { alert("Please Enter Father Name"); return; } if (!mandalName) { alert("Please Enter Mandal Name"); return; } document.getElementById('saveIcon').className = 'fa-solid fa-spinner fa-spin'; document.getElementById('btnText_992').innerText = 'SAVING'; const p = { certNo: localStorage.getItem('vsr_cert') || "NEW", date: document.getElementById('receiptDate_8471').value, motherName: document.getElementById('smtName_1004').innerText, fatherName: document.getElementById('sriName_1005').innerText, village: document.getElementById('nativePlace_1006').innerText, mandal: document.getElementById('mandalName_1007').innerText, dist: document.getElementById('distName_1008').innerText, onDate: document.getElementById('deliveryDate_1009').value, time: document.getElementById('deliveryTime').value, delivered: document.getElementById('deliveryOrder_1010').value, gender: document.getElementById('childGender_1011').value }; fetch(URL, { method: "POST", body: JSON.stringify(p) }).then(r => r.json()).then(d => { document.getElementById('receiptNumDisplay_9182').innerText = d.certNo; localStorage.setItem('vsr_cert', d.certNo); document.getElementById('saveIcon').className = 'fa-solid fa-circle-check'; document.getElementById('btnText_992').innerText = 'UPDATED'; document.getElementById('successText').innerHTML = 'Certificate Saved Successfully<br><br>Certificate No : <b>' + d.certNo + '</b>'; document.getElementById('successPopup').style.display = 'flex'; }).catch(err => { document.getElementById('saveIcon').className = 'fa-solid fa-cloud-arrow-up'; document.getElementById('btnText_992').innerText = 'SAVE'; console.error(err); alert("Save Error"); }); };
-const closeSuccessPopup = () => { document.getElementById('successPopup').style.display = 'none'; document.getElementById('saveIcon').className = 'fa-solid fa-cloud-arrow-up'; document.getElementById('btnText_992').innerText = 'SAVE'; };
-</script>
+        document.getElementById('username').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('password').focus(); });
+        document.getElementById('password').addEventListener('keypress', e => { if (e.key === 'Enter') handleLogin(); });
+
+        function handleLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            
+            if (user === USERNAME && pass === PASSWORD) {
+                sessionStorage.setItem('isLoggedIn', 'true');
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+                showForm("https://dsvsrh.github.io/WEB-V2.0/forms/01deliverycertificate.html");
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        }
+
+        window.onload = function() {
+            if (sessionStorage.getItem('isLoggedIn') === 'true') {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+                showForm("https://dsvsrh.github.io/WEB-V2.0/forms/01deliverycertificate.html");
+            }
+        };
+
+        function showForm(url) {
+            const container = document.getElementById('active-form-content');
+            container.innerHTML = `<iframe id="docFrame" src="${url}" title="Document Viewer"></iframe>`;
+            const iframe = document.getElementById('docFrame');
+            iframe.onload = () => {
+                try {
+                    const style = document.createElement('style');
+                    style.textContent = 'body { background-color: #ffffff !important; }';
+                    iframe.contentDocument.head.appendChild(style);
+                } catch (e) {}
+            };
+        }
+    </script>
 </body>
 </html>

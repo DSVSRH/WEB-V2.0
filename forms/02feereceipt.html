@@ -101,7 +101,7 @@ body { font-family: 'Roboto Slab', serif; background-color: #ffffff; padding: 10
                 <i class="fa-solid fa-calendar-days"></i>
             </button>
             <input type="date" id="receiptDateText_picker_3921" class="w-0 h-0 opacity-0 absolute pointer-events-none" onchange="setDateFromPicker('receiptDateText_3921', this.value)"> 
-            TOWARDS HOSPITAL CHARGES AND TREATMENTS / MEDICATION. 
+            TOWARDS <span id="towardsPurpose_5821" contenteditable="true" class="outline-none text-black font-semibold" oninput="runDataAutoSave_8312()">HOSPITAL CHARGES AND TREATMENTS / MEDICATION</span>. 
         </p> 
         <div class="mt-2 flex items-center font-bold text-blue-900 text-xs"> 
             <span>Rupees in words :</span> <input type="text" id="rupeesWords_1298" class="line-input flex-grow text-slate-700" readonly> 
@@ -204,6 +204,7 @@ function runDataAutoSave_8312() {
         rWords: document.getElementById('rupeesWords_1298').value, 
         topDate: document.getElementById('receiptDate_8471').value, 
         paymentDate: document.getElementById('receiptDateText_3921').value,
+        purpose: document.getElementById('towardsPurpose_5821').innerText,
         rNo: document.getElementById('receiptNumDisplay_9182').innerText, 
         searchVal: document.getElementById('searchReceiptNo_9981').value,
         isEditing: localStorage.getItem('vsr_is_editing_mode') || 'false'
@@ -221,6 +222,10 @@ function loadSavedData_8412() {
         document.getElementById('rupeesWords_1298').value = draft.rWords || ''; 
         document.getElementById('receiptNumDisplay_9182').innerText = draft.rNo || '[Click Save]'; 
         document.getElementById('searchReceiptNo_9981').value = draft.searchVal || ''; 
+        
+        if (draft.purpose) {
+            document.getElementById('towardsPurpose_5821').innerText = draft.purpose;
+        }
         
         if (draft.isEditing) {
             localStorage.setItem('vsr_is_editing_mode', draft.isEditing);
@@ -339,6 +344,7 @@ function executeReset_2910() {
         document.getElementById('patientName_9103').value = ''; 
         document.getElementById('receivedAmt_4812').value = ''; 
         document.getElementById('rupeesWords_1298').value = ''; 
+        document.getElementById('towardsPurpose_5821').innerText = 'HOSPITAL CHARGES AND TREATMENTS / MEDICATION';
         document.getElementById('searchReceiptNo_9981').value = ''; 
         document.getElementById('receiptNumDisplay_9182').innerText = '[Click Save]'; 
         const today = getTodayDateString();

@@ -109,13 +109,17 @@ Select Date:
 </div>
 
 <div id="dashboardContent" class="hidden w-full max-w-7xl mx-auto px-4 md:px-6 flex flex-col gap-3">
-<section class="bg-white border border-slate-200 rounded-xl p-2 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-xs">
-<div class="flex items-center gap-2"><span class="live-glow"></span><span class="text-[8px] font-extrabold uppercase tracking-widest text-slate-500">SELECTED DATE RECORDS</span><span class="text-[9px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full font-extrabold" id="liveDate">DD-MM-YYYY</span></div>
-<div class="grid grid-cols-2 lg:grid-cols-5 gap-1.5 w-full">
-<div class="stats-card"><div class="stats-icon bg-blue-100/50"><svg class="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div><div><div class="text-[7px] font-bold text-slate-400 uppercase tracking-wider">Total Registered</div><div class="text-[10px] font-extrabold text-slate-700" id="statReg">0</div></div></div>
-<div class="stats-card"><div class="stats-icon bg-emerald-100/50"><svg class="w-3 h-3 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><div><div class="text-[7px] font-bold text-slate-400 uppercase tracking-wider">Checked (No OPD)</div><div class="text-[10px] font-extrabold text-slate-700" id="statChk">0</div></div></div>
-<div class="stats-card"><div class="stats-icon bg-purple-100/50"><svg class="w-3 h-3 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div><div><div class="text-[7px] font-bold text-slate-400 uppercase tracking-wider">OPD Payments</div><div class="text-[10px] font-extrabold text-slate-700" id="statOPD">0</div></div></div>
-<div class="stats-card"><div class="stats-icon bg-blue-100/50"><svg class="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><div><div class="text-[7px] font-bold text-slate-400 uppercase tracking-wider">OPD Collection</div><div class="text-[10px] font-extrabold text-slate-700" id="statCol">₹0.00</div></div></div>
+<section class="bg-white border border-slate-200 rounded-xl p-2 flex flex-col items-center justify-between gap-2 shadow-xs">
+<div class="flex items-center justify-between w-full border-b border-slate-100 pb-2">
+    <div class="flex items-center gap-2"><span class="live-glow"></span><span class="text-[8px] font-extrabold uppercase tracking-widest text-slate-500">SELECTED DATE SUMMARY</span><span class="text-[9px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full font-extrabold" id="liveDate">DD-MM-YYYY</span></div>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-7 gap-1.5 w-full">
+<div class="stats-card"><div class="stats-icon bg-blue-100/50"><svg class="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div><div><div class="text-[7px] font-bold text-slate-400 uppercase tracking-wider">Total Reg.</div><div class="text-[10px] font-extrabold text-slate-700" id="statReg">0</div></div></div>
+<div class="stats-card"><div class="stats-icon bg-purple-100/50"><svg class="w-3 h-3 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div><div><div class="text-[7px] font-bold text-slate-400 uppercase tracking-wider">OPD Paid</div><div class="text-[10px] font-extrabold text-slate-700" id="statOPD">0</div></div></div>
+<div class="stats-card"><div class="stats-icon bg-slate-100/50"><svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"></path></svg></div><div><div class="text-[7px] font-bold text-slate-400 uppercase tracking-wider">Unpaid</div><div class="text-[10px] font-extrabold text-slate-700" id="statUnpaid">0</div></div></div>
+<div class="stats-card"><div class="stats-icon bg-amber-100/50"><svg class="w-3 h-3 text-amber-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><div><div class="text-[7px] font-bold text-amber-500 uppercase tracking-wider">Total Cash</div><div class="text-[10px] font-extrabold text-slate-700" id="statCash">₹0.00</div></div></div>
+<div class="stats-card"><div class="stats-icon bg-indigo-100/50"><svg class="w-3 h-3 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div><div><div class="text-[7px] font-bold text-indigo-500 uppercase tracking-wider">Total Online</div><div class="text-[10px] font-extrabold text-slate-700" id="statOnline">₹0.00</div></div></div>
+<div class="stats-card border-blue-200 bg-blue-50/50"><div class="stats-icon bg-blue-200/50"><svg class="w-3 h-3 text-blue-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg></div><div><div class="text-[7px] font-bold text-blue-600 uppercase tracking-wider">Total Coll. (OPD+Scan)</div><div class="text-[11px] font-extrabold text-blue-800" id="statTotal">₹0.00</div></div></div>
 <div class="stats-card"><div class="stats-icon bg-rose-100/50"><svg class="w-3 h-3 text-rose-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><div><div class="text-[7px] font-bold text-slate-400 uppercase tracking-wider">Expenses</div><div class="text-[10px] font-extrabold text-slate-700" id="statExpenses">₹0.00</div></div></div>
 </div>
 </section>
@@ -127,51 +131,45 @@ Select Date:
 <span class="bg-white/20 px-2 py-0.5 rounded-full text-[8px] font-bold animate-pulse" id="opdPaidBadge">0 Patients</span>
 </div>
 <div class="overflow-x-auto table-scroll w-full">
-<table class="w-full text-left border-collapse min-w-[850px]">
+<table class="w-full text-left border-collapse min-w-[1100px]">
 <thead>
 <tr class="bg-slate-50 border-b border-slate-200 text-[8px] font-bold tracking-widest text-slate-400 uppercase">
-<th class="py-1.5 px-3 w-16 text-center">S.No</th>
-<th class="py-1.5 px-3">Token ID</th>
-<th class="py-1.5 px-3">PID</th>
-<th class="py-1.5 px-3">Full Name</th>
-<th class="py-1.5 px-3 text-center">Age / Gender</th>
-<th class="py-1.5 px-3">Phone Number</th>
-<th class="py-1.5 px-3">Village</th>
-<th class="py-1.5 px-3">Section</th>
-<th class="py-1.5 px-3 text-center">Time</th>
-<th class="py-1.5 px-3 text-right">OPD Amount / Remarks</th>
+<th class="py-1.5 px-3 w-12 text-center">S.No</th>
+<th class="py-1.5 px-3">Token</th>
+<th class="py-1.5 px-3">Patient Details</th>
+<th class="py-1.5 px-3">Contact/Loc</th>
+<th class="py-1.5 px-3">Section/Time</th>
+<th class="py-1.5 px-3 text-right">OPD Pmt Details</th>
+<th class="py-1.5 px-3 text-right">Scan Pmt Details</th>
 </tr>
 </thead>
 <tbody id="opdBody" class="divide-y divide-slate-100 text-[10px] font-semibold text-slate-600">
-<tr><td colspan="10" class="py-4 text-center text-slate-400 font-bold">Loading OPD paid patients...</td></tr>
+<tr><td colspan="7" class="py-4 text-center text-slate-400 font-bold">Loading OPD paid patients...</td></tr>
 </tbody>
 </table>
 </div>
 </div>
 
-<div class="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden flex flex-col w-full">
-<div class="premium-gradient px-4 py-1.5 flex items-center justify-between text-white">
-<h2 class="font-bold text-[10px] tracking-wider uppercase flex items-center gap-1.5"><svg class="w-3 h-3 text-white inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 2. PATIENTS CHECKED QUEUE (No OPD)</h2>
-<span class="bg-white/20 px-2 py-0.5 rounded-full text-[8px] font-bold animate-pulse" id="checkedBadge">0 Patients</span>
+<!-- OPD UNPAID SECTION -->
+<div class="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden flex flex-col w-full mb-3">
+<div class="premium-gradient px-4 py-1.5 flex items-center justify-between text-white" style="background: linear-gradient(135deg, #475569 0%, #334155 100%);">
+<h2 class="font-bold text-[10px] tracking-wider uppercase flex items-center gap-1.5"><svg class="w-3 h-3 text-white inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 2. OPD UNPAID PATIENTS QUEUE</h2>
+<span class="bg-white/20 px-2 py-0.5 rounded-full text-[8px] font-bold animate-pulse" id="opdUnpaidBadge">0 Patients</span>
 </div>
 <div class="overflow-x-auto table-scroll w-full">
-<table class="w-full text-left border-collapse min-w-[850px]">
+<table class="w-full text-left border-collapse min-w-[800px]">
 <thead>
 <tr class="bg-slate-50 border-b border-slate-200 text-[8px] font-bold tracking-widest text-slate-400 uppercase">
-<th class="py-1.5 px-3 w-16 text-center">S.No</th>
-<th class="py-1.5 px-3">Token ID</th>
-<th class="py-1.5 px-3">PID</th>
-<th class="py-1.5 px-3">Full Name</th>
-<th class="py-1.5 px-3 text-center">Age / Gender</th>
-<th class="py-1.5 px-3">Phone Number</th>
-<th class="py-1.5 px-3">Village</th>
-<th class="py-1.5 px-3">Section</th>
-<th class="py-1.5 px-3 text-center">Time</th>
-<th class="py-1.5 px-3 text-right">OPD Amount / Remarks</th>
+<th class="py-1.5 px-3 w-12 text-center">S.No</th>
+<th class="py-1.5 px-3">Token</th>
+<th class="py-1.5 px-3">Patient Details</th>
+<th class="py-1.5 px-3">Contact/Loc</th>
+<th class="py-1.5 px-3">Section/Time</th>
+<th class="py-1.5 px-3 text-right">Remarks</th>
 </tr>
 </thead>
-<tbody id="checkedBody" class="divide-y divide-slate-100 text-[10px] font-semibold text-slate-600">
-<tr><td colspan="10" class="py-4 text-center text-slate-400 font-bold">Loading checked patients...</td></tr>
+<tbody id="unpaidBody" class="divide-y divide-slate-100 text-[10px] font-semibold text-slate-600">
+<tr><td colspan="6" class="py-4 text-center text-slate-400 font-bold">Loading unpaid patients...</td></tr>
 </tbody>
 </table>
 </div>
@@ -204,12 +202,12 @@ Select Date:
 </main>
 
 <footer class="bg-slate-100 border-t border-slate-200 py-2 z-10 mt-auto">
-<div class="max-w-7xl mx-auto px-4 md:px-8 text-center"><p class="text-[0.55rem] font-bold text-slate-500">© 2026 All Rights Reserved | Dr. S. Venkata Subba Reddy Multispeciality Hospital | Architected by Sri Veda Org.</p></div>
+<div class="max-w-7xl mx-auto px-4 md:px-8 text-center"><p class="text-[0.55rem] font-bold text-slate-500">© 2026 All Rights Reserved | Dr. S. Venkata Subba Reddy Multispecialty Hospital | Architected by Sri Veda Org.</p></div>
 </footer>
 
 <script>
 // 01-HEADER JAVASCRIPT SECTION
-const APP_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbzxGeoyHggMAZCVg3m1bMb-ak9AkSTgy4BaCRZ8SDbaU28fDfDy5azom_ZLYkeiVr2L/exec";
+const APP_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbzQrUId6akk0KV7aI6V4oA9Y-AC8BWBS6SQ8M7OOuEJZYQJyZh-mmDPK3rnMgvHbegk/exec";
 
 const updateLiveClock = () => { 
     const now = new Date(); 
@@ -424,8 +422,8 @@ const fetchLatest = async () => {
     const ri = document.getElementById('refreshIcon'); 
     if (ri) ri.classList.add('animate-spin'); 
     
-    document.getElementById('opdBody').innerHTML = '<tr><td colspan="10" class="py-4 text-center text-slate-400 font-bold">Syncing...</td></tr>'; 
-    document.getElementById('checkedBody').innerHTML = '<tr><td colspan="10" class="py-4 text-center text-slate-400 font-bold">Syncing...</td></tr>'; 
+    document.getElementById('opdBody').innerHTML = '<tr><td colspan="7" class="py-4 text-center text-slate-400 font-bold">Syncing...</td></tr>'; 
+    document.getElementById('unpaidBody').innerHTML = '<tr><td colspan="6" class="py-4 text-center text-slate-400 font-bold">Syncing...</td></tr>';
     document.getElementById('expensesBody').innerHTML = '<tr><td colspan="4" class="py-4 text-center text-slate-400 font-bold">Syncing...</td></tr>'; 
     
     const res = await executeApiRequest({ 
@@ -456,23 +454,54 @@ const renderRecords = (reg, pat, exp) => {
     const unique = {}; 
     all.forEach(item => { if (item.pid) unique[item.pid] = item; }); 
     const list = Object.values(unique); 
-    const opd = list.filter(item => (parseFloat(item.opdAmount) || 0) > 0); 
-    const chk = list.filter(item => (parseFloat(item.opdAmount) || 0) === 0); 
+    
+    // Determine which are OPD vs Checked based on OPD Amount OR Scan Amount existing
+    const opd = list.filter(item => (parseFloat(item.opdAmount) || 0) > 0 || (parseFloat(item.scanAmount) || 0) > 0); 
+    const chk = list.filter(item => (parseFloat(item.opdAmount) || 0) === 0 && (parseFloat(item.scanAmount) || 0) === 0); 
     
     document.getElementById('statReg').innerText = list.length; 
-    document.getElementById('statChk').innerText = chk.length; 
     document.getElementById('statOPD').innerText = opd.length; 
+    document.getElementById('statUnpaid').innerText = chk.length; 
     
-    let sum = 0; 
-    opd.forEach(item => sum += (parseFloat(item.opdAmount) || 0)); 
-    document.getElementById('statCol').innerText = "₹" + sum.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); 
+    // Detailed Aggregations
+    let totalCash = 0;
+    let totalOnline = 0;
+    
+    list.forEach(item => {
+        const opdVal = parseFloat(item.opdAmount) || 0;
+        const scanVal = parseFloat(item.scanAmount) || 0;
+        
+        // Check OPD Payment Type
+        if (opdVal > 0) {
+            if ((item.txType || "").toLowerCase().includes("online")) {
+                totalOnline += opdVal;
+            } else {
+                totalCash += opdVal; // Assume Cash if not explicitly Online
+            }
+        }
+        
+        // Check Scan Payment Type
+        if (scanVal > 0) {
+            if ((item.scanTxType || "").toLowerCase().includes("online")) {
+                totalOnline += scanVal;
+            } else {
+                totalCash += scanVal; // Assume Cash if not explicitly Online
+            }
+        }
+    });
+
+    const grandTotal = totalCash + totalOnline;
+    
+    document.getElementById('statCash').innerText = "₹" + totalCash.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); 
+    document.getElementById('statOnline').innerText = "₹" + totalOnline.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); 
+    document.getElementById('statTotal').innerText = "₹" + grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); 
     
     let expSum = 0; 
     filteredExp.forEach(item => expSum += (parseFloat(item.amount) || 0)); 
     document.getElementById('statExpenses').innerText = "₹" + expSum.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); 
     
     renderTableRows('opdBody', opd, 'opdPaidBadge'); 
-    renderTableRows('checkedBody', chk, 'checkedBadge'); 
+    renderUnpaidTableRows('unpaidBody', chk, 'opdUnpaidBadge');
     renderExpensesTable(filteredExp); 
 };
 
@@ -481,27 +510,98 @@ const renderTableRows = (bodyId, dataList, badgeId) => {
     const bCount = document.getElementById(badgeId); 
     bCount.innerText = `${dataList.length} Patients`; 
     if (dataList.length === 0) { 
-        body.innerHTML = '<tr><td colspan="10" class="py-4 text-center text-slate-400 font-bold">No records found for this date.</td></tr>'; 
+        body.innerHTML = '<tr><td colspan="7" class="py-4 text-center text-slate-400 font-bold">No records found for this date.</td></tr>'; 
         return; 
     } 
-    body.innerHTML = dataList.map((item, idx) => `
+    body.innerHTML = dataList.map((item, idx) => {
+        const opdVal = parseFloat(item.opdAmount) || 0;
+        const scanVal = parseFloat(item.scanAmount) || 0;
+        
+        // Format OPD Tx
+        let opdTxDisplay = '';
+        if (opdVal > 0) {
+            const isOnline = (item.txType || "").toLowerCase().includes("online");
+            opdTxDisplay = `<div class="text-[8px] mt-0.5"><span class="${isOnline ? 'bg-indigo-100 text-indigo-700 border-indigo-200' : 'bg-amber-100 text-amber-700 border-amber-200'} border px-1 rounded-sm">${item.txType || 'Cash'}</span></div>`;
+            if (isOnline && item.utrNo) {
+                 opdTxDisplay += `<div class="text-[7.5px] text-slate-400 mt-0.5 font-normal tracking-wide">UTR: ${item.utrNo}</div>`;
+            }
+        }
+
+        // Format Scan Tx
+        let scanDisplay = '-';
+        if (scanVal > 0) {
+            const isOnlineScan = (item.scanTxType || "").toLowerCase().includes("online");
+            scanDisplay = `
+                <div class="text-[#1e3a8a] font-bold">₹${scanVal.toFixed(2)}</div>
+                ${item.scanType ? `<div class="text-[8px] text-slate-500 font-bold mt-0.5 truncate max-w-[120px]" title="${item.scanType}">${item.scanType}</div>` : ''}
+                <div class="text-[8px] mt-0.5"><span class="${isOnlineScan ? 'bg-indigo-100 text-indigo-700 border-indigo-200' : 'bg-amber-100 text-amber-700 border-amber-200'} border px-1 rounded-sm">${item.scanTxType || 'Cash'}</span></div>
+            `;
+        }
+        
+        return `
         <tr class="hover:bg-slate-50 transition-colors border-b border-slate-100">
             <td class="py-1.5 px-3 text-center font-bold text-slate-400">${idx + 1}</td>
-            <td class="py-1.5 px-3 font-extrabold text-blue-900">${item.tokenId || '-'}</td>
-            <td class="py-1.5 px-3 text-[10px] font-bold text-slate-500">${item.pid || '-'}</td>
-            <td class="py-1.5 px-3 text-slate-700 font-bold">${item.fullName || '-'}</td>
-            <td class="py-1.5 px-3 text-center">
-                <span class="px-2 py-0.5 rounded text-[9px] font-extrabold ${item.gender && item.gender.toUpperCase() === 'MALE' ? 'bg-blue-100 text-blue-700' : 'bg-pink-100 text-pink-700'}">${item.age} Y / ${item.gender}</span>
+            <td class="py-1.5 px-3">
+                <div class="font-extrabold text-blue-900">${item.tokenId || '-'}</div>
+                <div class="text-[8.5px] font-bold text-slate-400 mt-0.5">ID: ${item.pid || '-'}</div>
             </td>
-            <td class="py-1.5 px-3 font-bold text-slate-500">${item.phoneNumber || '-'}</td>
-            <td class="py-1.5 px-3 text-slate-500 font-semibold">${item.village || '-'}</td>
-            <td class="py-1.5 px-3"><span class="px-1.5 py-0.5 bg-slate-100 text-slate-700 rounded text-[9px] font-bold">${item.section || '-'}</span></td>
-            <td class="py-1.5 px-3 text-center text-[10px] font-bold text-slate-400">${formatTime(item.time)}</td>
+            <td class="py-1.5 px-3">
+                <div class="text-slate-700 font-bold truncate max-w-[150px]">${item.fullName || '-'}</div>
+                <div class="mt-1"><span class="px-1.5 py-0.5 rounded text-[8.5px] font-extrabold border ${item.gender && item.gender.toUpperCase() === 'MALE' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-pink-50 text-pink-700 border-pink-200'}">${item.age} Y / ${item.gender}</span></div>
+            </td>
+            <td class="py-1.5 px-3">
+                <div class="font-bold text-slate-600">${item.phoneNumber || '-'}</div>
+                <div class="text-slate-400 font-semibold text-[9px] mt-0.5 truncate max-w-[100px]">${item.village || '-'}</div>
+            </td>
+            <td class="py-1.5 px-3">
+                <div><span class="px-1.5 py-0.5 bg-slate-100 text-slate-600 border border-slate-200 rounded text-[9px] font-bold">${item.section || '-'}</span></div>
+                <div class="text-[9px] font-bold text-slate-400 mt-1">${formatTime(item.time)}</div>
+            </td>
             <td class="py-1.5 px-3 text-right">
-                <div class="${item.remarks ? 'text-rose-600' : 'text-[#1e3a8a]'} font-bold">₹${(parseFloat(item.opdAmount) || 0).toFixed(2)}</div>
-                ${item.remarks ? `<div class="text-[9px] text-rose-500 italic font-bold mt-0.5">${item.remarks}</div>` : ''}
+                <div class="${item.remarks ? 'text-rose-600' : 'text-[#1e3a8a]'} font-bold">${opdVal > 0 ? '₹'+opdVal.toFixed(2) : '-'}</div>
+                ${opdTxDisplay}
+                ${item.remarks ? `<div class="text-[8.5px] text-rose-500 italic font-bold mt-1 truncate max-w-[120px]" title="${item.remarks}">${item.remarks}</div>` : ''}
             </td>
-        </tr>`).join(''); 
+            <td class="py-1.5 px-3 text-right bg-slate-50/30">
+                ${scanDisplay}
+            </td>
+        </tr>`;
+    }).join(''); 
+};
+
+const renderUnpaidTableRows = (bodyId, dataList, badgeId) => { 
+    const body = document.getElementById(bodyId); 
+    const bCount = document.getElementById(badgeId); 
+    bCount.innerText = `${dataList.length} Patients`; 
+    if (dataList.length === 0) { 
+        body.innerHTML = '<tr><td colspan="6" class="py-4 text-center text-slate-400 font-bold">No unpaid patients found for this date.</td></tr>'; 
+        return; 
+    } 
+    body.innerHTML = dataList.map((item, idx) => {
+        return `
+        <tr class="hover:bg-slate-50 transition-colors border-b border-slate-100">
+            <td class="py-1.5 px-3 text-center font-bold text-slate-400">${idx + 1}</td>
+            <td class="py-1.5 px-3">
+                <div class="font-extrabold text-slate-700">${item.tokenId || '-'}</div>
+                <div class="text-[8.5px] font-bold text-slate-400 mt-0.5">ID: ${item.pid || '-'}</div>
+            </td>
+            <td class="py-1.5 px-3">
+                <div class="text-slate-700 font-bold truncate max-w-[150px]">${item.fullName || '-'}</div>
+                <div class="mt-1"><span class="px-1.5 py-0.5 rounded text-[8.5px] font-extrabold border ${item.gender && item.gender.toUpperCase() === 'MALE' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-pink-50 text-pink-700 border-pink-200'}">${item.age} Y / ${item.gender}</span></div>
+            </td>
+            <td class="py-1.5 px-3">
+                <div class="font-bold text-slate-600">${item.phoneNumber || '-'}</div>
+                <div class="text-slate-400 font-semibold text-[9px] mt-0.5 truncate max-w-[100px]">${item.village || '-'}</div>
+            </td>
+            <td class="py-1.5 px-3">
+                <div><span class="px-1.5 py-0.5 bg-slate-100 text-slate-600 border border-slate-200 rounded text-[9px] font-bold">${item.section || '-'}</span></div>
+                <div class="text-[9px] font-bold text-slate-400 mt-1">${formatTime(item.time)}</div>
+            </td>
+            <td class="py-1.5 px-3 text-right">
+                ${item.remarks ? `<div class="text-[9.5px] text-slate-500 font-bold max-w-[150px] ml-auto whitespace-normal break-words">${item.remarks}</div>` : '<span class="text-slate-300">-</span>'}
+            </td>
+        </tr>`;
+    }).join(''); 
 };
 
 const renderExpensesTable = (expensesList) => { 
